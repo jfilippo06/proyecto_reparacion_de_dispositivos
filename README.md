@@ -1,11 +1,11 @@
-# 1 INSTALAR VIRTUALENV
+# 1 Instalar virtualenv
 pip install virtualenv
 
-# 2 CREAR UN ENTORNO VIRTUAL
+# 2 Crear un entorno virtual
 virtualenv env_dispositivos
 
-# 3 ACTIVAR ENTORNO VIRTUAL
+# 3 Activar el entorno virtual
 .\env_dispositivos\Scripts\activate
 
-# 3 INSTALAR LOS PAQUETES
+# 3 Instalar los paquetes
 pip install -r requirements.txt
