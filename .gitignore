@@ -1,2 +1,6 @@
+#Carpetas
 /env_dispositivos
+/.vscode
+
+#Archivos
 db.sqlite3
