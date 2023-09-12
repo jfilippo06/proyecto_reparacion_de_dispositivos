@@ -1,6 +1,7 @@
 #Carpetas
 /env_dispositivos
 /.vscode
+**/__pycache__/
 
 #Archivos
 db.sqlite3
