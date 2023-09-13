@@ -37,14 +37,16 @@
             
             <div id="contenedorcentrado">
                 <div id="login">
-                    <form id="loginform">
-                        <label for="usuario">Usuario</label>
-                        <input id="usuario" type="text" name="usuario" placeholder="Usuario" required>
-                        
-                        <label for="password">Contraseña</label>
-                        <input id="password" type="password" placeholder="Contraseña" name="password" required>
-                        
-                        <button type="submit" title="Ingresar" name="Ingresar">Login</button>
+                    <form id="loginform" method="POST" novalidate>
+                        {% csrf_token %}
+                        <h2>Login</h2>
+                        {{form.as_p}}
+                        <input type="submit" value="Login" />
+                        {% if messages %}
+                            {% for message in messages %}
+                                    {{ message }}
+                            {% endfor %}
+                        {% endif %}
                     </form>
                     
                 </div>
