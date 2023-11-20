@@ -31,4 +31,12 @@ def sign_in(request):
 
 def sign_out(request):
     logout(request)
-    return redirect('login') 
+    return redirect('login')
+
+def register(request):
+
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return redirect('home')
+
+        return render(request, 'register/register.html')
