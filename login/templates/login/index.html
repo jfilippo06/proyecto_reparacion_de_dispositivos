@@ -1,69 +1,82 @@
 {% load static %}
-<!-- Define que el documento esta bajo el estandar de HTML 5 -->
-<!doctype html>
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Login</title>
+  <!-- Tell the browser to be responsive to screen width -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Representa la raíz de un documento HTML o XHTML. Todos los demás elementos deben ser descendientes de este elemento. -->
-<html lang="es">
-    
-    <head>
-        <meta charset="utf-8">
-        
-        <title> Login </title>    
-        
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        <meta name="author" content="Videojuegos & Desarrollo">
-        <meta name="description" content="Ejemplo de formulario de acceso basado en HTML5 y CSS">
-        <meta name="keywords" content="login,formulariode acceso html">
-        
-        <link rel="stylesheet" href="{% static 'login/css/fonts.googleapis.com_css_family.css' %}"> 
-        
-        <!-- Link hacia el archivo de estilos css -->
-        <link rel="stylesheet" href="{% static 'login/css/login.css' %}">
-        
-        <style type="text/css">
-            
-        </style>
-        
-        <script type="text/javascript">
-        
-        </script>
-        
-    </head>
-    
-    <body>
-    
-        <div id="contenedor">
-            
-            <div id="contenedorcentrado">
-                <div id="login">
-                    <form id="loginform" method="POST" novalidate>
-                        {% csrf_token %}
-                        <h2>Login</h2>
-                        {{form.as_p}}
-                        <input type="submit" value="Login" />
-                        {% if messages %}
-                            {% for message in messages %}
-                                    {{ message }}
-                            {% endfor %}
-                        {% endif %}
-                    </form>
-                    
-                </div>
-                <div id="derecho">
-                    <div class="titulo">
-                        Bienvenido
-                    </div>
-                    <hr>
-                    <div class="pie-form">
-                        <a href="#">¿Perdiste tu contraseña?</a>
-                        <a href="#">¿No tienes Cuenta? Registrate</a>
-                        <hr>
-                        <a href="#">« Volver</a>
-                    </div>
-                </div>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="{% static 'login/css/all.min.css' %}">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="{% static 'login/css/ionicons.min.css' %}">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="{% static 'login/css/icheck-bootstrap.min.css' %}">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="{% static 'login/css/adminlte.min.css' %}">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+<body class="hold-transition login-page">
+<div class="login-box">
+  <div class="login-logo">
+    <a><b>Login</b></a>
+  </div>
+  <!-- /.login-logo -->
+  <div class="card">
+    <div class="card-body login-card-body">
+      <p class="login-box-msg">Cada día es una oportunidad para crear algo nuevo y maravilloso</p>
+
+      <form method="POST" action="{% url 'login' %}">
+        {% csrf_token %}
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" placeholder="Usuario" name="username" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-user"></span>
             </div>
+          </div>
         </div>
-        
-    </body>
+        <div class="input-group mb-3">
+          <input type="password" class="form-control" placeholder="Contraseña" name="password" required>
+          <div class="input-group-append">
+            <div class="input-group-text">
+              <span class="fas fa-lock"></span>
+            </div>
+          </div>
+        </div>
+        <div class="social-auth-links text-center mb-3">
+          <button type="submit" class="btn btn-block btn-primary btn">Iniciar sesión</button>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                    {{ message }}
+            {% endfor %}
+        {% endif %}
+      </form>
+
+      <!-- /.social-auth-links -->
+
+      <p class="mb-0">
+        <a href="register.html" class="text-center">Registrarse</a>
+      </p>
+      <p class="mb-1">
+        <a href="forgot-password.html">Haz olvidado tu contraseña</a>
+      </p>
+    </div>
+    <!-- /.login-card-body -->
+  </div>
+</div>
+<!-- /.login-box -->
+
+<!-- jQuery -->
+<script src="{% static 'login/js/jquery.min.js' %}"></script>
+<!-- Bootstrap 4 -->
+<script src="{% static 'login/js/bootstrap.bundle.min.js' %}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'login/js/adminlte.min.js' %}"></script>
+
+</body>
 </html>
