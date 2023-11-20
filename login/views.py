@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, authenticate, logout, get_user_model
 from .forms import LoginForm
 
 # Create your views here.
@@ -34,9 +34,30 @@ def sign_out(request):
     return redirect('login')
 
 def register(request):
-
     if request.method == 'GET':
         if request.user.is_authenticated:
             return redirect('home')
 
         return render(request, 'register/register.html')
+
+    elif request.method == 'POST':
+        User = get_user_model()
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        user_type = 'client'  # Set user_type as 'client'
+
+        # Check if a user with this username or email already exists
+        if User.objects.filter(username=username).exists():
+            messages.error(request, 'Username is already taken')
+            return render(request, 'register/register.html')
+        elif User.objects.filter(email=email).exists():
+            messages.error(request, 'Email is already taken')
+            return render(request, 'register/register.html')
+
+        # Create the user
+        user = User.objects.create_user(username=username, password=password, email=email, user_type=user_type)
+        user.save()
+
+        messages.success(request, 'User registered successfully')
+        return redirect('home')

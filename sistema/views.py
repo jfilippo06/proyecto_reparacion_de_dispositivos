@@ -1,9 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
-
-# Create your views here.
+from django.http import HttpResponse
 
 @login_required
 def home(request):
-    return HttpResponse("Bienvenido a la pagina principal")
+    return HttpResponse(f"Bienvenido {request.user.usernames} a la pagina principal")
