@@ -3,4 +3,4 @@ from django.http import HttpResponse
 
 @login_required
 def home(request):
-    return HttpResponse(f"Bienvenido {request.user.usernames} a la pagina principal")
+    return HttpResponse(f"Bienvenido {request.user.username} a la pagina principal")

@@ -4,6 +4,28 @@ import django.contrib.auth.models
 import django.contrib.auth.validators
 from django.db import migrations, models
 import django.utils.timezone
+from login.models import UserProfile
+
+def create_users(apps, schema_editor):
+    # Crear super usuario
+    superuser = UserProfile.objects.create(username='superuser', email='superuser@example.com', is_superuser=1, is_staff=1 , user_type='admin')
+    superuser.set_password('superuser')
+    superuser.save()
+
+    # Crear el primer usuario
+    user1 = UserProfile.objects.create(username='admin', email='admin@example.com', user_type='admin')
+    user1.set_password('admin')
+    user1.save()
+
+    # Crear el segundo usuario
+    user2 = UserProfile.objects.create(username='empleado', email='empleado@example.com', user_type='employee')
+    user2.set_password('empleado')
+    user2.save()
+
+    # Crear el tercer usuario
+    user3 = UserProfile.objects.create(username='cliente', email='cliente@example.com', user_type='client')
+    user3.set_password('cliente')
+    user3.save()
 
 
 class Migration(migrations.Migration):
@@ -42,4 +64,5 @@ class Migration(migrations.Migration):
                 ('objects', django.contrib.auth.models.UserManager()),
             ],
         ),
+            migrations.RunPython(create_users),
     ]
