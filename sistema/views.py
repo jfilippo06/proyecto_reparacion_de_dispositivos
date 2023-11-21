@@ -1,6 +1,8 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
 
 @login_required
 def home(request):
-    return HttpResponse(f"Bienvenido {request.user.username} a la pagina principal")
+
+    if request.method == 'GET':
+        return render(request, 'home/index.html')
