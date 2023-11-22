@@ -9,7 +9,7 @@ def sign_in(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('inventario')
 
         form = LoginForm()
         return render(request,'login/login.html', {'form': form})
@@ -23,7 +23,7 @@ def sign_in(request):
             user = authenticate(request,username=username,password=password)
             if user:
                 login(request, user)
-                return redirect('home')
+                return redirect('inventario')
         
         # form is not valid or user is not authenticated
         messages.error(request,f'Invalid username or password')
@@ -36,7 +36,7 @@ def sign_out(request):
 def register(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return redirect('home')
+            return redirect('inventario')
 
         return render(request, 'register/register.html')
 
@@ -60,4 +60,4 @@ def register(request):
         user.save()
 
         messages.success(request, 'User registered successfully')
-        return redirect('home')
+        return redirect('login')
