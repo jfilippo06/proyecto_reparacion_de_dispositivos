@@ -6,4 +6,4 @@ def home(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return render(request, 'home/index.html', {'user_name':request.user.username})
+            return render(request, 'home/home.html', {'user_name':request.user.username})
