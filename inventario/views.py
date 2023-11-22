@@ -6,4 +6,4 @@ def inventario(request):
 
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return render(request, 'home/home.html', {'user_name':request.user.username})
+            return render(request, 'inventario/inventario.html', {'user_name':request.user.username})
