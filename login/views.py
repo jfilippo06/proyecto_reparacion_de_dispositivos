@@ -12,7 +12,7 @@ def sign_in(request):
             return redirect('home')
 
         form = LoginForm()
-        return render(request,'login/index.html', {'form': form})
+        return render(request,'login/login.html', {'form': form})
     
     elif request.method == 'POST':
         form = LoginForm(request.POST)
