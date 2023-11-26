@@ -11,7 +11,7 @@ class Inventario(models.Model):
         ('RPT', 'Repuestos de Telefonos'),
     ]
 
-    codigo = models.IntegerField(unique=True)
+    codigo = models.CharField(max_length=6)
     articulo = models.CharField(max_length=50)
     marca = models.CharField(max_length=50)
     modelo = models.CharField(max_length=50)
