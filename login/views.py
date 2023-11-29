@@ -5,38 +5,40 @@ from .forms import LoginForm
 
 # Create your views here.
 
-def sign_in(request):
 
+def sign_in(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return redirect('inventario_computadora')
+            return redirect('computadora')
 
         form = LoginForm()
-        return render(request,'login/login.html', {'form': form})
-    
+        return render(request, 'login/login.html', {'form': form})
+
     elif request.method == 'POST':
         form = LoginForm(request.POST)
-        
+
         if form.is_valid():
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
-            user = authenticate(request,username=username,password=password)
+            user = authenticate(request, username=username, password=password)
             if user:
                 login(request, user)
-                return redirect('inventario_computadora')
-        
+                return redirect('computadora')
+
         # form is not valid or user is not authenticated
-        messages.error(request,f'Invalid username or password')
-        return render(request,'login/index.html',{'form': form})
+        messages.error(request, f'Invalid username or password')
+        return render(request, 'login/index.html', {'form': form})
+
 
 def sign_out(request):
     logout(request)
     return redirect('login')
 
+
 def register(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return redirect('inventario_computadora')
+            return redirect('computadora')
 
         return render(request, 'register/register.html')
 
@@ -56,7 +58,8 @@ def register(request):
             return render(request, 'register/register.html')
 
         # Create the user
-        user = User.objects.create_user(username=username, password=password, email=email, user_type=user_type)
+        user = User.objects.create_user(
+            username=username, password=password, email=email, user_type=user_type)
         user.save()
 
         messages.success(request, 'User registered successfully')
