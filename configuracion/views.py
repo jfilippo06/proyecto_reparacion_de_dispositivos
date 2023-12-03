@@ -1,4 +1,4 @@
-from login.decorators import admin_required
+from login.decorators import admin_required, employee_denied
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -8,6 +8,7 @@ from login.models import UserProfile
 
 
 @admin_required
+@employee_denied
 def users(request):
     if request.method == 'GET':
         usuarios = UserProfile.objects.exclude(user_type='super_user').exclude(is_active=False)
@@ -38,11 +39,13 @@ def users(request):
         return redirect('usuarios')
 
 @admin_required
+@employee_denied
 def updateUsers(request, id):
     pass
 
 
 @admin_required
+@employee_denied
 def deleteUsers(request, id):
     user = get_object_or_404(UserProfile, id=id)
     user.is_active = False
