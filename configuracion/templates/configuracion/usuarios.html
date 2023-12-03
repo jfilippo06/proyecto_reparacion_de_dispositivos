@@ -71,6 +71,67 @@
     </div><!-- /.container-fluid -->
   </section>
   <!-- /.content -->
+
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Lista de usuarios</h3>
+
+              <div class="card-tools">
+                <div class="input-group input-group-sm" style="width: 150px;">
+                  <input type="text" name="table_search" class="form-control float-right" placeholder="Busqueda">
+
+                  <div class="input-group-append">
+                    <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body table-responsive p-0" style="height: 300px;">
+              <table class="table table-head-fixed text-nowrap">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Usuario</th>
+                    <th>Correo electronico</th>
+                    <th>Tipo de usuario</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for usuario in usuarios %}
+                    <tr>
+                        <td>{{ usuario.id }}</td>
+                        <td>{{ usuario.username }}</td>
+                        <td>{{ usuario.email }}</td>
+                        {% if usuario.user_type == "admin" %}
+                            <td>Administrador</td>
+                        {% elif usuario.user_type == "employee" %}
+                            <td>Empleado</td>
+                        {% elif usuario.user_type == "client" %}
+                            <td>Cliente</td>
+                        {% endif %}
+                        <td><a href="{{ usuario.id }}" class="btn btn-block btn-warning">Editar</a></td>
+                        <td><a href="{{ usuario.id }}" class="btn btn-block btn-danger">Deshabilitar</a></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+            <!-- /.card-body -->
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+
 </div>
 
 {% endblock %}

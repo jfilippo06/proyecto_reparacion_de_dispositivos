@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect
 from django.contrib import messages
+from login.models import UserProfile
 
 # Create your views here.
 
@@ -9,7 +10,8 @@ from django.contrib import messages
 @login_required
 def users(request):
     if request.method == 'GET':
-        return render(request, 'configuracion/usuarios.html', {'user_name': request.user.username})
+        usuarios = UserProfile.objects.exclude(user_type='super_user')
+        return render(request, 'configuracion/usuarios.html', {'user_name': request.user.username, 'usuarios': usuarios})
 
     elif request.method == 'POST':
         User = get_user_model()
