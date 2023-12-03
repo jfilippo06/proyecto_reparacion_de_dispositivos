@@ -27,7 +27,7 @@ def sign_in(request):
 
         # form is not valid or user is not authenticated
         messages.error(request, f'Invalid username or password')
-        return render(request, 'login/index.html', {'form': form})
+        return render(request, 'login/login.html', {'form': form})
 
 
 def sign_out(request):

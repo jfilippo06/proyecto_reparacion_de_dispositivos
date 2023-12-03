@@ -116,8 +116,8 @@
                         {% elif usuario.user_type == "client" %}
                             <td>Cliente</td>
                         {% endif %}
-                        <td><a href="{{ usuario.id }}" class="btn btn-block btn-warning">Editar</a></td>
-                        <td><a href="{{ usuario.id }}" class="btn btn-block btn-danger">Deshabilitar</a></td>
+                        <td><a href="{% url 'actualizar_usuarios' usuario.id %}" class="btn btn-block btn-warning">Editar</a></td>
+                        <td><a href="{% url 'deshabilitar_usuarios' usuario.id %}" class="btn btn-block btn-danger">Deshabilitar</a></td>
                     </tr>
                   {% endfor %}
                 </tbody>

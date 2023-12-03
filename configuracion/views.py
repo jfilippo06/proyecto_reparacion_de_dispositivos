@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from login.models import UserProfile
 
@@ -10,7 +10,7 @@ from login.models import UserProfile
 @login_required
 def users(request):
     if request.method == 'GET':
-        usuarios = UserProfile.objects.exclude(user_type='super_user')
+        usuarios = UserProfile.objects.exclude(user_type='super_user').exclude(is_active=False)
         return render(request, 'configuracion/usuarios.html', {'user_name': request.user.username, 'usuarios': usuarios})
 
     elif request.method == 'POST':
@@ -36,3 +36,14 @@ def users(request):
 
         messages.success(request, 'Usuario registrado correctamente')
         return redirect('usuarios')
+
+
+def updateUsers(request, id):
+    pass
+
+
+def deleteUsers(request, id):
+    user = get_object_or_404(UserProfile, id=id)
+    user.is_active = False
+    user.save()
+    return redirect('usuarios')
