@@ -17,13 +17,17 @@ def sign_in(request):
     elif request.method == 'POST':
         form = LoginForm(request.POST)
 
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            user = authenticate(request, username=username, password=password)
-            if user:
+    if form.is_valid():
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password']
+        user = authenticate(request, username=username, password=password)
+        if user:
+            if user.user_type == 'super_user' or user.user_type == 'admin' or user.user_type == 'employee':
                 login(request, user)
                 return redirect('computadora')
+            elif user.user_type == 'client':
+                login(request, user)
+                return redirect('usuarios')
 
         # form is not valid or user is not authenticated
         messages.error(request, f'Invalid username or password')

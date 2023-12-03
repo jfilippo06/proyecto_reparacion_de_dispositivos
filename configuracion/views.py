@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from login.decorators import admin_required
 from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
@@ -7,7 +7,7 @@ from login.models import UserProfile
 # Create your views here.
 
 
-@login_required
+@admin_required
 def users(request):
     if request.method == 'GET':
         usuarios = UserProfile.objects.exclude(user_type='super_user').exclude(is_active=False)
@@ -37,11 +37,12 @@ def users(request):
         messages.success(request, 'Usuario registrado correctamente')
         return redirect('usuarios')
 
-
+@admin_required
 def updateUsers(request, id):
     pass
 
 
+@admin_required
 def deleteUsers(request, id):
     user = get_object_or_404(UserProfile, id=id)
     user.is_active = False
