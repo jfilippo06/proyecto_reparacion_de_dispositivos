@@ -126,6 +126,7 @@
               </li>
             </ul>
           </li>
+          {% if user_type == "admin" %}
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-tree"></i>
@@ -149,6 +150,7 @@
               </li>
             </ul>
           </li>
+          {% endif %}
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-edit"></i>
