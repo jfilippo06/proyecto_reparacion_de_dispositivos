@@ -11,8 +11,9 @@ from login.models import UserProfile
 @employee_denied
 def users(request):
     if request.method == 'GET':
-        usuarios = UserProfile.objects.exclude(user_type='super_user').exclude(is_active=False)
-        return render(request, 'configuracion/usuarios.html', {'user_name': request.user.username, 'usuarios': usuarios})
+        usuarios = UserProfile.objects.exclude(
+            user_type='super_user').exclude(is_active=False)
+        return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': usuarios})
 
     elif request.method == 'POST':
         User = get_user_model()
@@ -38,10 +39,23 @@ def users(request):
         messages.success(request, 'Usuario registrado correctamente')
         return redirect('usuarios')
 
+
 @admin_required
 @employee_denied
 def updateUsers(request, id):
-    pass
+    if request.method == "GET":
+        user = get_object_or_404(UserProfile, id=id)
+        if user.user_type == "super_user":
+            return redirect('usuarios')
+        return render(request, 'configuracion/editar_usuarios.html', {
+            'email': user.email,
+            'username': request.user.username,
+            'username_edit': user.username,
+            'user_type': user.user_type,
+        })
+
+    if request.method == "POST":
+        pass
 
 
 @admin_required

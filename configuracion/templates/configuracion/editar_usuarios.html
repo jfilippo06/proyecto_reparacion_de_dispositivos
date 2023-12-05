@@ -1,0 +1,83 @@
+{% extends 'base_configuracion.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="content-wrapper" style="min-height: 1246.5px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Usuarios</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Formulario de registro</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="POST" action="{% url 'usuarios' %}">
+              {% csrf_token %}
+              <div class="card-body">
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Correo electronico</label>
+                  <input type="email" class="form-control" name="email" value="{{ email }}" placeholder="Correo electronico" autofocus required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Nombre de usuario</label>
+                  <input type="text" class="form-control" name="username" value="{{ username_edit }}" placeholder="Nombre de usuario" required>
+                </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">Contraseña</label>
+                  <input type="password" class="form-control"  name="password" placeholder="Contraseña" required>
+                </div>
+                <div class="form-group">
+                  <label>Tipo de usuario</label>
+                  <select class="form-control" name="user_type">
+                    {% if user_type == "admin" %}
+                    <option value="admin">Administrador</option>
+                    <option value="employee">Empleado</option>
+                    <option value="client">Cliente</option>
+                    {% elif user_type == "employee" %}
+                    <option value="employee">Empleado</option>
+                    <option value="admin">Administrador</option>
+                    <option value="client">Cliente</option>
+                    {% elif user_type == "client" %}
+                    <option value="client">Cliente</option>
+                    <option value="admin">Administrador</option>
+                    <option value="employee">Empleado</option>
+                    {% endif %}
+                  </select>
+                </div>
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <a href="#" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Editar usuario</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+
+</div>
+
+{% endblock %}
