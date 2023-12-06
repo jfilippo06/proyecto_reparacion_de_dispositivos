@@ -45,17 +45,48 @@ def users(request):
 def updateUsers(request, id):
     if request.method == "GET":
         user = get_object_or_404(UserProfile, id=id)
-        if user.user_type == "super_user":
+        if user.user_type == "super_user" or user.is_active == False:
             return redirect('usuarios')
         return render(request, 'configuracion/editar_usuarios.html', {
             'email': user.email,
             'username': request.user.username,
             'username_edit': user.username,
             'user_type': user.user_type,
+            'usuario': id
         })
 
-    if request.method == "POST":
-        pass
+    elif request.method == "POST":
+        User = get_user_model()
+
+        # Get the user
+        try:
+            user = User.objects.get(pk=id)
+        except User.DoesNotExist:
+            messages.error(request, 'Usuario no existe')
+            return redirect('usuarios')
+
+        username = request.POST['username']
+        password = request.POST['password']
+        email = request.POST['email']
+        user_type = request.POST['user_type']  # Set user_type as 'client'
+
+        # Check if a user with this username or email already exists
+        if User.objects.filter(username=username).exclude(pk=id).exists():
+            messages.error(request, 'Usuario ya existe')
+            return redirect('usuarios')
+        elif User.objects.filter(email=email).exclude(pk=id).exists():
+            messages.error(request, 'Correo electronico esta siendo utilizado por otro usuarios')
+            return redirect('usuarios')
+
+        # Update the user
+        user.username = username
+        user.set_password(password)  # Use set_password to hash the password
+        user.email = email
+        user.user_type = user_type
+        user.save()
+
+        messages.success(request, 'Usuario actualizado correctamente')
+        return redirect('usuarios')
 
 
 @admin_required

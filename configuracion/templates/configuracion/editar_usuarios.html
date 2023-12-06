@@ -24,11 +24,11 @@
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Formulario de registro</h3>
+              <h3 class="card-title">Editar usuario</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{% url 'usuarios' %}">
+            <form method="POST" action="{% url 'actualizar_usuarios' usuario %}">
               {% csrf_token %}
               <div class="card-body">
                 <div class="form-group">
