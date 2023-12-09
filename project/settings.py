@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'inventario.apps.InventarioConfig',
     'pagina_principal.apps.PaginaPrincipalConfig',
     'configuracion.apps.ConfiguracionConfig',
+    'papelera.apps.PapeleraConfig',
 ]
 
 MIDDLEWARE = [
