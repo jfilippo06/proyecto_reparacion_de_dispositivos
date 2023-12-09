@@ -23,19 +23,19 @@ def computadora(request):
             return redirect('computadora')
         elif user_type == 'codigo':
             computadora = Inventario.objects.filter(
-                categoria='COM', codigo=inventario).exclude(is_active=False)
+                categoria='COM', codigo__iexact=inventario).exclude(is_active=False)
         elif user_type == 'articulo':
             computadora = Inventario.objects.filter(
-                categoria='COM', articulo=inventario).exclude(is_active=False)
+                categoria='COM', articulo__iexact=inventario).exclude(is_active=False)
         elif user_type == 'marca':
             computadora = Inventario.objects.filter(
-                categoria='COM', marca=inventario).exclude(is_active=False)
+                categoria='COM', marca__iexact=inventario).exclude(is_active=False)
         elif user_type == 'modelo':
             computadora = Inventario.objects.filter(
-                categoria='COM', modelo=inventario).exclude(is_active=False)
+                categoria='COM', modelo__iexact=inventario).exclude(is_active=False)
         elif user_type == 'no_serie':
             computadora = Inventario.objects.filter(
-                categoria='COM', no_serie=inventario).exclude(is_active=False)
+                categoria='COM', no_serie__iexact=inventario).exclude(is_active=False)
         elif user_type == 'cantidad':
             computadora = Inventario.objects.filter(
                 categoria='COM', cantidad=inventario).exclude(is_active=False)
@@ -112,7 +112,8 @@ def updateComputadora(request, id):
             messages.error(request, 'Actualizado correctamente')
             return redirect('computadora')
         except Inventario.DoesNotExist:
-            messages.error(request, 'El objeto con el código especificado no existe.')
+            messages.error(
+                request, 'El objeto con el código especificado no existe.')
             return redirect('computadora')
 
 
