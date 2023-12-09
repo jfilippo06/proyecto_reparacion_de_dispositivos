@@ -12,7 +12,7 @@ def computadora(request):
         paginator = Paginator(inventario, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'inventario/computadora.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
+        return render(request, 'inventario/computadora/computadora.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
 
     elif request.method == 'POST':
         inventario = request.POST['table_search']
@@ -43,7 +43,7 @@ def computadora(request):
         paginator = Paginator(computadora, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'inventario/computadora.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
+        return render(request, 'inventario/computadora/computadora.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
 
 
 @admin_required
@@ -52,6 +52,25 @@ def deleteComputadora(request, id):
     inventario.is_active = False
     inventario.save()
     return redirect('computadora')
+
+@admin_required
+def updateComputadora(request,id):
+    if request.method == "GET":
+        inventario = get_object_or_404(Inventario, id=id)
+        if inventario.is_active == False:
+            return redirect('computadora')
+        return render(request, 'inventario/computadora/editar_computadora.html', {
+            'username': request.user.username,
+            'user_type': request.user.user_type,
+            'computadora_id': id,
+            'codigo': inventario.codigo,
+            'articulo': inventario.articulo,
+            'marca': inventario.marca,
+            'modelo': inventario.modelo,
+            'no_serie': inventario.no_serie,
+            'cantidad': inventario.cantidad,
+            'costo': inventario.costo,
+        })
 
 
 @admin_required
