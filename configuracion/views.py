@@ -3,18 +3,22 @@ from django.contrib.auth import get_user_model
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from login.models import UserProfile
+from django.core.paginator import Paginator
 
 # Create your views here.
 
 
 @admin_required
 @employee_denied
+
 def users(request):
     if request.method == 'GET':
-        usuarios = UserProfile.objects.exclude(
-            user_type='super_user').exclude(is_active=False)
-        return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': usuarios})
-
+        usuarios = UserProfile.objects.exclude(user_type='super_user').exclude(is_active=False)
+        paginator = Paginator(usuarios, 5)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': page_obj})
+    
     elif request.method == 'POST':
         User = get_user_model()
         username = request.POST['username']
@@ -96,3 +100,18 @@ def deleteUsers(request, id):
     user.is_active = False
     user.save()
     return redirect('usuarios')
+
+
+@admin_required
+@employee_denied
+def cancelar(request):
+    return redirect('usuarios')
+
+@admin_required
+@employee_denied
+def buscar(request):
+    username = request.POST['table_search']
+    if username == '':
+        return redirect('usuarios')    
+    user = UserProfile.objects.filter(username=username)
+    return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': user})
