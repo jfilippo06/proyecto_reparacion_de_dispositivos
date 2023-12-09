@@ -10,15 +10,15 @@ from django.core.paginator import Paginator
 
 @admin_required
 @employee_denied
-
 def users(request):
     if request.method == 'GET':
-        usuarios = UserProfile.objects.exclude(user_type='super_user').exclude(is_active=False)
+        usuarios = UserProfile.objects.exclude(
+            user_type='super_user').exclude(is_active=False)
         paginator = Paginator(usuarios, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': page_obj})
-    
+
     elif request.method == 'POST':
         User = get_user_model()
         username = request.POST['username']
@@ -62,7 +62,6 @@ def updateUsers(request, id):
     elif request.method == "POST":
         User = get_user_model()
 
-        # Get the user
         try:
             user = User.objects.get(pk=id)
         except User.DoesNotExist:
@@ -79,7 +78,8 @@ def updateUsers(request, id):
             messages.error(request, 'Usuario ya existe')
             return redirect('usuarios')
         elif User.objects.filter(email=email).exclude(pk=id).exists():
-            messages.error(request, 'Correo electronico esta siendo utilizado por otro usuarios')
+            messages.error(
+                request, 'Correo electronico esta siendo utilizado por otro usuarios')
             return redirect('usuarios')
 
         # Update the user
@@ -107,11 +107,13 @@ def deleteUsers(request, id):
 def cancelar(request):
     return redirect('usuarios')
 
+
 @admin_required
 @employee_denied
 def buscar(request):
     username = request.POST['table_search']
     if username == '':
-        return redirect('usuarios')    
-    user = UserProfile.objects.filter(username=username)
+        return redirect('usuarios')
+    user = UserProfile.objects.filter(username=username).exclude(
+        user_type='super_user').exclude(is_active=False)
     return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': user})
