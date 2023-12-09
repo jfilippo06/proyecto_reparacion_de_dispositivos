@@ -202,6 +202,104 @@ def create_inventario(apps, schema_editor):
     )
     articulo7_telefono.save()
 
+    articulo1_accesorio = Inventario.objects.create(
+        codigo="A00001",
+        articulo='Articulo 1',
+        marca='Marca 1',
+        modelo='Modelo 1',
+        no_serie='Serie 1',
+        descripcion='Esta es una descripción del artículo 1.',
+        cantidad=20,
+        costo=2000,
+        categoria='ASE',  # Acessorio
+        is_active=True,
+    )
+    articulo1_accesorio.save()
+
+    articulo2_accesorio = Inventario.objects.create(
+        codigo="A00002",
+        articulo='Articulo 2',
+        marca='Marca 2',
+        modelo='Modelo 2',
+        no_serie='Serie 2',
+        descripcion='Esta es una descripción del artículo 2.',
+        cantidad=20,
+        costo=2000,
+        categoria='ASE',  # Acessorio
+        is_active=True,
+    )
+    articulo2_accesorio.save()
+
+    articulo3_accesorio = Inventario.objects.create(
+        codigo="A00003",
+        articulo='Articulo 3',
+        marca='Marca 3',
+        modelo='Modelo 3',
+        no_serie='Serie 3',
+        descripcion='Esta es una descripción del artículo 3.',
+        cantidad=20,
+        costo=2000,
+        categoria='ASE',  # Acessorio
+        is_active=True,
+    )
+    articulo3_accesorio.save()
+
+    articulo4_accesorio = Inventario.objects.create(
+        codigo="A00004",
+        articulo='Articulo 4',
+        marca='Marca 4',
+        modelo='Modelo 4',
+        no_serie='Serie 4',
+        descripcion='Esta es una descripción del artículo 4.',
+        cantidad=20,
+        costo=2000,
+        categoria='ASE',  # Acessorio
+        is_active=True,
+    )
+    articulo4_accesorio.save()
+
+    articulo5_accesorio = Inventario.objects.create(
+        codigo="A00005",
+        articulo='Articulo 5',
+        marca='Marca 5',
+        modelo='Modelo 5',
+        no_serie='Serie 5',
+        descripcion='Esta es una descripción del artículo 5.',
+        cantidad=20,
+        costo=2000,
+        categoria='ASE',  # Acessorio
+        is_active=True,
+    )
+    articulo5_accesorio.save()
+
+    articulo6_accesorio = Inventario.objects.create(
+        codigo="A00006",
+        articulo='Articulo 6',
+        marca='Marca 6',
+        modelo='Modelo 6',
+        no_serie='Serie 6',
+        descripcion='Esta es una descripción del artículo 6.',
+        cantidad=20,
+        costo=2000,
+        categoria='ASE',  # Acessorio
+        is_active=True,
+    )
+    articulo1_accesorio.save()
+
+    articulo7_accesorio = Inventario.objects.create(
+        codigo="A00007",
+        articulo='Articulo 7',
+        marca='Marca 7',
+        modelo='Modelo 7',
+        no_serie='Serie 7',
+        descripcion='Esta es una descripción del artículo 7.',
+        cantidad=20,
+        costo=2000,
+        categoria='ASE',  # Acessorio
+        is_active=True,
+    )
+    articulo7_accesorio.save()
+
 
 class Migration(migrations.Migration):
 
