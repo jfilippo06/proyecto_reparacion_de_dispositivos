@@ -11,7 +11,7 @@ class Inventario(models.Model):
         ('RPT', 'Repuestos de Telefonos'),
     ]
 
-    codigo = models.CharField(max_length=6)
+    codigo = models.CharField(unique=True, max_length=6)
     articulo = models.CharField(max_length=50)
     marca = models.CharField(max_length=50)
     modelo = models.CharField(max_length=50)
@@ -22,3 +22,4 @@ class Inventario(models.Model):
     categoria = models.CharField(max_length=3, choices=CATEGORIAS)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField()
