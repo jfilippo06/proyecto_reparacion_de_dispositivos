@@ -300,6 +300,202 @@ def create_inventario(apps, schema_editor):
     )
     articulo7_accesorio.save()
 
+    articulo1_rcp = Inventario.objects.create(
+        codigo="R00001",
+        articulo='Articulo 1',
+        marca='Marca 1',
+        modelo='Modelo 1',
+        no_serie='Serie 1',
+        descripcion='Esta es una descripción del artículo 1.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPC',  # Repuestos de Computadoras
+        is_active=True,
+    )
+    articulo1_rcp.save()
+
+    articulo2_rcp = Inventario.objects.create(
+        codigo="R00002",
+        articulo='Articulo 2',
+        marca='Marca 2',
+        modelo='Modelo 2',
+        no_serie='Serie 2',
+        descripcion='Esta es una descripción del artículo 2.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPC',  # Repuestos de Computadoras
+        is_active=True,
+    )
+    articulo2_rcp.save()
+
+    articulo3_rcp = Inventario.objects.create(
+        codigo="R00003",
+        articulo='Articulo 3',
+        marca='Marca 3',
+        modelo='Modelo 3',
+        no_serie='Serie 3',
+        descripcion='Esta es una descripción del artículo 3.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPC',  # Repuestos de Computadoras
+        is_active=True,
+    )
+    articulo3_rcp.save()
+
+    articulo4_rcp = Inventario.objects.create(
+        codigo="R00004",
+        articulo='Articulo 4',
+        marca='Marca 4',
+        modelo='Modelo 4',
+        no_serie='Serie 4',
+        descripcion='Esta es una descripción del artículo 4.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPC',  # Repuestos de Computadoras
+        is_active=True,
+    )
+    articulo4_rcp.save()
+
+    articulo5_rcp = Inventario.objects.create(
+        codigo="R00005",
+        articulo='Articulo 5',
+        marca='Marca 5',
+        modelo='Modelo 5',
+        no_serie='Serie 5',
+        descripcion='Esta es una descripción del artículo 5.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPC',  # Repuestos de Computadoras
+        is_active=True,
+    )
+    articulo5_rcp.save()
+
+    articulo6_rcp = Inventario.objects.create(
+        codigo="R00006",
+        articulo='Articulo 6',
+        marca='Marca 6',
+        modelo='Modelo 6',
+        no_serie='Serie 6',
+        descripcion='Esta es una descripción del artículo 6.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPC',  # Repuestos de Computadoras
+        is_active=True,
+    )
+    articulo6_rcp.save()
+
+    articulo7_rcp = Inventario.objects.create(
+        codigo="R00007",
+        articulo='Articulo 7',
+        marca='Marca 7',
+        modelo='Modelo 7',
+        no_serie='Serie 7',
+        descripcion='Esta es una descripción del artículo 7.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPC',  # Repuestos de Computadoras
+        is_active=True,
+    )
+    articulo7_rcp.save()
+
+    articulo1_rpt = Inventario.objects.create(
+        codigo="P00001",
+        articulo='Articulo 1',
+        marca='Marca 1',
+        modelo='Modelo 1',
+        no_serie='Serie 1',
+        descripcion='Esta es una descripción del artículo 1.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPT',  # Repuestos de Telefonos
+        is_active=True,
+    )
+    articulo1_rpt.save()
+
+    articulo2_rpt = Inventario.objects.create(
+        codigo="P00002",
+        articulo='Articulo 2',
+        marca='Marca 2',
+        modelo='Modelo 2',
+        no_serie='Serie 2',
+        descripcion='Esta es una descripción del artículo 2.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPT',  # Repuestos de Telefonos
+        is_active=True,
+    )
+    articulo2_rpt.save()
+
+    articulo3_rpt = Inventario.objects.create(
+        codigo="P00003",
+        articulo='Articulo 3',
+        marca='Marca 3',
+        modelo='Modelo 3',
+        no_serie='Serie 3',
+        descripcion='Esta es una descripción del artículo 3.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPT',  # Repuestos de Telefonos
+        is_active=True,
+    )
+    articulo3_rpt.save()
+
+    articulo4_rpt = Inventario.objects.create(
+        codigo="P00004",
+        articulo='Articulo 4',
+        marca='Marca 4',
+        modelo='Modelo 4',
+        no_serie='Serie 4',
+        descripcion='Esta es una descripción del artículo 4.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPT',  # Repuestos de Telefonos
+        is_active=True,
+    )
+    articulo4_rpt.save()
+
+    articulo5_rpt = Inventario.objects.create(
+        codigo="P00005",
+        articulo='Articulo 5',
+        marca='Marca 5',
+        modelo='Modelo 5',
+        no_serie='Serie 5',
+        descripcion='Esta es una descripción del artículo 5.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPT',  # Repuestos de Telefonos
+        is_active=True,
+    )
+    articulo5_rpt.save()
+
+    articulo6_rpt = Inventario.objects.create(
+        codigo="P00006",
+        articulo='Articulo 6',
+        marca='Marca 6',
+        modelo='Modelo 6',
+        no_serie='Serie 6',
+        descripcion='Esta es una descripción del artículo 6.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPT',  # Repuestos de Telefonos
+        is_active=True,
+    )
+    articulo6_rpt.save()
+
+    articulo7_rpt = Inventario.objects.create(
+        codigo="P00007",
+        articulo='Articulo 7',
+        marca='Marca 7',
+        modelo='Modelo 7',
+        no_serie='Serie 7',
+        descripcion='Esta es una descripción del artículo 7.',
+        cantidad=20,
+        costo=2000,
+        categoria='RPT',  # Repuestos de Telefonos
+        is_active=True,
+    )
+    articulo7_rpt.save()
+
 
 class Migration(migrations.Migration):
 
