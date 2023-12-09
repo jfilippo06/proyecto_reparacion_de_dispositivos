@@ -58,14 +58,19 @@
                   </div>
                   <div class="col-3">
                     <label>Cantidad</label>
-                    <input type="text" class="form-control" name="cantidad" value="{{ cantidad }}" placeholder="Cantidad" required>
+                    <input type="number" class="form-control" name="cantidad" value="{{ cantidad }}" placeholder="Cantidad" required>
                   </div>
                   <div class="col-3">
                     <label>Costo</label>
-                    <input type="text" class="form-control" name="costo" value="{{ costo }}" placeholder="Costo" required>  
+                    <input type="number" class="form-control" name="costo" value="{{ costo }}" placeholder="Costo" required>  
                   </div>
                 </div>
               </div>
+              {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+              {% endif %}
               <!-- /.card-body -->
               <div class="card-footer">
                 <a href="#" class="btn btn-danger">Cancelar</a>

@@ -2,6 +2,8 @@ from login.decorators import admin_required
 from django.shortcuts import render, redirect, get_object_or_404
 from inventario.models import Inventario
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.http import HttpResponse
 
 
 @admin_required
@@ -53,8 +55,9 @@ def deleteComputadora(request, id):
     inventario.save()
     return redirect('computadora')
 
+
 @admin_required
-def updateComputadora(request,id):
+def updateComputadora(request, id):
     if request.method == "GET":
         inventario = get_object_or_404(Inventario, id=id)
         if inventario.is_active == False:
@@ -71,6 +74,46 @@ def updateComputadora(request,id):
             'cantidad': inventario.cantidad,
             'costo': inventario.costo,
         })
+
+    elif request.method == "POST":
+        try:
+            # Obtén el objeto que quieres actualizar
+            objeto = Inventario.objects.get(pk=id)
+            codigo = request.POST['codigo']
+
+            if Inventario.objects.filter(codigo=codigo).exclude(pk=id).exists():
+                inventario = get_object_or_404(Inventario, id=id)
+                messages.error(request, 'Codigo ya existe')
+                return render(request, 'inventario/computadora/editar_computadora.html', {
+                    'username': request.user.username,
+                    'user_type': request.user.user_type,
+                    'computadora_id': id,
+                    'codigo': inventario.codigo,
+                    'articulo': inventario.articulo,
+                    'marca': inventario.marca,
+                    'modelo': inventario.modelo,
+                    'no_serie': inventario.no_serie,
+                    'cantidad': inventario.cantidad,
+                    'costo': inventario.costo,
+                })
+
+            # Actualiza los campos del objeto con los nuevos valores
+            objeto.codigo = request.POST['codigo']
+            objeto.articulo = request.POST['articulo']
+            objeto.marca = request.POST['marca']
+            objeto.modelo = request.POST['modelo']
+            objeto.no_serie = request.POST['no_serie']
+            objeto.cantidad = request.POST['cantidad']
+            objeto.costo = request.POST['costo']
+
+            # Guarda los cambios en la base de datos
+            objeto.save()
+
+            messages.error(request, 'Actualizado correctamente')
+            return redirect('computadora')
+        except Inventario.DoesNotExist:
+            messages.error(request, 'El objeto con el código especificado no existe.')
+            return redirect('computadora')
 
 
 @admin_required
