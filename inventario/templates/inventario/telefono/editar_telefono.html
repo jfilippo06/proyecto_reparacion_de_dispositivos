@@ -1,0 +1,90 @@
+{% extends 'base_inventario.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Inventario</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Editar computadora</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="POST" action="{% url 'actualizar_telefono' computadora_id %}">
+              {% csrf_token %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3">
+                    <label>Código</label>
+                    <input type="text" class="form-control" name="codigo" value="{{ codigo }}" placeholder="Código" required>
+                  </div>
+                  <div class="col-3">
+                    <label>Artículo</label>
+                    <input type="text" class="form-control" name="articulo" value="{{ articulo }}" placeholder="Artículo" required>
+                  </div>
+                  <div class="col-3">
+                    <label>Marca</label>
+                    <input type="text" class="form-control" name="marca" value="{{ marca }}" placeholder="Marca" required>
+                  </div>
+                  <div class="col-3">
+                    <label>Modelo</label>
+                    <input type="text" class="form-control" name="modelo" value="{{ modelo }}" placeholder="Modelo" required>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row ">
+                  <div class="col-3">
+                    <label>N° serie</label>
+                    <input type="text" class="form-control" name="no_serie" value="{{ no_serie }}" placeholder="N° serie" required>
+                  </div>
+                  <div class="col-3">
+                    <label>Cantidad</label>
+                    <input type="number" class="form-control" name="cantidad" value="{{ cantidad }}" placeholder="Cantidad" required>
+                  </div>
+                  <div class="col-3">
+                    <label>Costo</label>
+                    <input type="number" class="form-control" name="costo" value="{{ costo }}" placeholder="Costo" required>  
+                  </div>
+                </div>
+              </div>
+              {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+              {% endif %}
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <a href="#" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Editar usuario</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+{% endblock %}
