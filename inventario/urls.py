@@ -6,6 +6,7 @@ urlpatterns = [
     path("computadora/", views.computadora, name="computadora"),
     path("computadora/deshabilitar/<int:id>", views.deleteComputadora, name="deshabilitar_computadora"),
     path("computadora/actualizar/<int:id>", views.updateComputadora, name="actualizar_computadora"),
+    path("computadora/cancelar/", views.cancelarComputadora, name="cancelar_computadora"),
     path("telefono/", views.telefono, name="telefono"),
     path("telefono/deshabilitar/<int:id>", views.deleteTelefono, name="deshabilitar_telefono"),
     path("telefono/actualizar/<int:id>", views.updateTelefono, name="actualizar_telefono"),
