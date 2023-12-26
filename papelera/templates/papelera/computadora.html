@@ -77,7 +77,7 @@
                         <td>{{ computadora.no_serie }}</td>
                         <td>{{ computadora.cantidad }}</td>
                         <td>{{ computadora.costo }}</td>
-                        <td><a href="#" class="btn btn-block btn-success">Habilitar</a></td>
+                        <td><a href="{% url 'habilitar_computadora' computadora.id %}" class="btn btn-block btn-success">Habilitar</a></td>
                     </tr>
                   {% endfor %}
                 </tbody>

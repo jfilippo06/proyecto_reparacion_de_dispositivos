@@ -24,7 +24,7 @@
               <h3 class="card-title">Lista de usuarios</h3>
 
               <div class="card-tools">
-                <form action="{% url 'papelera_usuarios' %}" method="post">
+                <form action="{% url 'papelera_usuario' %}" method="post">
                   {% csrf_token %}
                   <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="table_search" class="form-control float-right" placeholder="Busqueda">
@@ -61,7 +61,7 @@
                         {% elif usuario.user_type == "client" %}
                             <td>Cliente</td>
                         {% endif %}
-                        <td><a href="{% url 'habilitar_usuarios' usuario.id %}" class="btn btn-block btn-success">Habilitar</a></td>
+                        <td><a href="{% url 'habilitar_usuario' usuario.id %}" class="btn btn-block btn-success">Habilitar</a></td>
                     </tr>
                   {% endfor %}
                 </tbody>

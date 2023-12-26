@@ -34,7 +34,7 @@ def habilitar_usuarios(request, id):
     user = get_object_or_404(UserProfile, id=id)
     user.is_active = True
     user.save()
-    return redirect('papelera_usuarios')
+    return redirect('papelera_usuario')
 
 
 @admin_required
@@ -78,3 +78,12 @@ def computadora(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         return render(request, 'papelera/computadora.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
+
+
+@admin_required
+@employee_denied
+def habilitar_computadoras(request, id):
+    user = get_object_or_404(Inventario, id=id)
+    user.is_active = True
+    user.save()
+    return redirect('papelera_computadora')
