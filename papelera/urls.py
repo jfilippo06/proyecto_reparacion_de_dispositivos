@@ -13,4 +13,6 @@ urlpatterns = [
     path("inventario/repuesto_computadora/<int:id>", views.habilitar_repuesto_computadora, name="habilitar_repuesto_computadora"),
     path("inventario/repuesto_telefono/", views.repuesto_telefono, name="papelera_repuesto_telefono"),
     path("inventario/repuesto_telefono/<int:id>", views.habilitar_repuesto_telefono, name="habilitar_repuesto_telefono"),
+    path("inventario/accesorio/", views.accesorio, name="papelera_accesorio"),
+    path("inventario/accesorio/<int:id>", views.habilitar_accesorio, name="habilitar_accesorio"),
 ]
