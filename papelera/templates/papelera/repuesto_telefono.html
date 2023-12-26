@@ -22,10 +22,10 @@
         <div class="col-12">
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title" style="margin-top: 10px;">Lista de repuesto de computadoras</h3>
+              <h3 class="card-title" style="margin-top: 10px;">Lista de repuesto de telefonos</h3>
 
               <div class="card-tools">
-                <form action="{% url 'papelera_repuesto_computadora' %}" method="post">
+                <form action="{% url 'papelera_repuesto_telefono' %}" method="post">
                   {% csrf_token %}
                   <div style="display: flex; flex-direction: row; align-items: baseline;">
                     <div style="margin-right: 10px;">
@@ -77,7 +77,7 @@
                         <td>{{ computadora.no_serie }}</td>
                         <td>{{ computadora.cantidad }}</td>
                         <td>{{ computadora.costo }}</td>
-                        <td><a href="{% url 'habilitar_repuesto_computadora' computadora.id %}" class="btn btn-block btn-success">Habilitar</a></td>
+                        <td><a href="{% url 'habilitar_repuesto_telefono' computadora.id %}" class="btn btn-block btn-success">Habilitar</a></td>
                     </tr>
                   {% endfor %}
                 </tbody>
