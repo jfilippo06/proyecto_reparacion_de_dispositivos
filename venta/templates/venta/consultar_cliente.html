@@ -28,13 +28,13 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="">
+            <form method="POST" action="{% url 'cliente' %}">
               {% csrf_token %}
               <div class="card-body">
                 <div class="row">
                   <div class="col-12">
                     <label>Cédula</label>
-                    <input type="number" class="form-control" name="cedula" value="" placeholder="Cédula" required>
+                    <input type="number" class="form-control" name="cedula" placeholder="Cédula" required>
                   </div>
                 </div>
               </div>
