@@ -58,13 +58,13 @@ def cancelar(request):
 @admin_required
 @employee_denied
 def facturar_cliente(request):
-    if request.method == 'GET' and 'inventario_ids' in request.session:
-        inventario_ids = request.session['inventario_ids']
-        inventario = Inventario.objects.filter(id__in=inventario_ids)
+    if request.method == 'GET':
+        if 'inventario_ids' in request.session:
+            inventario_ids = request.session['inventario_ids']
+            inventario = Inventario.objects.filter(id__in=inventario_ids)
+        else:
+            inventario = []
 
-    elif request.method == 'GET':
-        inventario = Inventario.objects.filter(
-            categoria='COM').exclude(is_active=False)
 
     elif request.method == 'POST':
         equipo = request.POST['equipo']
