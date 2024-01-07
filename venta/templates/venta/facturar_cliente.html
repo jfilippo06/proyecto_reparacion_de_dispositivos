@@ -25,16 +25,16 @@
               <h3 class="card-title" style="margin-top: 10px;">Inventario</h3>
 
               <div class="card-tools">
-                <form action="{% url 'computadora' %}" method="post">
+                <form action="{% url 'facturar_cliente' %}" method="post">
                   {% csrf_token %}
                   <div style="display: flex; flex-direction: row; align-items: baseline;">
                     <div style="margin-right: 10px;">
-                      <select class="form-control" name="user_type">
-                        <option value="codigo" >Computadoras</option>
-                        <option value="articulo" >Telefonos</option>
-                        <option value="marca" >Repuestos de computadoras</option>
-                        <option value="modelo" >Respuestos de telefonos</option>
-                        <option value="no_serie" >Accesorios</option>
+                      <select class="form-control" name="equipo">
+                        <option value="COM" >Computadoras</option>
+                        <option value="TEL" >Telefonos</option>
+                        <option value="RPC" >Repuestos de computadoras</option>
+                        <option value="RPT" >Respuestos de telefonos</option>
+                        <option value="ASE" >Accesorios</option>
                       </select> 
                     </div>               
                     <div style="margin-right: 10px;">
