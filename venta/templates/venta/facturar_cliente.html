@@ -85,8 +85,11 @@
                         <td>{{ computadora.no_serie }}</td>
                         <td>{{ computadora.cantidad }}</td>
                         <td>{{ computadora.costo }}</td>
-                        <td><input type="number" name="number"></td>
-                        <td><a href="#" class="btn btn-block btn-success">Agregar</a></td>
+                        <form action="{% url 'agregar_articulo' computadora.id %}" method="post">
+                          {% csrf_token %}
+                          <td><input type="number" name="cantidad" style="width: 110px;"></td>
+                          <td><input type="submit" value="Agregar" class="btn btn-block btn-success"></td>
+                        </form>
                     </tr>
                   {% endfor %}
                 </tbody>
@@ -165,13 +168,13 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for computadora in inventario %}
+                  {% for computadora in lista %}
                     <tr>
                         <td>{{ computadora.id }}</td>
-                        <td>{{ computadora.id }}</td>
-                        <td>{{ computadora.codigo }}</td>
                         <td>{{ computadora.articulo }}</td>
-                        <td>{{ computadora.articulo }}</td> 
+                        <td>{{ computadora.cantidad }}</td>
+                        <td>{{ computadora.costo_unidad }}</td>
+                        <td>{{ computadora.total }}</td> 
                         <td><a href="#" class="btn btn-block btn-danger">Cancelar</a></td>
                     </tr>
                   {% endfor %}

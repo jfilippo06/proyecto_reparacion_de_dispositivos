@@ -1,4 +1,5 @@
 from django.db import models
+from inventario.models import Inventario
 
 # Create your models here.
 
@@ -15,5 +16,6 @@ class T_Lista(models.Model):
     cantidad = models.PositiveIntegerField()
     costo_unidad = models.IntegerField()
     total = models.IntegerField()
-    n_recibo = models.OneToOneField(N_Recibo, on_delete=models.CASCADE)
+    inventario = models.ForeignKey(Inventario, on_delete=models.CASCADE)
+    n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
     
