@@ -1,8 +1,9 @@
 from login.decorators import admin_required, employee_denied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
-from django.contrib import messages
 from django.core.paginator import Paginator
+from django.contrib import messages
+from django.db.models import Sum
 from venta.models import Client, N_Recibo, T_Lista
 from inventario.models import Inventario
 
@@ -13,6 +14,12 @@ def get_last_n_factura():
     last_n_recibo = N_Recibo.objects.latest('id')
     last_n_factura = last_n_recibo.n_recibo
     return last_n_factura + 1
+
+
+def suma_total(request):
+    last = request.session['last']
+    total = T_Lista.objects.filter(n_recibo_id=last).aggregate(Sum('total'))
+    return total['total__sum']
 
 
 @admin_required
@@ -108,7 +115,8 @@ def facturar_cliente(request):
     page_obj = paginator.get_page(page_number)
     last = request.session['last']
     registro = T_Lista.objects.filter(n_recibo_id=last)
-    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro})
+    total = suma_total(request)
+    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'total': total})
 
 
 @admin_required
@@ -126,7 +134,7 @@ def agregar_articulo(request, id):
     else:
         try:
             T_Lista.objects.get(inventario_id=id)
-            messages.success(request, 'No permitido.')        
+            messages.success(request, 'No permitido.')
         except ObjectDoesNotExist:
             messages.success(request, 'Cantidad permitida.')
             articulo = Inventario.objects.get(id=id)
@@ -136,6 +144,7 @@ def agregar_articulo(request, id):
                 articulo=articulo.articulo, cantidad=cantidad, costo_unidad=articulo.costo, total=total, inventario_id=id,  n_recibo_id=last)
             registro.save()
     return redirect('facturar_cliente')
+
 
 @admin_required
 @employee_denied
