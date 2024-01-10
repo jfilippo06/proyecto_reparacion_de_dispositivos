@@ -137,7 +137,7 @@
               <div class="card-tools">
                 <div style="display: flex; flex-direction: row; align-items: baseline;">
                   <div style="margin-right: 10px;">
-                    <a href="#" class="btn btn-block btn-danger">Cancelar</a>
+                    <a href="{% url 'cancelar_compra' %}" class="btn btn-block btn-danger">Cancelar</a>
                   </div>   
                   <div style="margin-right: 10px;">
                     <a href="#" class="btn btn-block btn-success">Facturar</a>
@@ -175,7 +175,7 @@
                         <td>{{ computadora.cantidad }}</td>
                         <td>{{ computadora.costo_unidad }}</td>
                         <td>{{ computadora.total }}</td> 
-                        <td><a href="#" class="btn btn-block btn-danger">Cancelar</a></td>
+                        <td><a href="{% url 'cancelar_articulo' computadora.id %}" class="btn btn-block btn-danger">Cancelar</a></td>
                     </tr>
                   {% endfor %}
                 </tbody>

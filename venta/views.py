@@ -136,3 +136,18 @@ def agregar_articulo(request, id):
                 articulo=articulo.articulo, cantidad=cantidad, costo_unidad=articulo.costo, total=total, inventario_id=id,  n_recibo_id=last)
             registro.save()
     return redirect('facturar_cliente')
+
+@admin_required
+@employee_denied
+def cancelar_articulo(request, id):
+    objeto = get_object_or_404(T_Lista, id=id)
+    objeto.delete()
+    return redirect('facturar_cliente')
+
+
+@admin_required
+@employee_denied
+def cancelar_compra(request):
+    last = request.session['last']
+    T_Lista.objects.filter(n_recibo_id=last).delete()
+    return redirect('cliente')
