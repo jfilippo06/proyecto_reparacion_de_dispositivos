@@ -28,7 +28,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{% url 'actualizar_repuestos_computadora' computadora_id %}">
+            <form method="POST" action="{% url 'actualizar_repuestos_telefono' computadora_id %}">
               {% csrf_token %}
               <div class="card-body">
                 <div class="row">
@@ -73,7 +73,7 @@
               {% endif %}
               <!-- /.card-body -->
               <div class="card-footer">
-                <a href="{% url 'repuestos_computadora' %}" class="btn btn-danger">Cancelar</a>
+                <a href="{% url 'cancelar_repuesto_telefono' %}" class="btn btn-danger">Cancelar</a>
                 <button type="submit" class="btn btn-primary">Editar usuario</button>
               </div>
             </form>
