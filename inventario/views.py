@@ -20,27 +20,9 @@ def computadora(request):
         user_type = request.POST['user_type']
         if inventario == '':
             return redirect('computadora')
-        elif user_type == 'codigo':
+        else:
             computadora = Inventario.objects.filter(
-                categoria='COM', codigo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'articulo':
-            computadora = Inventario.objects.filter(
-                categoria='COM', articulo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'marca':
-            computadora = Inventario.objects.filter(
-                categoria='COM', marca__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'modelo':
-            computadora = Inventario.objects.filter(
-                categoria='COM', modelo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'no_serie':
-            computadora = Inventario.objects.filter(
-                categoria='COM', no_serie__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'cantidad':
-            computadora = Inventario.objects.filter(
-                categoria='COM', cantidad=inventario).exclude(is_active=False)
-        elif user_type == 'costo':
-            computadora = Inventario.objects.filter(
-                categoria='COM', costo=inventario).exclude(is_active=False)
+                categoria='COM', **{user_type+'__iexact': inventario}).exclude(is_active=False)
         paginator = Paginator(computadora, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
@@ -136,27 +118,9 @@ def telefono(request):
         user_type = request.POST['user_type']
         if inventario == '':
             return redirect('telefono')
-        elif user_type == 'codigo':
+        else:
             computadora = Inventario.objects.filter(
-                categoria='TEL', codigo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'articulo':
-            computadora = Inventario.objects.filter(
-                categoria='TEL', articulo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'marca':
-            computadora = Inventario.objects.filter(
-                categoria='TEL', marca__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'modelo':
-            computadora = Inventario.objects.filter(
-                categoria='TEL', modelo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'no_serie':
-            computadora = Inventario.objects.filter(
-                categoria='TEL', no_serie__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'cantidad':
-            computadora = Inventario.objects.filter(
-                categoria='TEL', cantidad=inventario).exclude(is_active=False)
-        elif user_type == 'costo':
-            computadora = Inventario.objects.filter(
-                categoria='TEL', costo=inventario).exclude(is_active=False)
+                categoria='TEL', **{user_type+'__iexact': inventario}).exclude(is_active=False)
         paginator = Paginator(computadora, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
@@ -252,27 +216,9 @@ def repuesto_computadora(request):
         user_type = request.POST['user_type']
         if inventario == '':
             return redirect('repuestos_computadora')
-        elif user_type == 'codigo':
+        else:
             computadora = Inventario.objects.filter(
-                categoria='RPC', codigo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'articulo':
-            computadora = Inventario.objects.filter(
-                categoria='RPC', articulo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'marca':
-            computadora = Inventario.objects.filter(
-                categoria='RPC', marca__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'modelo':
-            computadora = Inventario.objects.filter(
-                categoria='RPC', modelo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'no_serie':
-            computadora = Inventario.objects.filter(
-                categoria='RPC', no_serie__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'cantidad':
-            computadora = Inventario.objects.filter(
-                categoria='RPC', cantidad=inventario).exclude(is_active=False)
-        elif user_type == 'costo':
-            computadora = Inventario.objects.filter(
-                categoria='RPC', costo=inventario).exclude(is_active=False)
+                categoria='RPC', **{user_type+'__iexact': inventario}).exclude(is_active=False)
         paginator = Paginator(computadora, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
@@ -368,27 +314,9 @@ def repuesto_telefono(request):
         user_type = request.POST['user_type']
         if inventario == '':
             return redirect('repuestos_telefono')
-        elif user_type == 'codigo':
+        else:
             computadora = Inventario.objects.filter(
-                categoria='RPT', codigo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'articulo':
-            computadora = Inventario.objects.filter(
-                categoria='RPT', articulo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'marca':
-            computadora = Inventario.objects.filter(
-                categoria='RPT', marca__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'modelo':
-            computadora = Inventario.objects.filter(
-                categoria='RPT', modelo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'no_serie':
-            computadora = Inventario.objects.filter(
-                categoria='RPT', no_serie__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'cantidad':
-            computadora = Inventario.objects.filter(
-                categoria='RPT', cantidad=inventario).exclude(is_active=False)
-        elif user_type == 'costo':
-            computadora = Inventario.objects.filter(
-                categoria='RPT', costo=inventario).exclude(is_active=False)
+                categoria='RPT', **{user_type+'__iexact': inventario}).exclude(is_active=False)
         paginator = Paginator(computadora, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
@@ -484,32 +412,13 @@ def acessorio(request):
         user_type = request.POST['user_type']
         if inventario == '':
             return redirect('accesorio')
-        elif user_type == 'codigo':
+        else:
             computadora = Inventario.objects.filter(
-                categoria='ASE', codigo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'articulo':
-            computadora = Inventario.objects.filter(
-                categoria='ASE', articulo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'marca':
-            computadora = Inventario.objects.filter(
-                categoria='ASE', marca__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'modelo':
-            computadora = Inventario.objects.filter(
-                categoria='ASE', modelo__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'no_serie':
-            computadora = Inventario.objects.filter(
-                categoria='ASE', no_serie__iexact=inventario).exclude(is_active=False)
-        elif user_type == 'cantidad':
-            computadora = Inventario.objects.filter(
-                categoria='ASE', cantidad=inventario).exclude(is_active=False)
-        elif user_type == 'costo':
-            computadora = Inventario.objects.filter(
-                categoria='ASE', costo=inventario).exclude(is_active=False)
+                categoria='ASE', **{user_type+'__iexact': inventario}).exclude(is_active=False)
         paginator = Paginator(computadora, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         return render(request, 'inventario/accesorio/accesorio.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
-
 
 @admin_required
 def deleteAccesorio(request, id):
@@ -578,7 +487,6 @@ def updateAccesorio(request, id):
             messages.error(
                 request, 'El objeto con el código especificado no existe.')
             return redirect('accesorio')
-
 
 
 @admin_required
