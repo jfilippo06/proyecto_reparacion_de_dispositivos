@@ -472,4 +472,115 @@ def cancelarRepuestoTelefono(request):
 @admin_required
 def acessorio(request):
     if request.method == 'GET':
-        return render(request, 'inventario/accesorio.html', {'username': request.user.username, 'user_type': request.user.user_type})
+        inventario = Inventario.objects.filter(
+            categoria='ASE').exclude(is_active=False)
+        paginator = Paginator(inventario, 5)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'inventario/accesorio/accesorio.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
+
+    elif request.method == 'POST':
+        inventario = request.POST['table_search']
+        user_type = request.POST['user_type']
+        if inventario == '':
+            return redirect('accesorio')
+        elif user_type == 'codigo':
+            computadora = Inventario.objects.filter(
+                categoria='ASE', codigo__iexact=inventario).exclude(is_active=False)
+        elif user_type == 'articulo':
+            computadora = Inventario.objects.filter(
+                categoria='ASE', articulo__iexact=inventario).exclude(is_active=False)
+        elif user_type == 'marca':
+            computadora = Inventario.objects.filter(
+                categoria='ASE', marca__iexact=inventario).exclude(is_active=False)
+        elif user_type == 'modelo':
+            computadora = Inventario.objects.filter(
+                categoria='ASE', modelo__iexact=inventario).exclude(is_active=False)
+        elif user_type == 'no_serie':
+            computadora = Inventario.objects.filter(
+                categoria='ASE', no_serie__iexact=inventario).exclude(is_active=False)
+        elif user_type == 'cantidad':
+            computadora = Inventario.objects.filter(
+                categoria='ASE', cantidad=inventario).exclude(is_active=False)
+        elif user_type == 'costo':
+            computadora = Inventario.objects.filter(
+                categoria='ASE', costo=inventario).exclude(is_active=False)
+        paginator = Paginator(computadora, 5)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+        return render(request, 'inventario/accesorio/accesorio.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
+
+
+@admin_required
+def deleteAccesorio(request, id):
+    inventario = get_object_or_404(Inventario, id=id)
+    inventario.is_active = False
+    inventario.save()
+    return redirect('accesorio')
+
+
+@admin_required
+def updateAccesorio(request, id):
+    if request.method == "GET":
+        inventario = get_object_or_404(Inventario, id=id)
+        if inventario.is_active == False:
+            return redirect('repuestos_telefono')
+        return render(request, 'inventario/accesorio/editar_accesorio.html', {
+            'username': request.user.username,
+            'user_type': request.user.user_type,
+            'computadora_id': id,
+            'codigo': inventario.codigo,
+            'articulo': inventario.articulo,
+            'marca': inventario.marca,
+            'modelo': inventario.modelo,
+            'no_serie': inventario.no_serie,
+            'cantidad': inventario.cantidad,
+            'costo': inventario.costo,
+        })
+
+    elif request.method == "POST":
+        try:
+            # Obtén el objeto que quieres actualizar
+            objeto = Inventario.objects.get(pk=id)
+            codigo = request.POST['codigo']
+
+            if Inventario.objects.filter(codigo=codigo).exclude(pk=id).exists():
+                inventario = get_object_or_404(Inventario, id=id)
+                messages.error(request, 'Codigo ya existe')
+                return render(request, 'inventario/accesorio/editar_accesorio.html', {
+                    'username': request.user.username,
+                    'user_type': request.user.user_type,
+                    'computadora_id': id,
+                    'codigo': inventario.codigo,
+                    'articulo': inventario.articulo,
+                    'marca': inventario.marca,
+                    'modelo': inventario.modelo,
+                    'no_serie': inventario.no_serie,
+                    'cantidad': inventario.cantidad,
+                    'costo': inventario.costo,
+                })
+
+            # Actualiza los campos del objeto con los nuevos valores
+            objeto.codigo = request.POST['codigo']
+            objeto.articulo = request.POST['articulo']
+            objeto.marca = request.POST['marca']
+            objeto.modelo = request.POST['modelo']
+            objeto.no_serie = request.POST['no_serie']
+            objeto.cantidad = request.POST['cantidad']
+            objeto.costo = request.POST['costo']
+
+            # Guarda los cambios en la base de datos
+            objeto.save()
+
+            messages.error(request, 'Actualizado correctamente')
+            return redirect('accesorio')
+        except Inventario.DoesNotExist:
+            messages.error(
+                request, 'El objeto con el código especificado no existe.')
+            return redirect('accesorio')
+
+
+
+@admin_required
+def cancelarAccesorio(request):
+    return redirect('cancelar_accesorio')

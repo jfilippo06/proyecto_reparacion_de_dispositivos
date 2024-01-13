@@ -24,11 +24,11 @@
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Editar repuesto computadora</h3>
+              <h3 class="card-title">Editar accesorio</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{% url 'actualizar_repuestos_computadora' computadora_id %}">
+            <form method="POST" action="{% url 'actualizar_accesorio' computadora_id %}">
               {% csrf_token %}
               <div class="card-body">
                 <div class="row">
@@ -73,8 +73,8 @@
               {% endif %}
               <!-- /.card-body -->
               <div class="card-footer">
-                <a href="{% url 'repuestos_computadora' %}" class="btn btn-danger">Cancelar</a>
-                <button type="submit" class="btn btn-primary">Editar computadora</button>
+                <a href="{% url 'cancelar_accesorio' %}" class="btn btn-danger">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Editar accesorio</button>
               </div>
             </form>
           </div>
