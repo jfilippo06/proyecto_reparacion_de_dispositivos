@@ -23,7 +23,7 @@ urlpatterns = [
     path("repuesto_telefono/", views.repuesto_telefono, name="repuestos_telefono"),
     path("repuesto_telefono/deshabilitar/<int:id>", views.deleteRepuestoTelefono, name="deshabilitar_repuestos_telefono"),
     path("repuesto_telefono/actualizar/<int:id>", views.updateRepuestoTelefono, name="actualizar_repuestos_telefono"),
-    path("repuesto_telefono/", views.cancelarRepuestoTelefono, name="cancelar_repuesto_telefono"),
+    path("repuesto_telefono/cancelar/", views.cancelarRepuestoTelefono, name="cancelar_repuesto_telefono"),
     
     path("accesorio/", views.acessorio, name="accesorio"),
     path("accesorio/deshabilitar/<int:id>", views.deleteAccesorio, name="deshabilitar_accesorio"),
