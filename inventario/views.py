@@ -1,8 +1,33 @@
 from login.decorators import admin_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.exceptions import ObjectDoesNotExist
 from inventario.models import Inventario
 from django.core.paginator import Paginator
 from django.contrib import messages
+
+
+@admin_required
+def inventario(request):
+    if request.method == 'GET':
+        return render(request, 'inventario/inventario.html', {'username': request.user.username, 'user_type': request.user.user_type})
+    elif request.method == 'POST':
+        codigo = request.POST['codigo'].lower().capitalize()
+        articulo = request.POST['articulo'].lower().capitalize()
+        marca = request.POST['marca'].lower().capitalize()
+        modelo = request.POST['modelo'].lower().capitalize()
+        no_serie = request.POST['no_serie'].lower().capitalize()
+        cantidad = request.POST['cantidad']
+        costo = request.POST['costo']
+        categoria = request.POST['categoria']
+        try:
+            Inventario.objects.get(codigo=codigo)
+            messages.success(request, 'No permitido.')
+        except ObjectDoesNotExist:
+            Inventario.objects.create(codigo=codigo, articulo=articulo,  marca=marca, 
+                                    modelo=modelo, no_serie=no_serie, cantidad=cantidad,
+                                    costo=costo, categoria=categoria, is_active=True)
+            messages.success(request, 'Registrado con exito')
+        return redirect('inventario')
 
 
 @admin_required
@@ -419,6 +444,7 @@ def acessorio(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         return render(request, 'inventario/accesorio/accesorio.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
+
 
 @admin_required
 def deleteAccesorio(request, id):
