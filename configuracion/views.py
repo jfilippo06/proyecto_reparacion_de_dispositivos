@@ -117,3 +117,8 @@ def buscar(request):
     user = UserProfile.objects.filter(username=username).exclude(
         user_type='super_user').exclude(is_active=False)
     return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': user})
+
+
+def impuesto(request):
+    if request.method == 'GET':
+        return render(request, 'impuesto/impuesto.html', {'username': request.user.username})

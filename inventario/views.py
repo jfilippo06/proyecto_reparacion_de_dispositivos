@@ -517,4 +517,4 @@ def updateAccesorio(request, id):
 
 @admin_required
 def cancelarAccesorio(request):
-    return redirect('cancelar_accesorio')
+    return redirect('accesorio')
