@@ -4,6 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from login.models import UserProfile
 from django.core.paginator import Paginator
+from configuracion.models import Impuesto
 
 # Create your views here.
 
@@ -119,6 +120,9 @@ def buscar(request):
     return render(request, 'configuracion/usuarios.html', {'username': request.user.username, 'usuarios': user})
 
 
+@admin_required
+@employee_denied
 def impuesto(request):
     if request.method == 'GET':
-        return render(request, 'impuesto/impuesto.html', {'username': request.user.username})
+        impuesto = Impuesto.objects.all()
+        return render(request, 'impuesto/impuesto.html', {'username': request.user.username, 'impuestos': impuesto})

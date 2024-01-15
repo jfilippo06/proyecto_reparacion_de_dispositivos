@@ -32,28 +32,52 @@
               {% csrf_token %}
               <div class="card-body">
                 <div class="row">
-                  <div class="col-3">
-                    <label>IVA</label>
-                    <input type="text" class="form-control" name="iva" placeholder="IVA" required autofocus>
+                  {% for impuesto in impuestos %}
+                    {% if impuesto.is_active %}
+                    <div class="col-3">
+                      <label>IVA</label>
+                      <input type="text" class="form-control" name="iva" value="{{ impuesto.iva }}" placeholder="IVA" required autofocus>
+                    </div>
+                    <div class="col-3">
+                      <label>Valor</label>
+                      <input type="text" class="form-control" name="valor" value="{{ impuesto.valor }}" placeholder="Valor" required>
+                    </div>
+                        </div>
+                      </div>
+                    {% elif not impuesto.is_active %}
+                      <div class="col-3">
+                        <label>IVA</label>
+                        <input type="text" class="form-control" name="iva" value="{{ impuesto.iva }}" placeholder="IVA" disabled>
+                      </div>
+                      <div class="col-3">
+                        <label>Valor</label>
+                        <input type="text" class="form-control" name="valor" value="{{ impuesto.valor }}" placeholder="Valor" disabled>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-3">
-                    <label>Valor</label>
-                    <input type="number" class="form-control" name="valor" placeholder="Valor" required>
+                  {% endif %}
+
+                  {% if messages %}
+                    {% for message in messages %}
+                      {{ message }}
+                    {% endfor %}
+                  {% endif %}
+                  
+                  <!-- /.card-body -->
+                  {% if impuesto.is_active %}
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <a href="#" class="btn btn-danger">Desactivar</a>
                   </div>
-                </div>
-              </div>
-              {% if messages %}
-                {% for message in messages %}
-                    {{ message }}
+                  {% elif not impuesto.is_active %}
+                  <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Activar</a>
+                  </div>
+                  {% endif %}
+                </form>
                 {% endfor %}
-              {% endif %}
-              <!-- /.card-body -->
-              <div class="card-footer">
-                <button type="submit" class="btn btn-primary">Actualizar</button>
               </div>
-            </form>
-          </div>
-          <!-- /.card -->
+              <!-- /.card -->
         </div>
       </div>
       <!-- /.row -->
