@@ -6,8 +6,14 @@ from django.contrib import messages
 from django.db.models import Sum
 from venta.models import Client, N_Recibo, T_Lista
 from inventario.models import Inventario
+from configuracion.models import Impuesto
 
 # Create your views here.
+
+
+def impuesto():
+    impuesto = Impuesto.objects.get(id=1)
+    return impuesto.is_active
 
 
 def get_last_n_factura():
@@ -115,8 +121,14 @@ def facturar_cliente(request):
     page_obj = paginator.get_page(page_number)
     last = request.session['last']
     registro = T_Lista.objects.filter(n_recibo_id=last)
-    total = suma_total(request)
-    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'total': total})
+    is_active = impuesto()
+    sub_total = suma_total(request)
+    iva = 0
+    if is_active:
+        i = float(Impuesto.objects.get(id=1).valor)
+        iva = sub_total * i
+    total = sub_total + iva
+    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'sub_total': sub_total, 'iva': iva, 'total': total, 'is_active': is_active})
 
 
 @admin_required
