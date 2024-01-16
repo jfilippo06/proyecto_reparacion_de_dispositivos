@@ -28,7 +28,7 @@
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="#">
+            <form method="POST" action="{% url 'actualizar_impuesto' %}">
               {% csrf_token %}
               <div class="card-body">
                 <div class="row">
@@ -40,18 +40,18 @@
                     </div>
                     <div class="col-3">
                       <label>Valor</label>
-                      <input type="text" class="form-control" name="valor" value="{{ impuesto.valor }}" placeholder="Valor" required>
+                      <input type="number" step="any" class="form-control" name="valor" value="{{ valor }}" placeholder="Valor" required>
                     </div>
                         </div>
                       </div>
                     {% elif not impuesto.is_active %}
                       <div class="col-3">
                         <label>IVA</label>
-                        <input type="text" class="form-control" name="iva" value="{{ impuesto.iva }}" placeholder="IVA" disabled>
+                        <input type="text" class="form-control"  placeholder="IVA" disabled>
                       </div>
                       <div class="col-3">
                         <label>Valor</label>
-                        <input type="text" class="form-control" name="valor" value="{{ impuesto.valor }}" placeholder="Valor" disabled>
+                        <input type="number" class="form-control" placeholder="Valor" disabled>
                       </div>
                     </div>
                   </div>
@@ -67,11 +67,11 @@
                   {% if impuesto.is_active %}
                   <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                    <a href="#" class="btn btn-danger">Desactivar</a>
+                    <a href="{% url 'desactivar_impuesto' %}" class="btn btn-danger">Desactivar</a>
                   </div>
                   {% elif not impuesto.is_active %}
                   <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Activar</a>
+                    <a href="{% url 'activar_impuesto' %}" class="btn btn-primary">Activar</a>
                   </div>
                   {% endif %}
                 </form>

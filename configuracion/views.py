@@ -126,3 +126,35 @@ def impuesto(request):
     if request.method == 'GET':
         impuesto = Impuesto.objects.all()
         return render(request, 'impuesto/impuesto.html', {'username': request.user.username, 'impuestos': impuesto})
+
+
+@admin_required
+@employee_denied
+def activar_impuesto(request):
+    iva = Impuesto.objects.get(id=1)
+    iva.is_active = True
+    iva.save()
+    return redirect('impuesto')
+
+
+@admin_required
+@employee_denied
+def desactivar_impuesto(request):
+    iva = Impuesto.objects.get(id=1)
+    iva.is_active = False
+    iva.save()
+    return redirect('impuesto')
+
+
+@admin_required
+@employee_denied
+def actualizar_impuesto(request):
+    iva = request.POST['iva']
+    valor = float(request.POST['valor'])
+    impuesto = Impuesto.objects.get(id=1)
+    impuesto.iva = iva
+    impuesto.valor = valor
+    impuesto.save()
+    return redirect('impuesto')
+
+    
