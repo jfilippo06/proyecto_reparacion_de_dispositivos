@@ -7,6 +7,7 @@ from django.db.models import Sum
 from venta.models import Client, N_Recibo, T_Lista, Factura, Totales
 from inventario.models import Inventario
 from configuracion.models import Impuesto
+import datetime
 
 # Create your views here.
 
@@ -214,9 +215,55 @@ def restar_inventario(request):
         except Inventario.DoesNotExist:
             print(f"No se encontró el inventario para el objeto {objeto.id}")
             return redirect('facturar_cliente')
-            
+
         inventario.cantidad -= objeto.cantidad
         inventario.save()
+
+
+def contexto(request):
+    last = request.session['last']
+    registro = T_Lista.objects.filter(n_recibo_id=last)
+    total = request.session['total']
+    cedula = request.session['cedula']
+    cliente = Client.objects.get(cedula=cedula)
+    nombre = cliente.username
+    ci = cliente.cedula
+    ahora = datetime.datetime.now()
+    fecha_formateada = ahora.strftime("%d/%m/%Y")
+    contexto = {'listas': registro, 
+                'total': total,
+                'usuario': request.user.username,
+                'cliente': nombre,
+                'cedula': ci,
+                'n_recibo': last,
+                'fecha': fecha_formateada,}
+    return contexto
+
+
+def contexto_iva(request):
+    last = request.session['last']
+    registro = T_Lista.objects.filter(n_recibo_id=last)
+    sub_total = request.session['sub_total']
+    iva = request.session['iva']
+    total = request.session['total']
+    cedula = request.session['cedula']
+    cliente = Client.objects.get(cedula=cedula)
+    nombre = cliente.username
+    ci = cliente.cedula
+    ahora = datetime.datetime.now()
+    fecha_formateada = ahora.strftime("%d/%m/%Y")
+    nombre_iva = Impuesto.objects.all()
+    contexto = {'listas': registro, 
+                'sub_total': sub_total,
+                'nombre_iva': nombre_iva,
+                'iva': iva,
+                'total': total,
+                'usuario': request.user.username,
+                'cliente': nombre,
+                'cedula': ci,
+                'n_recibo': last,
+                'fecha': fecha_formateada,}
+    return contexto
 
 
 def render_pdf(request):
