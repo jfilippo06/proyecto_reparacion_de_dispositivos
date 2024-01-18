@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>WCH</title>
+    <link href="http://localhost:3000/bootstrap/css/bootstrap.min-3.4.1.css" rel="stylesheet">
+    <link href="http://localhost:3000/css/marca.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-10 ">
+                <h1>Nota de entrega</h1>
+                <strong>Fecha</strong>
+                <br><%= fecha %><br>
+                <strong>Recibo N° <%= order %></strong>
+            </div>
+            <div class="col-xs-2">
+                <img class="img img-responsive" src="http://localhost:3000/images/logo.png">
+            </div>
+        </div>
+        <hr>
+        <div class="row text-center" style="margin-bottom: 2rem;">
+            <div class="col-xs-6">
+                <h1 class="h2">Cliente</h1>
+                <strong><%= nombre %></strong>
+                <br>
+                <strong>C.I: <%= cedula %></strong>
+            </div>
+            <div class="col-xs-6">
+                <h1 class="h2">Remitente</h1>
+                <strong><%= usuario %></strong>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <table class="table table-condensed table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>Descripción</th>
+                            <th>Cantidad</th>
+                            <th>C/U</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0; i < facturaFranela.length; i++) { %>
+                            <tr>
+                                <td><%= facturaFranela[i].franela %></td>
+                                <td><%= facturaFranela[i].cantidad %></td>
+                                <td><%= facturaFranela[i].unidad %></td>
+                                <td><%= facturaFranela[i].total %></td>
+                            </tr>
+                        <% } %>
+                        <% for(let i=0; i < facturaProducto.length; i++) { %>
+                            <tr>
+                                <td><%= facturaProducto[i].producto %></td>
+                                <td><%= facturaProducto[i].cantidad %></td>
+                                <td><%= facturaProducto[i].unidad %></td>
+                                <td><%= facturaProducto[i].total %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="3" class="text-right">
+                                <p>Total</p>
+                            </td>
+                            <td>
+                                <p><%= total %></p>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <p class="h5">Gracias por su compra</p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
