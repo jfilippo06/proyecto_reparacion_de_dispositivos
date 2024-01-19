@@ -8,6 +8,12 @@ from venta.models import Client, N_Recibo, T_Lista, Factura, Totales
 from inventario.models import Inventario
 from configuracion.models import Impuesto
 import datetime
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Frame, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+import io
+
 
 # Create your views here.
 
@@ -230,13 +236,13 @@ def contexto(request):
     ci = cliente.cedula
     ahora = datetime.datetime.now()
     fecha_formateada = ahora.strftime("%d/%m/%Y")
-    contexto = {'listas': registro, 
+    contexto = {'listas': registro,
                 'total': total,
                 'usuario': request.user.username,
                 'cliente': nombre,
                 'cedula': ci,
                 'n_recibo': last,
-                'fecha': fecha_formateada,}
+                'fecha': fecha_formateada, }
     return contexto
 
 
@@ -253,7 +259,7 @@ def contexto_iva(request):
     ahora = datetime.datetime.now()
     fecha_formateada = ahora.strftime("%d/%m/%Y")
     nombre_iva = Impuesto.objects.all()
-    contexto = {'listas': registro, 
+    contexto = {'listas': registro,
                 'sub_total': sub_total,
                 'nombre_iva': nombre_iva,
                 'iva': iva,
@@ -262,18 +268,73 @@ def contexto_iva(request):
                 'cliente': nombre,
                 'cedula': ci,
                 'n_recibo': last,
-                'fecha': fecha_formateada,}
+                'fecha': fecha_formateada, }
     return contexto
 
 
-def render_pdf(request):
-    pass
+def some_view(request):
+    contexto_dict = contexto(request)
+    listas = contexto_dict['listas']
+    total = contexto_dict['total']
+    usuario = contexto_dict['usuario']
+    cliente = contexto_dict['cliente']
+    cedula = contexto_dict['cedula']
+    n_recibo = contexto_dict['n_recibo']
+    fecha = contexto_dict['fecha']
+    
+    # Crea un objeto de archivo en memoria
+    buffer = io.BytesIO()
+
+    # Crea el archivo PDF usando ReportLab
+    doc = SimpleDocTemplate(buffer, pagesize=letter,
+                            rightMargin=72, leftMargin=72)
+
+    # Contenedor para los elementos 'Flowable'
+    elements = []
+
+    # Usa un estilo predeterminado y agrega algunos elementos
+    styles = getSampleStyleSheet()
+
+    # Modifica el estilo del título para alinearlo a la izquierda
+    styles["Title"].alignment = 0  # 0 = TA_LEFT
+
+    # Agrega un título
+    title = Paragraph("Nota de entrega", styles["Title"])
+    elements.append(title)
+
+    # Agrega un párrafo
+    paragraph = Paragraph(f"Fecha: {fecha}", styles["Normal"])
+    elements.append(paragraph)
+
+    recibo = Paragraph(f"Recibo N°: {n_recibo}", styles["Normal"])
+    elements.append(recibo)
+
+    name_client = Paragraph(f"Cliente: {cliente}", styles["Normal"])
+    elements.append(name_client)
+    
+    id_client = Paragraph(f"C.I: {cedula}", styles["Normal"])
+    elements.append(id_client)
+
+    remitente = Paragraph(f"Remitente: {usuario}", styles["Normal"])
+    elements.append(remitente)
+
+    # Construye el PDF
+    doc.build(elements)
+
+    # Recupera el valor del objeto de tipo 'file'.
+    buffer.seek(0)
+    pdf = buffer.read()
+
+    # Guarda el PDF en un archivo en tu máquina
+    with open('output.pdf', 'wb') as f:
+        f.write(pdf)
+
 
 @admin_required
 @employee_denied
 def facturar(request):
-    registrar_factura(request)
-    registrar_totales(request)
-    restar_inventario(request)
-    render_pdf(request)
+    # registrar_factura(request)
+    # registrar_totales(request)
+    # restar_inventario(request)
+    some_view(request)
     return redirect('facturar_cliente')
