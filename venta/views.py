@@ -9,7 +9,7 @@ from inventario.models import Inventario
 from configuracion.models import Impuesto
 import datetime
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, Frame, TableStyle
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 import io
@@ -281,7 +281,7 @@ def some_view(request):
     cedula = contexto_dict['cedula']
     n_recibo = contexto_dict['n_recibo']
     fecha = contexto_dict['fecha']
-    
+
     # Crea un objeto de archivo en memoria
     buffer = io.BytesIO()
 
@@ -311,14 +311,43 @@ def some_view(request):
 
     name_client = Paragraph(f"Cliente: {cliente}", styles["Normal"])
     elements.append(name_client)
-    
+
     id_client = Paragraph(f"C.I: {cedula}", styles["Normal"])
     elements.append(id_client)
 
     remitente = Paragraph(f"Remitente: {usuario}", styles["Normal"])
     elements.append(remitente)
 
-    # Construye el PDF
+    # Define los datos de la tabla
+    data = [
+        ['Descripcion', 'Cantidad', 'C/U', 'Total']
+    ]
+
+    # Agrega más registros al array
+    for lista in listas:
+        data.append([lista.articulo, lista.cantidad, lista.costo_unidad, lista.total])
+
+    data.append(['','','total:', total])
+
+    # Crea la tabla
+    table = Table(data)
+
+    # Define el estilo de la tabla
+    style = TableStyle([
+        ('ALIGN', (0,0), (-1,0), 'CENTER'),  # Alinea al centro la primera fila
+        ('ALIGN', (0,1), (-1,-1), 'LEFT'),  # Alinea a la izquierda el resto de las filas
+        ('ALIGN', (-1,1), (-1,-1), 'CENTER'),  # Alinea al centro la última columna
+        ('GRID', (0,0), (-1,-1), 1, colors.black),  # Dibuja una cuadrícula
+        ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold')  # Primera fila en negrita
+    ])
+
+    # Aplica el estilo a la tabla
+    table.setStyle(style)
+
+    # Agrega la tabla a los elementos
+    elements.append(table)
+
+    # Construye el PDF (incluyendo la tabla)
     doc.build(elements)
 
     # Recupera el valor del objeto de tipo 'file'.
