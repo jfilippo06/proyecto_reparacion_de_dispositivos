@@ -1,0 +1,43 @@
+{% extends 'base_venta.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Venta</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Recibo</h3>
+            </div>            
+              <div class="card-footer">
+                <a href="{{ direccion }}" class="btn btn-primary">Ver recibo</a>
+                <a href="{% url 'cliente' %}" class="btn btn-danger">Volver</a>
+              </div>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+{% endblock %}

@@ -369,9 +369,14 @@ def some_view(request):
     with open(file_path, 'wb') as f:
         f.write(pdf)
 
+    dir_path_link = 'http://127.0.0.1:8000/static/recibos'
+    file_path_link = f'{dir_path_link}/recibo_{n_recibo}.pdf'
+
     save = Direccion_de_factura.objects.create(
-        link=file_path, nombre_cliente=cliente, cliente_id=id_cliente, n_recibo_id=n_recibo)
+        link=file_path_link, nombre_cliente=cliente, cliente_id=id_cliente, n_recibo_id=n_recibo)
     save.save()
+
+    return file_path_link
 
 
 def limpiar_compra(request):
@@ -391,7 +396,7 @@ def facturar(request):
     registrar_factura(request)
     registrar_totales(request)
     restar_inventario(request)
-    some_view(request)
+    direccion = some_view(request)
     limpiar_compra(request)
     sumar_n_recibo()
-    return redirect('facturar_cliente')
+    return render(request, 'venta/ver_factura.html', {'direccion': direccion})
