@@ -3,16 +3,18 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.conf import settings
 from django.db.models import Sum
-from venta.models import Client, N_Recibo, T_Lista, Factura, Totales
-from inventario.models import Inventario
+from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura
 from configuracion.models import Impuesto
-import datetime
-from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle
+from inventario.models import Inventario
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
+import datetime
 import io
+import os
 
 
 # Create your views here.
@@ -131,6 +133,7 @@ def facturar_cliente(request):
     registro = T_Lista.objects.filter(n_recibo_id=last)
     is_active = impuesto()
     sub_total = suma_total(request)
+    nombre_iva = Impuesto.objects.get(id=1).iva
     iva = 0
     if is_active:
         i = float(Impuesto.objects.get(id=1).valor)
@@ -139,7 +142,7 @@ def facturar_cliente(request):
     request.session['sub_total'] = sub_total
     request.session['iva'] = iva
     request.session['total'] = total
-    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'sub_total': sub_total, 'iva': iva, 'total': total, 'is_active': is_active})
+    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'sub_total': sub_total, 'nombre_iva': nombre_iva, 'iva': iva, 'total': total, 'is_active': is_active})
 
 
 @admin_required
@@ -229,26 +232,6 @@ def restar_inventario(request):
 def contexto(request):
     last = request.session['last']
     registro = T_Lista.objects.filter(n_recibo_id=last)
-    total = request.session['total']
-    cedula = request.session['cedula']
-    cliente = Client.objects.get(cedula=cedula)
-    nombre = cliente.username
-    ci = cliente.cedula
-    ahora = datetime.datetime.now()
-    fecha_formateada = ahora.strftime("%d/%m/%Y")
-    contexto = {'listas': registro,
-                'total': total,
-                'usuario': request.user.username,
-                'cliente': nombre,
-                'cedula': ci,
-                'n_recibo': last,
-                'fecha': fecha_formateada, }
-    return contexto
-
-
-def contexto_iva(request):
-    last = request.session['last']
-    registro = T_Lista.objects.filter(n_recibo_id=last)
     sub_total = request.session['sub_total']
     iva = request.session['iva']
     total = request.session['total']
@@ -256,15 +239,17 @@ def contexto_iva(request):
     cliente = Client.objects.get(cedula=cedula)
     nombre = cliente.username
     ci = cliente.cedula
+    id_cliente = cliente.id
     ahora = datetime.datetime.now()
     fecha_formateada = ahora.strftime("%d/%m/%Y")
-    nombre_iva = Impuesto.objects.all()
+    nombre_iva = Impuesto.objects.get(id=1).iva
     contexto = {'listas': registro,
                 'sub_total': sub_total,
                 'nombre_iva': nombre_iva,
                 'iva': iva,
                 'total': total,
                 'usuario': request.user.username,
+                'id_cliente': id_cliente,
                 'cliente': nombre,
                 'cedula': ci,
                 'n_recibo': last,
@@ -275,12 +260,17 @@ def contexto_iva(request):
 def some_view(request):
     contexto_dict = contexto(request)
     listas = contexto_dict['listas']
+    sub_total = contexto_dict['sub_total']
+    nombre_iva = contexto_dict['nombre_iva']
+    iva = contexto_dict['iva']
     total = contexto_dict['total']
     usuario = contexto_dict['usuario']
+    id_cliente = contexto_dict['id_cliente']
     cliente = contexto_dict['cliente']
     cedula = contexto_dict['cedula']
     n_recibo = contexto_dict['n_recibo']
     fecha = contexto_dict['fecha']
+    is_active = impuesto()
 
     # Crea un objeto de archivo en memoria
     buffer = io.BytesIO()
@@ -325,24 +315,36 @@ def some_view(request):
 
     # Agrega más registros al array
     for lista in listas:
-        data.append([lista.articulo, lista.cantidad, lista.costo_unidad, lista.total])
+        data.append([lista.articulo, lista.cantidad,
+                    lista.costo_unidad, lista.total])
 
-    data.append(['','','total:', total])
+    if is_active:
+        data.append(['', '', 'Sub total:', sub_total])
+        data.append(['', '', nombre_iva, iva])
+        data.append(['', '', 'Total:', total])
+    else:
+        data.append(['', '', 'Total:', total])
 
     # Crea la tabla
-    table = Table(data)
+    # Ajusta el tamaño de las celdas
+    table = Table(data, colWidths=[360, 60, 60, 60], rowHeights=25)
 
     # Define el estilo de la tabla
     style = TableStyle([
-        ('ALIGN', (0,0), (-1,0), 'CENTER'),  # Alinea al centro la primera fila
-        ('ALIGN', (0,1), (-1,-1), 'LEFT'),  # Alinea a la izquierda el resto de las filas
-        ('ALIGN', (-1,1), (-1,-1), 'CENTER'),  # Alinea al centro la última columna
-        ('GRID', (0,0), (-1,-1), 1, colors.black),  # Dibuja una cuadrícula
-        ('FONTNAME', (0,0), (-1,0), 'Helvetica-Bold')  # Primera fila en negrita
+        # Alinea al centro la primera fila
+        ('ALIGN', (0, 0), (-1, 0), 'CENTER'),
+        # Alinea a la izquierda el resto de las filas
+        ('ALIGN', (0, 1), (-1, -1), 'LEFT'),
+        # Alinea al centro la última columna
+        ('ALIGN', (-1, 1), (-1, -1), 'CENTER'),
+        ('GRID', (0, 0), (-1, -1), 1, colors.black),  # Dibuja una cuadrícula
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold')  # Primera fila en negrita
     ])
 
     # Aplica el estilo a la tabla
     table.setStyle(style)
+
+    elements.append(Spacer(1, 20))
 
     # Agrega la tabla a los elementos
     elements.append(table)
@@ -354,16 +356,42 @@ def some_view(request):
     buffer.seek(0)
     pdf = buffer.read()
 
-    # Guarda el PDF en un archivo en tu máquina
-    with open('output.pdf', 'wb') as f:
+    # Crea la ruta al directorio
+    dir_path = os.path.join(settings.BASE_DIR, 'venta', 'static', 'recibos')
+
+    # Asegúrate de que el directorio exista
+    os.makedirs(dir_path, exist_ok=True)
+
+    # Crea la ruta al archivo
+    file_path = os.path.join(dir_path, f'recibo_{n_recibo}.pdf')
+
+    # Guarda el PDF en el archivo
+    with open(file_path, 'wb') as f:
         f.write(pdf)
+
+    save = Direccion_de_factura.objects.create(
+        link=file_path, nombre_cliente=cliente, cliente_id=id_cliente, n_recibo_id=n_recibo)
+    save.save()
+
+
+def limpiar_compra(request):
+    last = request.session['last']
+    T_Lista.objects.filter(n_recibo_id=last).delete()
+
+
+def sumar_n_recibo():
+    i = get_last_n_factura()
+    save = N_Recibo.objects.create(n_recibo=i)
+    save.save()
 
 
 @admin_required
 @employee_denied
 def facturar(request):
-    # registrar_factura(request)
-    # registrar_totales(request)
-    # restar_inventario(request)
+    registrar_factura(request)
+    registrar_totales(request)
+    restar_inventario(request)
     some_view(request)
+    limpiar_compra(request)
+    sumar_n_recibo()
     return redirect('facturar_cliente')

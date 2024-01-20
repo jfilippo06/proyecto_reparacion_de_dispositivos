@@ -37,3 +37,9 @@ class Totales(models.Model):
     iva = models.DecimalField(max_digits=5, decimal_places=2)
     total = models.IntegerField()
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
+
+class Direccion_de_factura(models.Model):
+    link = models.CharField(max_length=300)
+    nombre_cliente = models.CharField(max_length=100)
+    cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
+    n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)

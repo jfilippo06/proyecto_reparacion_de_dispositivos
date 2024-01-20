@@ -141,13 +141,13 @@
                       <a href="{% url 'cancelar_compra' %}" class="btn btn-block btn-danger">Cancelar</a>
                     </div>   
                     <div style="margin-right: 10px;">
-                      <a href="#" class="btn btn-block btn-success">Facturar</a>
+                      <a href="{% url 'facturar' %}" class="btn btn-block btn-success">Facturar</a>
                     </div>   
                     <div style="margin-right: 10px;">
                       <h3 class="card-title">Sub-Total: {{ sub_total }}</h3>    
                     </div>   
                     <div style="margin-right: 10px;">
-                      <h3 class="card-title">Iva 6%: {{ iva }}</h3> 
+                      <h3 class="card-title">{{ nombre_iva }}: {{ iva }}</h3> 
                     </div>   
                     <div style="margin-right: 10px;">
                       <h3 class="card-title">Total: {{total}}</h3> 
