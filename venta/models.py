@@ -35,7 +35,7 @@ class Factura(models.Model):
 class Totales(models.Model):
     sub_total = models.IntegerField()
     iva = models.DecimalField(max_digits=5, decimal_places=2)
-    total = models.IntegerField()
+    total = models.DecimalField(max_digits=50, decimal_places=2)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
 
 class Direccion_de_factura(models.Model):
