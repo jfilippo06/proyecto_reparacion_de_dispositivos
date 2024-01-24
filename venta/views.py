@@ -373,7 +373,7 @@ def some_view(request):
     file_path_link = f'{dir_path_link}/recibo_{n_recibo}.pdf'
 
     save = Direccion_de_factura.objects.create(
-        link=file_path_link, nombre_cliente=cliente, cliente_id=id_cliente, n_recibo_id=n_recibo)
+        link=file_path_link, nombre_cliente=cliente, cedula= cedula, cliente_id=id_cliente, n_recibo_id=n_recibo)
     save.save()
 
     return file_path_link

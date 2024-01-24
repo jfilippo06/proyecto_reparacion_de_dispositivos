@@ -41,5 +41,6 @@ class Totales(models.Model):
 class Direccion_de_factura(models.Model):
     link = models.CharField(max_length=300)
     nombre_cliente = models.CharField(max_length=100)
+    cedula = models.IntegerField()
     cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
