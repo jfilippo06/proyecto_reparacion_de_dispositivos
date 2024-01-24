@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'papelera.apps.PapeleraConfig',
     'venta.apps.VentaConfig',
     'reporte.apps.ReporteConfig',
+    'mantenimiento.apps.MantenimientoConfig',
 ]
 
 MIDDLEWARE = [
