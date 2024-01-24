@@ -39,10 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'login.apps.LoginConfig',
     'inventario.apps.InventarioConfig',
-    'pagina_principal.apps.PaginaPrincipalConfig',
     'configuracion.apps.ConfiguracionConfig',
     'papelera.apps.PapeleraConfig',
     'venta.apps.VentaConfig',
+    'reporte.apps.ReporteConfig',
 ]
 
 MIDDLEWARE = [

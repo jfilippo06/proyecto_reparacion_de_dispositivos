@@ -1,0 +1,5 @@
+body {
+    background-image: url('http://localhost:3000/images/logo.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+}
