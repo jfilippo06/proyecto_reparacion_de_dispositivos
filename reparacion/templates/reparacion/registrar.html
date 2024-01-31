@@ -1,0 +1,92 @@
+{% extends 'base_reparacion.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Reparaciónes</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Ingreso de reparación</h3>
+            </div>
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="POST" action="{% url 'registrar' %}">
+              {% csrf_token %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-3">
+                    <label>Artículo</label>
+                    <input type="text" class="form-control" name="articulo" placeholder="Artículo" required autofocus>
+                  </div>
+                  <div class="col-3">
+                    <label>Descripción</label>
+                    <input type="text" class="form-control" name="descripcion" placeholder="Descripción" required>
+                  </div>
+                  <div class="col-3">
+                    <label>Cantidad</label>
+                    <input type="number" class="form-control" name="cantidad"  placeholder="Cantidad">
+                  </div>
+                  <div class="col-3">
+                    <label>Nombre</label>
+                    <input type="text" class="form-control" name="nombre"  placeholder="Nombre">
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row ">
+                  <div class="col-3">
+                    <label>Cédula</label>
+                    <input type="number" class="form-control" name="cedula"  placeholder="Cédula">
+                  </div>
+                  <div class="col-3">
+                    <label>Correo electronico</label>
+                    <input type="email" class="form-control" name="correo"  placeholder="Correo electronico">
+                  </div>
+                  <div class="col-3">
+                    <label>Estado</label>
+                    <select class="form-control" name="estado" required>
+                      <option value="ER" >En revisión</option>
+                      <option value="EC" >En Curso</option>
+                    </select>   
+                  </div>
+                </div>
+              </div>
+              {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+              {% endif %}
+              <!-- /.card-body -->
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Ingresar articulo</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+</div>
+
+{% endblock %}

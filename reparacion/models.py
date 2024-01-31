@@ -11,6 +11,7 @@ class Reparacion(models.Model):
 
     articulo = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True)
+    cantidad = models.IntegerField()
     cedula = models.IntegerField()
     username = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
