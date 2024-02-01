@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from login.decorators import admin_required, employee_denied
 from django.core.paginator import Paginator
 from reparacion.models import Reparacion
@@ -50,4 +50,13 @@ def registrarReparacion(request):
 
 
 def cancelar(request):
+    return redirect('reparacion')
+
+
+@admin_required
+@employee_denied
+def deleteReparacion(request, id):
+    reparacion = get_object_or_404(Reparacion, id=id)
+    reparacion.is_active = False
+    reparacion.save()
     return redirect('reparacion')
