@@ -9,13 +9,21 @@ from reparacion.models import Reparacion
 @employee_denied
 def reparacion(request):
     if request.method == 'GET':
-        inventario = Reparacion.objects.all().exclude(is_active=False)
-        paginator = Paginator(inventario, 15)
+        reparacion = Reparacion.objects.all().exclude(is_active=False)
+        paginator = Paginator(reparacion, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
     elif request.method == 'POST':
-        pass
+        reparacion = request.POST['table_search']
+        user_type = request.POST['user_type']
+        if reparacion == '':
+            return redirect('reparacion')
+        else:
+            computadora = Reparacion.objects.filter(**{user_type+'__iexact': reparacion}).exclude(is_active=False)
+        paginator = Paginator(computadora, 15)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
 
     return render(request, 'reparacion/reparacion.html', {'username': request.user.username, 'reparaciones': page_obj})
 
