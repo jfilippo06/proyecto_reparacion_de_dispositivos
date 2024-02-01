@@ -79,7 +79,7 @@
                           {% elif reparacion.estado == "TR" %}
                               <td>Terminado</td>
                           {% endif %}
-                          <td><a href="#" class="btn btn-block btn-warning">Editar</a></td>
+                          <td><a href="{% url 'actualizar' reparacion.id %}" class="btn btn-block btn-warning">Editar</a></td>
                           <td><a href="{% url 'deshabilitar' reparacion.id %}" class="btn btn-block btn-danger">Deshabilitar</a></td>
                       </tr>
                     {% endfor %}

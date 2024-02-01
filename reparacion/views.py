@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from login.decorators import admin_required, employee_denied
 from django.core.paginator import Paginator
 from reparacion.models import Reparacion
+from django.contrib import messages
 # Create your views here.
 
 
@@ -60,3 +61,39 @@ def deleteReparacion(request, id):
     reparacion.is_active = False
     reparacion.save()
     return redirect('reparacion')
+
+
+def updateReparacion(request, id):
+    if request.method == "GET":
+        reparacion = get_object_or_404(Reparacion, id=id)
+        if reparacion.is_active == False:
+            return redirect('reparacion')
+        return render(request, 'reparacion/editar_reparacion.html', {
+            'username': request.user.username,
+            'reparacion_id': id,
+            'articulo': reparacion.articulo,
+            'descripcion': reparacion.descripcion,
+            'cantidad': reparacion.cantidad,
+            'estado': reparacion.estado,  
+        })
+
+    elif request.method == "POST":
+        try:
+            # Obtén el objeto que quieres actualizar
+            objeto = Reparacion.objects.get(pk=id)
+            
+            # Actualiza los campos del objeto con los nuevos valores
+            objeto.articulo = request.POST['articulo'].lower().capitalize()
+            objeto.descripcion = request.POST['descripcion'].lower().capitalize()
+            objeto.cantidad = request.POST['cantidad']
+            objeto.estado = request.POST['estado']
+
+            # Guarda los cambios en la base de datos
+            objeto.save()
+
+            messages.error(request, 'Actualizado correctamente')
+            return redirect('reparacion')
+        except Reparacion.DoesNotExist:
+            messages.error(
+                request, '...')
+            return redirect('reparacion')
