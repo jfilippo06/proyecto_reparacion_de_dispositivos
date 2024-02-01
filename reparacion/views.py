@@ -27,15 +27,19 @@ def registrarReparacion(request):
         return render(request, 'reparacion/registrar.html', {'username': request.user.username})
 
     elif request.method == 'POST':
-        articulo = request.POST['articulo']
-        descripcion = request.POST['descripcion']
+        articulo = request.POST['articulo'].lower().capitalize()
+        descripcion = request.POST['descripcion'].lower().capitalize()
         cantidad = request.POST['cantidad']
         cedula = request.POST['cedula']
-        nombre = request.POST['nombre']
-        correo = request.POST['correo']
+        nombre = request.POST['nombre'].lower().capitalize()
+        correo = request.POST['correo'].lower().capitalize()
         estado = request.POST['estado']
 
         save = Reparacion.objects.create(articulo=articulo, descripcion=descripcion, cantidad=cantidad,
                                   cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True)
         save.save()
         return redirect('reparacion')
+
+
+def cancelar(request):
+    return redirect('reparacion')
