@@ -3,6 +3,7 @@ from login.decorators import admin_required, employee_denied
 from django.core.paginator import Paginator
 from reparacion.models import Reparacion
 from django.contrib import messages
+from venta.models import Client
 # Create your views here.
 
 
@@ -21,7 +22,8 @@ def reparacion(request):
         if reparacion == '':
             return redirect('reparacion')
         else:
-            computadora = Reparacion.objects.filter(**{user_type+'__iexact': reparacion}).exclude(is_active=False)
+            computadora = Reparacion.objects.filter(
+                **{user_type+'__iexact': reparacion}).exclude(is_active=False)
         paginator = Paginator(computadora, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
@@ -44,9 +46,18 @@ def registrarReparacion(request):
         correo = request.POST['correo'].lower().capitalize()
         estado = request.POST['estado']
 
-        save = Reparacion.objects.create(articulo=articulo, descripcion=descripcion, cantidad=cantidad,
-                                  cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True)
-        save.save()
+        try:
+            usuario = Client.objects.get(cedula=cedula)
+            save = Reparacion.objects.create(articulo=articulo, descripcion=descripcion, cantidad=cantidad,
+                                            cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True)
+            save.save()
+        except Client.DoesNotExist:
+            cliente = Client.objects.create(cedula=cedula, username=nombre, email=correo)
+            cliente.save()
+            save = Reparacion.objects.create(articulo=articulo, descripcion=descripcion, cantidad=cantidad,
+                                            cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True)
+            save.save()
+
         return redirect('reparacion')
 
 
@@ -74,17 +85,18 @@ def updateReparacion(request, id):
             'articulo': reparacion.articulo,
             'descripcion': reparacion.descripcion,
             'cantidad': reparacion.cantidad,
-            'estado': reparacion.estado,  
+            'estado': reparacion.estado,
         })
 
     elif request.method == "POST":
         try:
             # Obtén el objeto que quieres actualizar
             objeto = Reparacion.objects.get(pk=id)
-            
+
             # Actualiza los campos del objeto con los nuevos valores
             objeto.articulo = request.POST['articulo'].lower().capitalize()
-            objeto.descripcion = request.POST['descripcion'].lower().capitalize()
+            objeto.descripcion = request.POST['descripcion'].lower(
+            ).capitalize()
             objeto.cantidad = request.POST['cantidad']
             objeto.estado = request.POST['estado']
 
@@ -97,3 +109,14 @@ def updateReparacion(request, id):
             messages.error(
                 request, '...')
             return redirect('reparacion')
+
+
+def buscar_cedula(request):
+    try:
+        table_search = request.POST['table_search']
+        usuario = Client.objects.get(cedula=table_search)
+        return render(request, 'reparacion/registrar.html', {'username': request.user.username, 'cedula': usuario.cedula, 'nombre': usuario.username})
+    except Client.DoesNotExist:
+        messages.error(
+            request, 'Usuario no existe')
+        return redirect('registrar')
