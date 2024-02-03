@@ -17,15 +17,15 @@ def create_users(apps, schema_editor):
     user1.set_password('admin')
     user1.save()
 
-    # Crear el segundo usuario
-    user2 = UserProfile.objects.create(username='empleado', email='empleado@example.com', user_type='employee')
-    user2.set_password('empleado')
-    user2.save()
+    # # Crear el segundo usuario
+    # user2 = UserProfile.objects.create(username='empleado', email='empleado@example.com', user_type='employee')
+    # user2.set_password('empleado')
+    # user2.save()
 
-    # Crear el tercer usuario
-    user3 = UserProfile.objects.create(username='cliente', email='cliente@example.com', user_type='client')
-    user3.set_password('cliente')
-    user3.save()
+    # # Crear el tercer usuario
+    # user3 = UserProfile.objects.create(username='cliente', email='cliente@example.com', user_type='client')
+    # user3.set_password('cliente')
+    # user3.save()
 
 
 class Migration(migrations.Migration):
