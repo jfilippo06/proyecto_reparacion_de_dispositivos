@@ -54,6 +54,7 @@ def registrarReparacion(request):
         except Client.DoesNotExist:
             cliente = Client.objects.create(cedula=cedula, username=nombre, email=correo)
             cliente.save()
+            usuario = Client.objects.get(cedula=cedula)
             save = Reparacion.objects.create(articulo=articulo, descripcion=descripcion, cantidad=cantidad,
                                             cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True)
             save.save()

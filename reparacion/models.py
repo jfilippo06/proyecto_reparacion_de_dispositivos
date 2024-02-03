@@ -1,4 +1,5 @@
 from django.db import models
+from venta.models import Client
 
 # Create your models here.
 
@@ -12,6 +13,7 @@ class Reparacion(models.Model):
     articulo = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True)
     cantidad = models.IntegerField()
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
     cedula = models.IntegerField()
     username = models.CharField(max_length=50)
     email = models.CharField(max_length=50)
