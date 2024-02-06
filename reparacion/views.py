@@ -49,14 +49,15 @@ def registrarReparacion(request):
         try:
             usuario = Client.objects.get(cedula=cedula)
             save = Reparacion.objects.create(articulo=articulo, descripcion=descripcion, cantidad=cantidad,
-                                            cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True)
+                                             cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True, client_id=usuario.id)
             save.save()
         except Client.DoesNotExist:
-            cliente = Client.objects.create(cedula=cedula, username=nombre, email=correo)
+            cliente = Client.objects.create(
+                cedula=cedula, username=nombre, email=correo)
             cliente.save()
             usuario = Client.objects.get(cedula=cedula)
             save = Reparacion.objects.create(articulo=articulo, descripcion=descripcion, cantidad=cantidad,
-                                            cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True)
+                                             cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True, client_id=usuario.id)
             save.save()
 
         return redirect('reparacion')
