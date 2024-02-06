@@ -1,4 +1,4 @@
-{% extends 'base_reparacion.html' %}
+{% extends 'base_reporte.html' %}
 {% load static %}
 
 {% block contenido %}
@@ -27,21 +27,24 @@
                 <div class="card-tools">
                   <form action="" method="post">
                     {% csrf_token %}
-                    <div style="display: flex; flex-direction: row; align-items: baseline;">
-                      <div style="margin-right: 10px;">
-                        <a href="{% url 'registrar' %}" class="btn btn-block btn-success">Ingresar reparación</a>
-                      </div> 
+                    <div style="display: flex; flex-direction: row; align-items: baseline; margin-right: -80px;">
                       <div style="margin-right: 10px;">
                         <select class="form-control" name="user_type">
-                          <option value="username" >Cliente</option>
-                          <option value="cedula" >Cédula</option>
+                          <option value="ER" >En revisión</option>
+                          <option value="EC" >En curso</option>
+                          <option value="TR" >Terminado</option>
+                          <option value="todo" >Todos</option>
+                          <option value="usuario" >Usuario</option>
                         </select> 
+                      </div>
+                      <div style="margin-right: 10px;">
+                        <input type="date" class="form-control" style="width:140px;">
+                      </div>               
+                      <div style="margin-right: 10px;">
+                        <input type="date" class="form-control" style="width:140px;">
                       </div>               
                       <div class="input-group input-group-sm" style="width: 150px;">
-                        <input type="text" name="table_search" class="form-control float-right" placeholder="Busqueda">
-                        <div class="input-group-append">
-                          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
-                        </div>
+                        <button type="submit" class="btn btn-default"><i>Enviar</i></button>
                       </div>
                     </div>
                   </form>
