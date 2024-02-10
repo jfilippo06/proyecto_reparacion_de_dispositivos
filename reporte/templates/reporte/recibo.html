@@ -32,6 +32,7 @@
                         <select class="form-control" name="user_type">
                           <option value="nombre_cliente" >Nombre</option>
                           <option value="cedula" >Cédula</option>
+                          <option value="n_recibo_id" >N° recibo</option>
                         </select> 
                       </div>               
                       <div class="input-group input-group-sm" style="width: 150px;">
@@ -51,6 +52,8 @@
                     <tr>
                       <th>ID</th>
                       <th>Cliente</th>
+                      <th>Cédula</th>
+                      <th>N° recibo </th>
                       <th>Recibo</th>
                     </tr>
                   </thead>
@@ -59,6 +62,8 @@
                       <tr>
                           <td>{{ recibo.id }}</td>
                           <td>{{ recibo.nombre_cliente }}</td>
+                          <td>{{ recibo.cedula }}</td>
+                          <td>{{ recibo.n_recibo_id }}</td>
                           <td><a href="{{ recibo.link }}" class="btn btn-block btn-success">Ver</a></td>
                       </tr>
                     {% endfor %}

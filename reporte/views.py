@@ -3,6 +3,11 @@ from login.decorators import admin_required, employee_denied
 from venta.models import Direccion_de_factura
 from django.core.paginator import Paginator
 from reparacion.models import Reparacion
+from venta.models import Totales
+from venta.views import impuesto
+from django.db.models import Q
+from datetime import datetime, time
+
 
 # Create your views here.
 
@@ -22,6 +27,9 @@ def recibo(request):
         user_type = request.POST['user_type']
         if reporte == '':
             return redirect('recibo')
+        elif user_type == 'n_recibo_id':
+            computadora = Direccion_de_factura.objects.filter(
+                **{user_type: reporte})
         else:
             computadora = Direccion_de_factura.objects.filter(
                 **{user_type+'__iexact': reporte})
@@ -41,7 +49,35 @@ def reporteRepaciones(request):
         page_obj = paginator.get_page(page_number)
 
     elif request.method == 'POST':
-        pass
+        date_begin = datetime.strptime(request.POST.get('date_begin', ''), '%Y-%m-%d') if request.POST.get(
+            'date_begin', '') else datetime.combine(datetime.today(), time.min)
+        date_end = datetime.strptime(request.POST.get(
+            'date_end', ''), '%Y-%m-%d') if request.POST.get('date_end', '') else datetime.now()
+        table_search = request.POST['table_search']
+
+        query = Q()
+
+        if request.POST['user_type'] in ['ER', 'EC', 'TR']:
+            query &= Q(estado=request.POST['user_type'])
+        elif request.POST['user_type'] == 'cliente':
+            if table_search:
+                query &= Q(username=table_search)
+        elif request.POST['user_type'] == 'cedula':
+            if table_search:
+                query &= Q(cedula=table_search)
+        elif request.POST['user_type'] == 'todos':
+            pass
+
+        query &= Q(fecha_creacion__range=(date_begin, date_end))
+
+        reparaciones = Reparacion.objects.filter(query)
+
+        if 'buscar' in request.POST['submit_button']:
+            paginator = Paginator(reparaciones, 15)
+            page_number = request.GET.get('page', 1)
+            page_obj = paginator.get_page(page_number)
+        elif 'enviar' in request.POST['submit_button']:
+            pass
 
     return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'reparaciones': page_obj})
 
@@ -74,9 +110,13 @@ def reporteInventario(request):
 @employee_denied
 def reporteVenta(request):
     if request.method == 'GET':
-        pass
+        venta = Totales.objects.all()
+        paginator = Paginator(venta, 15)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+        iva = impuesto()
 
     elif request.method == 'POST':
         pass
 
-    return render(request, 'reporte/venta.html', {'username': request.user.username})
+    return render(request, 'reporte/venta.html', {'username': request.user.username, 'ventas': page_obj, 'is_active': iva})
