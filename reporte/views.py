@@ -7,13 +7,13 @@ from venta.models import Totales
 from venta.views import impuesto
 from django.db.models import Q
 from datetime import datetime, time
-from django.http import FileResponse
-from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Spacer, Paragraph
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
 from io import BytesIO
+from django.core.files.base import ContentFile
+from django.http import FileResponse
 
 
 # Create your views here.
@@ -86,6 +86,10 @@ def reporteRepaciones(request):
             page_obj = paginator.get_page(page_number)
             return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'reparaciones': page_obj})
         elif 'enviar' in request.POST['submit_button']:
+            if not reparaciones:
+                # Redirige a otra página (por ejemplo, a 'home')
+                return redirect('reporte_reparaciones')
+
             # Crea un objeto de archivo en memoria
             buffer = BytesIO()
 
@@ -103,19 +107,40 @@ def reporteRepaciones(request):
             styles["Title"].alignment = 1  # 1 = TA_CENTER
 
             # Agrega un título
-            title = Paragraph("Título", styles["Title"])
+            title = Paragraph("Reporte - reparaciónes", styles["Title"])
             elements.append(title)
+
+            fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
+            elements.append(fecha_b)
+
+            fecha_e = Paragraph(f"Fecha: {date_end}", styles["Normal"])
+            elements.append(fecha_e)
 
             # Agrega un espacio
             elements.append(Spacer(1, 50))
 
             # Define los datos de la tabla
             data = [
-                [' ', ' ', ' ', ' ']
+                ['ID', 'Artículo', 'Descripción', 'Cantidad',
+                    'Cliente', 'Cédula', 'Estado']
             ]
 
+            # Agrega más registros al array
+            for reparacion in reparaciones:
+                data.append([reparacion.id, reparacion.articulo,
+                            reparacion.descripcion, reparacion.cantidad, reparacion.username, reparacion.cedula, reparacion.estado])
+
+            # Si la tabla se está volviendo muy larga, inserta un salto de página
+            if len(data) % 25 == 0:  # ajusta el número según tus necesidades
+                elements.append(
+                    Table(data, colWidths=[40, 110, 200, 60, 80, 70, 40]))
+                elements.append(PageBreak())
+                for reparacion in reparaciones:
+                    data.append([reparacion.id, reparacion.articulo,
+                                 reparacion.descripcion, reparacion.cantidad, reparacion.username, reparacion.cedula, reparacion.estado])
+
             # Crea la tabla
-            table = Table(data, colWidths=[100, 100, 100, 100])
+            table = Table(data, colWidths=[40, 110, 200, 60, 80, 70, 40])
 
             # Define el estilo de la tabla
             style = TableStyle([
@@ -137,11 +162,13 @@ def reporteRepaciones(request):
             pdf = buffer.getvalue()
             buffer.close()
 
-            response = FileResponse(pdf, as_attachment=False, filename='blank.pdf')
+            # Crea un archivo en memoria con el contenido del PDF
+            pdf_file = ContentFile(pdf)
+
+            response = FileResponse(
+                pdf_file, as_attachment=False, filename='blank.pdf')
             response['Content-Type'] = 'application/pdf'
             return response
-
-
 
 
 @admin_required
