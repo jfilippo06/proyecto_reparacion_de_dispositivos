@@ -43,6 +43,8 @@ class Migration(migrations.Migration):
                 ('iva', models.DecimalField(decimal_places=2, max_digits=5)),
                 ('total', models.DecimalField(decimal_places=2, max_digits=50)),
                 ('n_recibo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='venta.n_recibo')),
+                ('fecha_creacion', models.DateTimeField(auto_now_add=True)),
+                ('fecha_actualizacion', models.DateTimeField(auto_now=True)),
             ],
         ),
     ]

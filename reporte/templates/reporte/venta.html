@@ -29,13 +29,16 @@
                     {% csrf_token %}
                     <div style="display: flex; flex-direction: row; align-items: baseline; margin-right: -80px;">
                       <div style="margin-right: 10px;">
-                        <input type="date" class="form-control" style="width:140px;">
+                        <input type="date" name="date_begin" class="form-control" style="width:140px;">
                       </div>               
                       <div style="margin-right: 10px;">
-                        <input type="date" class="form-control" style="width:140px;">
-                      </div>               
+                        <input type="date" name="date_end" class="form-control" style="width:140px;">
+                      </div>  
+                      <div class="input-group input-group-sm" style="width: 80px;">
+                        <button type="submit" name="submit_button" value="buscar" class="btn btn-default"><i>Buscar</i></button>
+                      </div>
                       <div class="input-group input-group-sm" style="width: 150px;">
-                        <button type="submit" class="btn btn-default"><i>Enviar</i></button>
+                        <button type="submit" name="submit_button" value="enviar" class="btn btn-default"><i>Enviar</i></button>
                       </div>
                     </div>
                   </form>

@@ -204,8 +204,117 @@ def reporteVenta(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         iva = impuesto()
+        return render(request, 'reporte/venta.html', {'username': request.user.username, 'ventas': page_obj, 'is_active': iva})
 
     elif request.method == 'POST':
-        pass
+        iva = impuesto()
+        date_begin = datetime.strptime(request.POST.get('date_begin', ''), '%Y-%m-%d') if request.POST.get(
+            'date_begin', '') else datetime.combine(datetime.today(), time.min)
+        date_end = datetime.strptime(request.POST.get(
+            'date_end', ''), '%Y-%m-%d') if request.POST.get('date_end', '') else datetime.now()
 
-    return render(request, 'reporte/venta.html', {'username': request.user.username, 'ventas': page_obj, 'is_active': iva})
+        query = Q()
+        query &= Q(fecha_creacion__range=(date_begin, date_end))
+        venta = Totales.objects.filter(query)
+
+        if 'buscar' in request.POST['submit_button']:
+            paginator = Paginator(venta, 15)
+            page_number = request.GET.get('page', 1)
+            page_obj = paginator.get_page(page_number)
+            return render(request, 'reporte/venta.html', {'username': request.user.username, 'ventas': page_obj, 'is_active': iva})
+        elif 'enviar' in request.POST['submit_button']:
+            if not venta:
+                # Redirige a otra página (por ejemplo, a 'home')
+                return redirect('reporte_venta')
+
+            # Crea un objeto de archivo en memoria
+            buffer = BytesIO()
+
+            # Crea el archivo PDF usando ReportLab
+            doc = SimpleDocTemplate(buffer, pagesize=letter,
+                                    rightMargin=72, leftMargin=72)
+
+            # Contenedor para los elementos 'Flowable'
+            elements = []
+
+            # Usa un estilo predeterminado y agrega algunos elementos
+            styles = getSampleStyleSheet()
+
+            # Modifica el estilo del título para alinearlo al centro
+            styles["Title"].alignment = 1  # 1 = TA_CENTER
+
+            # Agrega un título
+            title = Paragraph("Reporte - ventas", styles["Title"])
+            elements.append(title)
+
+            fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
+            elements.append(fecha_b)
+
+            fecha_e = Paragraph(f"Fecha: {date_end}", styles["Normal"])
+            elements.append(fecha_e)
+
+            # Agrega un espacio
+            elements.append(Spacer(1, 50))
+
+            # Define los datos de la tabla
+            if iva:
+                data = [
+                    ['ID', 'Sub total', 'Iva', 'Total', 'N° recibo']
+                ]
+            else:
+                data = [
+                    ['ID', 'Total', 'N° recibo']
+                ]
+
+            # Agrega más registros al array
+            if iva:
+                for i in venta:
+                    data.append([i.id,i.sub_total, i.iva, i.total, i.n_recibo_id])
+            else:
+                for i in venta:
+                    data.append([i.id, i.total, i.n_recibo_id])
+
+
+            # Si la tabla se está volviendo muy larga, inserta un salto de página
+            if len(data) % 25 == 0:  # ajusta el número según tus necesidades
+                elements.append(
+                    Table(data, colWidths=[100,100,100]))
+                elements.append(PageBreak())
+                if iva:
+                    for i in venta:
+                        data.append([i.id,i.sub_total, i.iva, i.total, i.n_recibo_id])
+                else:
+                    for i in venta:
+                        data.append([i.id, i.total, i.n_recibo_id])
+
+            # Crea la tabla
+            table = Table(data, colWidths=[100,100,100])
+
+            # Define el estilo de la tabla
+            style = TableStyle([
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ])
+
+            # Aplica el estilo a la tabla
+            table.setStyle(style)
+
+            # Agrega la tabla a los elementos
+            elements.append(table)
+
+            # Construye el PDF (incluyendo la tabla)
+            doc.build(elements)
+
+            # Recupera el valor del objeto de tipo 'file'.
+            buffer.seek(0)
+            pdf = buffer.getvalue()
+            buffer.close()
+
+            # Crea un archivo en memoria con el contenido del PDF
+            pdf_file = ContentFile(pdf)
+
+            response = FileResponse(
+                pdf_file, as_attachment=False, filename='blank.pdf')
+            response['Content-Type'] = 'application/pdf'
+            return response
+

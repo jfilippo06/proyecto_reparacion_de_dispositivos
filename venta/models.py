@@ -37,6 +37,8 @@ class Totales(models.Model):
     iva = models.DecimalField(max_digits=5, decimal_places=2)
     total = models.DecimalField(max_digits=50, decimal_places=2)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
 
 class Direccion_de_factura(models.Model):
     link = models.CharField(max_length=300)
