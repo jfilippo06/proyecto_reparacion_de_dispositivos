@@ -3,6 +3,133 @@
 
 {% block contenido %}
 
-
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Reporte</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+  
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title" style="margin-top: 10px;">Clientes</h3>
+  
+                <div class="card-tools">
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <div style="display: flex; flex-direction: row; align-items: baseline; margin-right: -80px;">
+                          <div style="margin-right: 10px;">
+                            <select class="form-control" name="user_type">
+                                <option value="nombre_cliente" >Cliente</option>
+                                <option value="cedula" >Cédula</option>
+                                <option value="todos" >Todos</option>
+                            </select> 
+                          </div>
+                          <div style="margin-right: 10px;">
+                            <input type="text" name="table_search" class="form-control" placeholder="Busqueda">
+                          </div>               
+                          <div style="margin-right: 10px;">
+                            <input type="date" name="date_begin" class="form-control" style="width:140px;">
+                          </div>               
+                          <div style="margin-right: 10px;">
+                            <input type="date" name="date_end" class="form-control" style="width:140px;">
+                          </div>               
+                          <div class="input-group input-group-sm" style="width: 80px;">
+                            <button type="submit" name="submit_button" value="buscar" class="btn btn-default"><i>Buscar</i></button>
+                          </div>
+                          <div class="input-group input-group-sm" style="width: 150px;">
+                            <button type="submit" name="submit_button" value="enviar" class="btn btn-default"><i>Enviar</i></button>
+                          </div>
+                        </div>
+                      </form>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-head-fixed text-nowrap">
+                  <thead>
+                    <tr>
+                    {% if is_active %}
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Cédula</th>
+                        <th>Sub total</th>
+                        <th>Iva</th>
+                        <th>Total</th>
+                        <th>N° recibo </th>
+                    {% elif not is_active %}
+                        <th>ID</th>
+                        <th>Cliente</th>
+                        <th>Cédula</th>
+                        <th>Total</th>
+                        <th>N° recibo </th>
+                    {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in cliente %}
+                    <tr>
+                        {% if is_active %}
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.nombre_cliente }}</td>
+                            <td>{{ i.cedula }}</td>
+                            <td>{{ i.sub_total }}</td>
+                            <td>{{ i.iva }}</td>
+                            <td>{{ i.total }}</td>
+                            <td>{{ i.n_recibo_id }}</td>
+                        {% elif not is_active %}
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.nombre_cliente }}</td>
+                            <td>{{ i.cedula }}</td>
+                            <td>{{ i.total }}</td>
+                            <td>{{ i.n_recibo_id }}</td>
+                        {% endif %}
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              {% if messages %}
+                {% for message in messages %}
+                    {{ message }}
+                {% endfor %}
+              {% endif %}
+              <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    {% if cliente.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primero</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ cliente.previous_page_number }}">Anterior</a></li>
+                    {% endif %}
+            
+                    <span class="current page-item active">
+                        <a class="page-link">Página {{ cliente.number }} de {{ cliente.paginator.num_pages }}.</a>
+                    </span>
+            
+                    {% if cliente.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ cliente.next_page_number }}">Siguiente</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ cliente.paginator.num_pages }}">Último &raquo;</a></li>
+                    {% endif %}
+                </ul>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+        <!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
 
 {% endblock %}

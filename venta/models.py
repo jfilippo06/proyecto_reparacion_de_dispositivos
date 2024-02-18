@@ -40,9 +40,22 @@ class Totales(models.Model):
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
 
+
 class Direccion_de_factura(models.Model):
     link = models.CharField(max_length=300)
     nombre_cliente = models.CharField(max_length=100)
     cedula = models.IntegerField()
     cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
+
+
+class Cliente_atendido(models.Model):
+    nombre_cliente = models.CharField(max_length=100)
+    cedula = models.IntegerField()
+    n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
+    cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
+    sub_total = models.IntegerField()
+    iva = models.DecimalField(max_digits=5, decimal_places=2)
+    total = models.DecimalField(max_digits=50, decimal_places=2)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)

@@ -5,7 +5,7 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.conf import settings
 from django.db.models import Sum
-from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura
+from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura, Cliente_atendido
 from configuracion.models import Impuesto
 from inventario.models import Inventario
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer
@@ -373,8 +373,11 @@ def some_view(request):
     file_path_link = f'{dir_path_link}/recibo_{n_recibo}.pdf'
 
     save = Direccion_de_factura.objects.create(
-        link=file_path_link, nombre_cliente=cliente, cedula= cedula, cliente_id=id_cliente, n_recibo_id=n_recibo)
+        link=file_path_link, nombre_cliente=cliente, cedula=cedula, cliente_id=id_cliente, n_recibo_id=n_recibo)
     save.save()
+
+    cliente = Cliente_atendido.objects.create(
+        nombre_cliente=cliente, cedula=cedula, sub_total=sub_total, iva=iva, total=total, cliente_id=id_cliente, n_recibo_id=n_recibo)
 
     return file_path_link
 
