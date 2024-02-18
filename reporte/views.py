@@ -108,7 +108,7 @@ def reporteRepaciones(request):
             styles["Title"].alignment = 1  # 1 = TA_CENTER
 
             # Agrega un título
-            title = Paragraph("Reporte - reparaciónes", styles["Title"])
+            title = Paragraph("Reporte - Reparaciónes", styles["Title"])
             elements.append(title)
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
@@ -191,8 +191,16 @@ def reporteInventario(request):
         if 'inventario_ads' in request.session:
             inventario_ads = request.session['inventario_ads']
             inventario = Inventario.objects.filter(id__in=inventario_ads)
+            paginator = Paginator(inventario, 15)
+            page_number = request.GET.get('page', 1)
+            page_obj = paginator.get_page(page_number)
+            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'inventario': page_obj})
         else:
             inventario = []
+            paginator = Paginator(inventario, 15)
+            page_number = request.GET.get('page', 1)
+            page_obj = paginator.get_page(page_number)
+            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'inventario': page_obj})
 
     elif request.method == 'POST':
         equipo = request.POST['equipo']
@@ -223,12 +231,88 @@ def reporteInventario(request):
         request.session['inventario_ads'] = list(
             inventario.values_list('id', flat=True))
 
-    paginator = Paginator(inventario, 15)
-    page_number = request.GET.get('page', 1)
-    page_obj = paginator.get_page(page_number)
+        if 'buscar' in request.POST['submit_button']:
+            paginator = Paginator(inventario, 15)
+            page_number = request.GET.get('page', 1)
+            page_obj = paginator.get_page(page_number)
+            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'inventario': page_obj})
+        elif 'enviar' in request.POST['submit_button']:
+            if not inventario:
+                # Redirige a otra página (por ejemplo, a 'home')
+                return redirect('reporte_inventario')
 
-    return render(request, 'reporte/inventario.html', {'username': request.user.username, 'inventario': page_obj})
+            buffer = BytesIO()
 
+            # Crea el archivo PDF usando ReportLab
+            doc = SimpleDocTemplate(buffer, pagesize=letter,
+                                    rightMargin=72, leftMargin=72)
+
+            # Contenedor para los elementos 'Flowable'
+            elements = []
+
+            # Usa un estilo predeterminado y agrega algunos elementos
+            styles = getSampleStyleSheet()
+
+            # Modifica el estilo del título para alinearlo al centro
+            styles["Title"].alignment = 1  # 1 = TA_CENTER
+
+            # Agrega un título
+            title = Paragraph("Reporte - Inventario", styles["Title"])
+            elements.append(title)
+
+
+            # Agrega un espacio
+            elements.append(Spacer(1, 50))
+
+            # Define los datos de la tabla     
+            data = [
+                ['ID', 'Código', 'Artículo', 'Marca', 'Modelo', 'N° serie', 'Cantidad', 'Costo']
+            ]
+
+            # Agrega más registros al array
+            for i in inventario:
+                data.append([i.id,i.codigo, i.articulo, i.marca, i.modelo, i.no_serie, i.cantidad, i.costo])
+
+            # Si la tabla se está volviendo muy larga, inserta un salto de página
+            if len(data) % 25 == 0:  # ajusta el número según tus necesidades
+                elements.append(
+                    Table(data, colWidths=[30,50,100,90,90,70,60,70]))
+                elements.append(PageBreak())
+                for i in inventario:
+                    data.append([i.id,i.codigo, i.articulo, i.marca, i.modelo, i.no_serie, i.cantidad, i.costo])
+
+            # Crea la tabla
+            table = Table(data, colWidths=[30,50,100,90,90,70,60,70])
+
+            # Define el estilo de la tabla
+            style = TableStyle([
+                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ])
+
+            # Aplica el estilo a la tabla
+            table.setStyle(style)
+
+            # Agrega la tabla a los elementos
+            elements.append(table)
+
+            # Construye el PDF (incluyendo la tabla)
+            doc.build(elements)
+
+            # Recupera el valor del objeto de tipo 'file'.
+            buffer.seek(0)
+            pdf = buffer.getvalue()
+            buffer.close()
+
+            # Crea un archivo en memoria con el contenido del PDF
+            pdf_file = ContentFile(pdf)
+
+            response = FileResponse(
+                pdf_file, as_attachment=False, filename='blank.pdf')
+            response['Content-Type'] = 'application/pdf'
+            return response
+
+    
 
 @admin_required
 @employee_denied
@@ -279,7 +363,7 @@ def reporteVenta(request):
             styles["Title"].alignment = 1  # 1 = TA_CENTER
 
             # Agrega un título
-            title = Paragraph("Reporte - ventas", styles["Title"])
+            title = Paragraph("Reporte - Ventas", styles["Title"])
             elements.append(title)
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])

@@ -48,11 +48,14 @@
                           <option value="costo" >costo</option>
                         </select> 
                       </div>               
-                      <div class="input-group input-group-sm" style="width: 150px;">
+                      <div class="input-group input-group-sm" style="width: 150px; margin-right: 10px;">
                         <input type="text" name="table_search" class="form-control float-right" placeholder="Busqueda">
                         <div class="input-group-append">
-                          <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                          <button type="submit" name="submit_button" value="buscar" class="btn btn-default"><i class="fas fa-search"></i></button>
                         </div>
+                      </div>                      
+                      <div class="input-group input-group-sm" style="width: 70px;">
+                        <button type="submit" name="submit_button" value="enviar" class="btn btn-default"><i>Enviar</i></button>
                       </div>
                     </div>
                   </form>
@@ -85,11 +88,6 @@
                           <td>{{ computadora.no_serie }}</td>
                           <td>{{ computadora.cantidad }}</td>
                           <td>{{ computadora.costo }}</td>
-                          <form action="{% url 'agregar_articulo' computadora.id %}" method="post">
-                            {% csrf_token %}
-                            <td><input type="number" name="cantidad" style="width: 110px;"></td>
-                            <td><input type="submit" value="Agregar" class="btn btn-block btn-success"></td>
-                          </form>
                       </tr>
                     {% endfor %}
                   </tbody>
