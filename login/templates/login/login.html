@@ -7,7 +7,7 @@
   <!-- /.login-logo -->
   <div class="card">
     <div class="card-body login-card-body">
-      <p class="login-box-msg">Sistema de inventario y facturación para la empresa Dr. Cell</p>
+      <p class="login-box-msg" style="font-size: 25px ;">Sistema de inventario y facturación para la empresa Dr. Cell</p>
 
       <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
@@ -39,9 +39,9 @@
 
       <!-- /.social-auth-links -->
 
-      <p class="mb-0">
+      <!-- <p class="mb-0">
         <a href="{% url 'register' %}" class="text-center">Registrarse</a>
-      </p>
+      </p> -->
     </div>
     <!-- /.login-card-body -->
   </div>
