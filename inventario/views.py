@@ -21,12 +21,12 @@ def inventario(request):
         categoria = request.POST['categoria']
         try:
             Inventario.objects.get(codigo=codigo)
-            messages.success(request, 'No permitido.')
+            messages.error(request, 'Códio ya exite.')
         except ObjectDoesNotExist:
-            Inventario.objects.create(codigo=codigo, articulo=articulo,  marca=marca, 
-                                    modelo=modelo, no_serie=no_serie, cantidad=cantidad,
-                                    costo=costo, categoria=categoria, is_active=True)
-            messages.success(request, 'Registrado con exito')
+            Inventario.objects.create(codigo=codigo, articulo=articulo,  marca=marca,
+                                      modelo=modelo, no_serie=no_serie, cantidad=cantidad,
+                                      costo=costo, categoria=categoria, is_active=True)
+            messages.success(request, 'Registrado con exito.')
         return redirect('inventario')
 
 
@@ -44,6 +44,7 @@ def computadora(request):
         inventario = request.POST['table_search']
         user_type = request.POST['user_type']
         if inventario == '':
+            messages.error(request, 'introduzca texto.')
             return redirect('computadora')
         else:
             computadora = Inventario.objects.filter(
@@ -59,6 +60,7 @@ def deleteComputadora(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
     inventario.save()
+    messages.success(request, 'Artículo deshabilitado correctamente.')
     return redirect('computadora')
 
 
@@ -67,6 +69,7 @@ def updateComputadora(request, id):
     if request.method == "GET":
         inventario = get_object_or_404(Inventario, id=id)
         if inventario.is_active == False:
+            messages.error(request, 'Acción no permitida.')
             return redirect('computadora')
         return render(request, 'inventario/computadora/editar_computadora.html', {
             'username': request.user.username,
@@ -89,7 +92,7 @@ def updateComputadora(request, id):
 
             if Inventario.objects.filter(codigo=codigo).exclude(pk=id).exists():
                 inventario = get_object_or_404(Inventario, id=id)
-                messages.error(request, 'Codigo ya existe')
+                messages.error(request, 'Codigo ya existe.')
                 return render(request, 'inventario/computadora/editar_computadora.html', {
                     'username': request.user.username,
                     'user_type': request.user.user_type,
@@ -115,7 +118,7 @@ def updateComputadora(request, id):
             # Guarda los cambios en la base de datos
             objeto.save()
 
-            messages.error(request, 'Actualizado correctamente')
+            messages.success(request, 'Actualizado correctamente.')
             return redirect('computadora')
         except Inventario.DoesNotExist:
             messages.error(
@@ -142,6 +145,7 @@ def telefono(request):
         inventario = request.POST['table_search']
         user_type = request.POST['user_type']
         if inventario == '':
+            messages.error(request, 'introduzca texto.')
             return redirect('telefono')
         else:
             computadora = Inventario.objects.filter(
@@ -157,6 +161,7 @@ def deleteTelefono(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
     inventario.save()
+    messages.success(request, 'Articulo deshabilitado correctamente.')
     return redirect('telefono')
 
 
@@ -165,7 +170,8 @@ def updateTelefono(request, id):
     if request.method == "GET":
         inventario = get_object_or_404(Inventario, id=id)
         if inventario.is_active == False:
-            return redirect('telefonos')
+            messages.error(request, 'Acción no permitida.')
+            return redirect('telefono')
         return render(request, 'inventario/telefono/editar_telefono.html', {
             'username': request.user.username,
             'user_type': request.user.user_type,
@@ -187,8 +193,8 @@ def updateTelefono(request, id):
 
             if Inventario.objects.filter(codigo=codigo).exclude(pk=id).exists():
                 inventario = get_object_or_404(Inventario, id=id)
-                messages.error(request, 'Codigo ya existe')
-                return render(request, 'inventario/computadora/editar_telefono.html', {
+                messages.error(request, 'Codigo ya existe.')
+                return render(request, 'inventario/telefono/editar_telefono.html', {
                     'username': request.user.username,
                     'user_type': request.user.user_type,
                     'computadora_id': id,
@@ -213,7 +219,7 @@ def updateTelefono(request, id):
             # Guarda los cambios en la base de datos
             objeto.save()
 
-            messages.error(request, 'Actualizado correctamente')
+            messages.success(request, 'Actualizado correctamente.')
             return redirect('telefono')
         except Inventario.DoesNotExist:
             messages.error(
@@ -240,6 +246,7 @@ def repuesto_computadora(request):
         inventario = request.POST['table_search']
         user_type = request.POST['user_type']
         if inventario == '':
+            messages.error(request, 'Introduzca texto.')
             return redirect('repuestos_computadora')
         else:
             computadora = Inventario.objects.filter(
@@ -255,6 +262,7 @@ def deleteRepuestoComputadora(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
     inventario.save()
+    messages.success(request, 'Artículo deshabilitado correctamente.')
     return redirect('repuestos_computadora')
 
 
@@ -263,6 +271,7 @@ def updateRepuestoComputadora(request, id):
     if request.method == "GET":
         inventario = get_object_or_404(Inventario, id=id)
         if inventario.is_active == False:
+            messages.error(request, 'Acción no permitida.')
             return redirect('repuestos_computadora')
         return render(request, 'inventario/repuesto_computadora/editar_repuesto_computadora.html', {
             'username': request.user.username,
@@ -285,7 +294,7 @@ def updateRepuestoComputadora(request, id):
 
             if Inventario.objects.filter(codigo=codigo).exclude(pk=id).exists():
                 inventario = get_object_or_404(Inventario, id=id)
-                messages.error(request, 'Codigo ya existe')
+                messages.error(request, 'Codigo ya existe.')
                 return render(request, 'inventario/repuesto_computadora/editar_repuesto_computadora.html', {
                     'username': request.user.username,
                     'user_type': request.user.user_type,
@@ -311,7 +320,7 @@ def updateRepuestoComputadora(request, id):
             # Guarda los cambios en la base de datos
             objeto.save()
 
-            messages.error(request, 'Actualizado correctamente')
+            messages.success(request, 'Actualizado correctamente.')
             return redirect('repuestos_computadora')
         except Inventario.DoesNotExist:
             messages.error(
@@ -338,6 +347,7 @@ def repuesto_telefono(request):
         inventario = request.POST['table_search']
         user_type = request.POST['user_type']
         if inventario == '':
+            messages.error(request, 'Introduzca texto.')
             return redirect('repuestos_telefono')
         else:
             computadora = Inventario.objects.filter(
@@ -353,6 +363,7 @@ def deleteRepuestoTelefono(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
     inventario.save()
+    messages.sucess(request, 'Artículo deshabilitado correctamente.')
     return redirect('repuestos_telefono')
 
 
@@ -361,6 +372,7 @@ def updateRepuestoTelefono(request, id):
     if request.method == "GET":
         inventario = get_object_or_404(Inventario, id=id)
         if inventario.is_active == False:
+            messages.error(request, 'Acción no permitida.')
             return redirect('repuestos_telefono')
         return render(request, 'inventario/repuesto_telefono/editar_repuesto_telefono.html', {
             'username': request.user.username,
@@ -383,7 +395,7 @@ def updateRepuestoTelefono(request, id):
 
             if Inventario.objects.filter(codigo=codigo).exclude(pk=id).exists():
                 inventario = get_object_or_404(Inventario, id=id)
-                messages.error(request, 'Codigo ya existe')
+                messages.error(request, 'Codigo ya existe.')
                 return render(request, 'inventario/repuesto_telefono/editar_repuesto_telefono.html', {
                     'username': request.user.username,
                     'user_type': request.user.user_type,
@@ -409,7 +421,7 @@ def updateRepuestoTelefono(request, id):
             # Guarda los cambios en la base de datos
             objeto.save()
 
-            messages.error(request, 'Actualizado correctamente')
+            messages.success(request, 'Actualizado correctamente.')
             return redirect('repuestos_telefono')
         except Inventario.DoesNotExist:
             messages.error(
@@ -436,6 +448,7 @@ def acessorio(request):
         inventario = request.POST['table_search']
         user_type = request.POST['user_type']
         if inventario == '':
+            messages.error(request, 'Introduzca texto.')
             return redirect('accesorio')
         else:
             computadora = Inventario.objects.filter(
@@ -451,6 +464,7 @@ def deleteAccesorio(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
     inventario.save()
+    messages.success(request, 'Artículo deshabilitado correctamente.')
     return redirect('accesorio')
 
 
@@ -459,7 +473,8 @@ def updateAccesorio(request, id):
     if request.method == "GET":
         inventario = get_object_or_404(Inventario, id=id)
         if inventario.is_active == False:
-            return redirect('repuestos_telefono')
+            messages.error(request, 'Acción no permitida.')
+            return redirect('accesorio')
         return render(request, 'inventario/accesorio/editar_accesorio.html', {
             'username': request.user.username,
             'user_type': request.user.user_type,
@@ -481,7 +496,7 @@ def updateAccesorio(request, id):
 
             if Inventario.objects.filter(codigo=codigo).exclude(pk=id).exists():
                 inventario = get_object_or_404(Inventario, id=id)
-                messages.error(request, 'Codigo ya existe')
+                messages.error(request, 'Codigo ya existe.')
                 return render(request, 'inventario/accesorio/editar_accesorio.html', {
                     'username': request.user.username,
                     'user_type': request.user.user_type,
@@ -507,7 +522,7 @@ def updateAccesorio(request, id):
             # Guarda los cambios en la base de datos
             objeto.save()
 
-            messages.error(request, 'Actualizado correctamente')
+            messages.success(request, 'Actualizado correctamente.')
             return redirect('accesorio')
         except Inventario.DoesNotExist:
             messages.error(
