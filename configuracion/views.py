@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from login.models import UserProfile
 from django.core.paginator import Paginator
-from configuracion.models import Impuesto
+from configuracion.models import Impuesto, Dolar
 
 # Create your views here.
 
@@ -157,4 +157,40 @@ def actualizar_impuesto(request):
     impuesto.save()
     return redirect('impuesto')
 
-    
+
+@admin_required
+@employee_denied
+def dolar(request):
+    if request.method == 'GET':
+        dolar = Dolar.objects.all()
+        return render(request, 'dolar/dolar.html', {'username': request.user.username, 'dolar': dolar})
+
+
+@admin_required
+@employee_denied
+def activar_dolar(request):
+    dolar = Dolar.objects.get(id=1)
+    dolar.is_active = True
+    dolar.save()
+    return redirect('dolar')
+
+
+@admin_required
+@employee_denied
+def desactivar_dolar(request):
+    dolar = Dolar.objects.get(id=1)
+    dolar.is_active = False
+    dolar.save()
+    return redirect('dolar')
+
+
+@admin_required
+@employee_denied
+def actualizar_dolar(request):
+    moneda = request.POST['moneda']
+    valor = float(request.POST['valor'])
+    dolar = Dolar.objects.get(id=1)
+    dolar.moneda = moneda
+    dolar.valor = valor
+    dolar.save()
+    return redirect('dolar')

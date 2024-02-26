@@ -24,34 +24,34 @@
           <!-- general form elements -->
           <div class="card card-primary">
             <div class="card-header">
-              <h3 class="card-title">Impuesto</h3>
+              <h3 class="card-title">Moneda</h3>
             </div>
             <!-- /.card-header -->
             <!-- form start -->
-            <form method="POST" action="{% url 'actualizar_impuesto' %}">
+            <form method="POST" action="{% url 'actualizar_dolar' %}">
               {% csrf_token %}
               <div class="card-body">
                 <div class="row">
-                  {% for impuesto in impuestos %}
-                    {% if impuesto.is_active %}
+                  {% for moneda in dolar %}
+                    {% if moneda.is_active %}
                     <div class="col-3">
-                      <label>IVA</label>
-                      <input type="text" class="form-control" name="iva" value="{{ impuesto.iva }}" placeholder="IVA" required autofocus>
+                      <label>Moneda</label>
+                      <input type="text" class="form-control" name="moneda" value="{{moneda.moneda}}" placeholder="Moneda" required autofocus>
                     </div>
                     <div class="col-3">
                       <label>Valor</label>
-                      <input type="number" step="any" class="form-control" name="valor" placeholder="{{impuesto.valor}}" required>
+                      <input type="number" step="any" class="form-control" name="valor" placeholder="{{ moneda.valor }}" required>
                     </div>
                         </div>
                       </div>
-                    {% elif not impuesto.is_active %}
+                    {% elif not moneda.is_active %}
                       <div class="col-3">
-                        <label>IVA</label>
-                        <input type="text" class="form-control"  placeholder="IVA" disabled>
+                        <label>Moneda</label>
+                        <input type="text" class="form-control"  placeholder="Dolar" disabled>
                       </div>
                       <div class="col-3">
                         <label>Valor</label>
-                        <input type="number" class="form-control" placeholder="{{impuesto.valor}}" disabled>
+                        <input type="number" class="form-control" placeholder="{{ moneda.valor }}" disabled>
                       </div>
                     </div>
                   </div>
@@ -64,14 +64,14 @@
                   {% endif %}
                   
                   <!-- /.card-body -->
-                  {% if impuesto.is_active %}
+                  {% if moneda.is_active %}
                   <div class="card-footer">
                     <button type="submit" class="btn btn-primary">Actualizar</button>
-                    <a href="{% url 'desactivar_impuesto' %}" class="btn btn-danger">Desactivar</a>
+                    <a href="{% url 'desactivar_dolar' %}" class="btn btn-danger">Desactivar</a>
                   </div>
-                  {% elif not impuesto.is_active %}
+                  {% elif not moneda.is_active %}
                   <div class="card-footer">
-                    <a href="{% url 'activar_impuesto' %}" class="btn btn-primary">Activar</a>
+                    <a href="{% url 'activar_dolar' %}" class="btn btn-primary">Activar</a>
                   </div>
                   {% endif %}
                 </form>
