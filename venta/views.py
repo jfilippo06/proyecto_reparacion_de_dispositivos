@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.conf import settings
 from django.db.models import Sum
 from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura, Cliente_atendido
-from configuracion.models import Impuesto
+from configuracion.models import Impuesto, Dolar
 from inventario.models import Inventario
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer
 from reportlab.lib.styles import getSampleStyleSheet
@@ -23,6 +23,11 @@ import os
 def impuesto():
     impuesto = Impuesto.objects.get(id=1)
     return impuesto.is_active
+
+
+def dolar_valor():
+    dolar = Dolar.objects.get(id=1)
+    return dolar.is_active
 
 
 def get_last_n_factura():
@@ -135,14 +140,17 @@ def facturar_cliente(request):
     sub_total = suma_total(request)
     nombre_iva = Impuesto.objects.get(id=1).iva
     iva = 0
+    dolar_is_active = dolar_valor()
+    dolar = float(Dolar.objects.get(id=1).valor)
     if is_active:
         i = float(Impuesto.objects.get(id=1).valor)
         iva = sub_total * i
     total = sub_total + iva
+    total_dolar = round(float(total / dolar), 2)
     request.session['sub_total'] = sub_total
     request.session['iva'] = iva
     request.session['total'] = total
-    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'sub_total': sub_total, 'nombre_iva': nombre_iva, 'iva': iva, 'total': total, 'is_active': is_active})
+    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'sub_total': sub_total, 'nombre_iva': nombre_iva, 'iva': iva, 'total': total, 'is_active': is_active, 'dolar_is_active': dolar_is_active, 'dolar': total_dolar})
 
 
 @admin_required

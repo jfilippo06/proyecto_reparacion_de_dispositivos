@@ -151,7 +151,12 @@
                     </div>   
                     <div style="margin-right: 10px;">
                       <h3 class="card-title">Total: {{total}}</h3> 
-                    </div>   
+                    </div>
+                    {% if dolar_is_active %}
+                      <div style="margin-right: 10px;">
+                        <h3 class="card-title">REF: {{dolar}}</h3> 
+                      </div>
+                    {% endif %}
                   </div>
                 </div>
               </div>            
@@ -166,7 +171,12 @@
                   </div>
                   <div style="margin-right: 10px;">
                     <h3 class="card-title">Total: {{total}}</h3> 
-                  </div>   
+                  </div>
+                  {% if dolar_is_active %}
+                      <div style="margin-right: 10px;">
+                        <h3 class="card-title">REF: {{dolar}}</h3> 
+                      </div>
+                  {% endif %}  
                 </div>
               </div>
             </div>
