@@ -24,7 +24,7 @@ def sign_in(request):
         if user:
             if user.user_type == 'super_user' or user.user_type == 'admin' or user.user_type == 'employee':
                 login(request, user)
-                messages.error(request, f'Bienvenido {user.username}.')
+                messages.success(request, f'Bienvenido {user.username}.')
                 return redirect('computadora')
             elif user.user_type == 'client':
                 login(request, user)

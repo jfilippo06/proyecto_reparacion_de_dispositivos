@@ -133,10 +133,10 @@
                 <div class="card-tools">
                   <div style="display: flex; flex-direction: row; align-items: baseline;">
                     <div style="margin-right: 10px;">
-                      <a href="{% url 'cancelar_compra' %}" class="btn btn-block btn-danger">Cancelar</a>
+                      <a href="{% url 'cancelar_compra' %}" class="btn btn-block btn-danger" id="cancelar_compra">Cancelar</a>
                     </div>   
                     <div style="margin-right: 10px;">
-                      <a href="{% url 'facturar' %}" class="btn btn-block btn-success">Facturar</a>
+                      <a href="{% url 'facturar' %}" class="btn btn-block btn-success" id="facturar">Facturar</a>
                     </div>   
                     <div style="margin-right: 10px;">
                       <h3 class="card-title">Sub-Total: {{ sub_total }}</h3>    
@@ -159,10 +159,10 @@
               <div class="card-tools">
                 <div style="display: flex; flex-direction: row; align-items: baseline;">
                   <div style="margin-right: 10px;">
-                    <a href="{% url 'cancelar_compra' %}" class="btn btn-block btn-danger">Cancelar</a>
+                    <a href="{% url 'cancelar_compra' %}" class="btn btn-block btn-danger" id="cancelar_compra">Cancelar</a>
                   </div>   
                   <div style="margin-right: 10px;">
-                    <a href="{% url 'facturar' %}" class="btn btn-block btn-success">Facturar</a>
+                    <a href="{% url 'facturar' %}" class="btn btn-block btn-success" id="facturar">Facturar</a>
                   </div>
                   <div style="margin-right: 10px;">
                     <h3 class="card-title">Total: {{total}}</h3> 

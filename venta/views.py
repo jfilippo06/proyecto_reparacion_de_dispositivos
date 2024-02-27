@@ -148,6 +148,7 @@ def facturar_cliente(request):
         i = float(Impuesto.objects.get(id=1).valor)
         iva = sub_total * i
     total = sub_total + iva
+    dolar = 1 if dolar == 0 else dolar
     total_dolar = round(float(total / dolar), 2)
     request.session['sub_total'] = sub_total
     request.session['iva'] = iva
