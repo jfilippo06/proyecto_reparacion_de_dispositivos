@@ -15,6 +15,7 @@ from reportlab.lib import colors
 from io import BytesIO
 from django.core.files.base import ContentFile
 from django.http import FileResponse
+from django.contrib import messages
 
 
 # Create your views here.
@@ -34,6 +35,7 @@ def recibo(request):
         reporte = request.POST['table_search']
         user_type = request.POST['user_type']
         if reporte == '':
+            messages.error(request, 'introduzca texto.')
             return redirect('recibo')
         elif user_type == 'n_recibo_id':
             computadora = Direccion_de_factura.objects.filter(
