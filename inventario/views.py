@@ -363,7 +363,7 @@ def deleteRepuestoTelefono(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
     inventario.save()
-    messages.sucess(request, 'Artículo deshabilitado correctamente.')
+    messages.success(request, 'Artículo deshabilitado correctamente.')
     return redirect('repuestos_telefono')
 
 
