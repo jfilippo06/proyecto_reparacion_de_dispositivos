@@ -51,6 +51,8 @@ def importar(request):
 
         # Copia la base de datos al nuevo directorio
         shutil.copy2(db_path, new_db_path)
+        messages.success(
+            request, 'Copia de seguridad creada correctamente.')
 
         
     direccion = Copia_de_seguridad.objects.all()
@@ -84,6 +86,8 @@ def copiar_bd(request, id):
 
     # Copia la base de datos al nuevo directorio
     shutil.copy2(db.link, db_path)
+    messages.success(
+            request, 'xopia de seguridad restaurada correctamente.')
 
     return redirect('restaurar')
 
@@ -97,7 +101,7 @@ def compactar(request):
     elif request.method == 'POST':
         with connection.cursor() as cursor:
             cursor.execute("VACUUM;")
-        messages.error(
-            request, 'Base de datos compactada correctamente')
+        messages.success(
+            request, 'Base de datos compactada correctamente.')
 
     return render(request, 'mantenimiento/compactar.html', {'username': request.user.username})
