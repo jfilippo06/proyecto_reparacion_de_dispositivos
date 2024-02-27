@@ -56,6 +56,7 @@ def client(request):
             request.session['last'] = get_last_n_factura()
             return redirect('facturar_cliente')
         else:
+            messages.error(request, 'Cliente no existe.')
             return redirect('registrar_cliente')
 
 
@@ -82,6 +83,7 @@ def registrar_cliente(request):
         nuevo_cliente = Client(cedula=cedula, username=nombre, email=email)
         nuevo_cliente.save()
 
+        messages.success(request, 'Cliente registrado correctamente.')
         request.session['last'] = get_last_n_factura()
         return redirect('facturar_cliente')
 
@@ -168,9 +170,9 @@ def agregar_articulo(request, id):
     else:
         try:
             T_Lista.objects.get(inventario_id=id)
-            messages.success(request, 'No permitido.')
+            messages.error(request, 'No permitido.')
         except ObjectDoesNotExist:
-            messages.success(request, 'Cantidad permitida.')
+            messages.success(request, 'Artículo agregado.')
             articulo = Inventario.objects.get(id=id)
             total = cantidad * articulo.costo
             last = request.session['last']
@@ -185,6 +187,7 @@ def agregar_articulo(request, id):
 def cancelar_articulo(request, id):
     objeto = get_object_or_404(T_Lista, id=id)
     objeto.delete()
+    messages.success(request, 'Artículo eliminado.')
     return redirect('facturar_cliente')
 
 
