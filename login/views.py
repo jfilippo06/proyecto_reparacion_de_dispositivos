@@ -24,13 +24,14 @@ def sign_in(request):
         if user:
             if user.user_type == 'super_user' or user.user_type == 'admin' or user.user_type == 'employee':
                 login(request, user)
+                messages.error(request, f'Bienvenido {user.username}.')
                 return redirect('computadora')
             elif user.user_type == 'client':
                 login(request, user)
                 return redirect('usuarios')
 
         # form is not valid or user is not authenticated
-        messages.error(request, f'Invalid username or password')
+        messages.error(request, 'Usuario o contraseña no valido.')
         return render(request, 'login/login.html', {'form': form})
 
 
