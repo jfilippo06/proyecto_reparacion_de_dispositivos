@@ -29,11 +29,11 @@ def users(request):
 
         # Check if a user with this username or email already exists
         if User.objects.filter(username=username).exists():
-            messages.error(request, 'Usuario ya existe')
+            messages.error(request, 'Usuario ya existe.')
             return redirect('usuarios')
         elif User.objects.filter(email=email).exists():
             messages.error(
-                request, 'Correo electronico esta siendo utilizado por otro usuarios')
+                request, 'Correo electronico esta siendo utilizado por otro usuarios.')
             return redirect('usuarios')
 
         # Create the user
@@ -41,7 +41,7 @@ def users(request):
             username=username, password=password, email=email, user_type=user_type)
         user.save()
 
-        messages.success(request, 'Usuario registrado correctamente')
+        messages.success(request, 'Usuario registrado correctamente.')
         return redirect('usuarios')
 
 
@@ -51,6 +51,7 @@ def updateUsers(request, id):
     if request.method == "GET":
         user = get_object_or_404(UserProfile, id=id)
         if user.user_type == "super_user" or user.is_active == False:
+            messages.error(request, 'Acción no permitida.')
             return redirect('usuarios')
         return render(request, 'configuracion/editar_usuarios.html', {
             'email': user.email,
@@ -66,7 +67,7 @@ def updateUsers(request, id):
         try:
             user = User.objects.get(pk=id)
         except User.DoesNotExist:
-            messages.error(request, 'Usuario no existe')
+            messages.error(request, 'Usuario no existe.')
             return redirect('usuarios')
 
         username = request.POST['username']
@@ -76,11 +77,11 @@ def updateUsers(request, id):
 
         # Check if a user with this username or email already exists
         if User.objects.filter(username=username).exclude(pk=id).exists():
-            messages.error(request, 'Usuario ya existe')
+            messages.error(request, 'Usuario ya existe.')
             return redirect('usuarios')
         elif User.objects.filter(email=email).exclude(pk=id).exists():
             messages.error(
-                request, 'Correo electronico esta siendo utilizado por otro usuarios')
+                request, 'Correo electronico esta siendo utilizado por otro usuarios.')
             return redirect('usuarios')
 
         # Update the user
@@ -90,7 +91,7 @@ def updateUsers(request, id):
         user.user_type = user_type
         user.save()
 
-        messages.success(request, 'Usuario actualizado correctamente')
+        messages.success(request, 'Usuario actualizado correctamente.')
         return redirect('usuarios')
 
 
@@ -100,6 +101,7 @@ def deleteUsers(request, id):
     user = get_object_or_404(UserProfile, id=id)
     user.is_active = False
     user.save()
+    messages.success(request, 'Usuario deshabilitado correctamente.')
     return redirect('usuarios')
 
 
@@ -114,6 +116,7 @@ def cancelar(request):
 def buscar(request):
     username = request.POST['table_search']
     if username == '':
+        messages.error(request, 'introduzca texto.')
         return redirect('usuarios')
     user = UserProfile.objects.filter(username=username).exclude(
         user_type='super_user').exclude(is_active=False)
@@ -134,6 +137,7 @@ def activar_impuesto(request):
     iva = Impuesto.objects.get(id=1)
     iva.is_active = True
     iva.save()
+    messages.success(request, 'Impuesto habilitado.')
     return redirect('impuesto')
 
 
@@ -143,6 +147,7 @@ def desactivar_impuesto(request):
     iva = Impuesto.objects.get(id=1)
     iva.is_active = False
     iva.save()
+    messages.success(request, 'Impuesto deshabilitado.')
     return redirect('impuesto')
 
 
@@ -155,6 +160,7 @@ def actualizar_impuesto(request):
     impuesto.iva = iva
     impuesto.valor = valor
     impuesto.save()
+    messages.success(request, 'Impuesto actualizado.')
     return redirect('impuesto')
 
 
@@ -172,6 +178,7 @@ def activar_dolar(request):
     dolar = Dolar.objects.get(id=1)
     dolar.is_active = True
     dolar.save()
+    messages.success(request, 'Dolar habilitado.')
     return redirect('dolar')
 
 
@@ -181,6 +188,7 @@ def desactivar_dolar(request):
     dolar = Dolar.objects.get(id=1)
     dolar.is_active = False
     dolar.save()
+    messages.success(request, 'Dolar deshabilitado.')
     return redirect('dolar')
 
 
@@ -193,4 +201,5 @@ def actualizar_dolar(request):
     dolar.moneda = moneda
     dolar.valor = valor
     dolar.save()
+    messages.success(request, 'Dolar actualizado.')
     return redirect('dolar')
