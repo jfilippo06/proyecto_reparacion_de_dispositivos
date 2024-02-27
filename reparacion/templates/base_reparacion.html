@@ -62,6 +62,15 @@
 <script src="{% static 'js/adminlte.min.js' %}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'js/demo.js' %}"></script>
+{% if messages %}
+  {% for message in messages %}
+    <script>
+      document.addEventListener('DOMContentLoaded', (event)=>{
+        alert("{{ message }}");
+      })
+    </script>
+  {% endfor %}
+{% endif %}
 </body>
 </html>
 

@@ -20,6 +20,7 @@ def reparacion(request):
         reparacion = request.POST['table_search']
         user_type = request.POST['user_type']
         if reparacion == '':
+            messages.error(request, 'Introduzca texto.')
             return redirect('reparacion')
         else:
             computadora = Reparacion.objects.filter(
@@ -60,6 +61,7 @@ def registrarReparacion(request):
                                              cedula=cedula, username=nombre, email=correo, estado=estado, is_active=True, client_id=usuario.id)
             save.save()
 
+        messages.success(request, 'Reparación creada.')
         return redirect('reparacion')
 
 
@@ -73,6 +75,7 @@ def deleteReparacion(request, id):
     reparacion = get_object_or_404(Reparacion, id=id)
     reparacion.is_active = False
     reparacion.save()
+    messages.success(request, 'Reparación deshabilitada correctamente.')
     return redirect('reparacion')
 
 
@@ -80,6 +83,7 @@ def updateReparacion(request, id):
     if request.method == "GET":
         reparacion = get_object_or_404(Reparacion, id=id)
         if reparacion.is_active == False:
+            messages.error(request, 'Acción no permitida.')
             return redirect('reparacion')
         return render(request, 'reparacion/editar_reparacion.html', {
             'username': request.user.username,
@@ -105,7 +109,7 @@ def updateReparacion(request, id):
             # Guarda los cambios en la base de datos
             objeto.save()
 
-            messages.error(request, 'Actualizado correctamente')
+            messages.success(request, 'Actualizado correctamente')
             return redirect('reparacion')
         except Reparacion.DoesNotExist:
             messages.error(
@@ -116,9 +120,13 @@ def updateReparacion(request, id):
 def buscar_cedula(request):
     try:
         table_search = request.POST['table_search']
+        if table_search == '':
+            messages.error(
+                request, 'Introduzca una cédula.')
+            return redirect('registrar')
         usuario = Client.objects.get(cedula=table_search)
         return render(request, 'reparacion/registrar.html', {'username': request.user.username, 'cedula': usuario.cedula, 'nombre': usuario.username})
     except Client.DoesNotExist:
         messages.error(
-            request, 'Usuario no existe')
+            request, 'Usuario no existe.')
         return redirect('registrar')
