@@ -1,4 +1,4 @@
-{% extends 'base_venta.html' %}
+{% extends 'base_cliente.html' %}
 {% load static %}
 
 {% block contenido %}
@@ -34,11 +34,11 @@
                 <div class="row">
                   <div class="col-3">
                     <label>Cédula</label>
-                    <input type="number" class="form-control" name="cedula" value="{{ cedula }}" placeholder="Cédula" required>
+                    <input type="number" class="form-control" name="cedula" placeholder="Cédula" required autofocus>
                   </div>
                   <div class="col-3">
                     <label>Nombre</label>
-                    <input type="tel" class="form-control" name="nombre" placeholder="Nombre" required autofocus>
+                    <input type="tel" class="form-control" name="nombre" placeholder="Nombre" required>
                   </div>
                   <div class="col-3">
                     <label>Correo electronico</label>
