@@ -71,7 +71,6 @@
                     <th>N° serie</th>
                     <th>Cantidad</th>
                     <th>Costo</th>
-                    <th></th> 
                   </tr>
                 </thead>
                 <tbody>
@@ -85,11 +84,6 @@
                         <td>{{ computadora.no_serie }}</td>
                         <td>{{ computadora.cantidad }}</td>
                         <td>{{ computadora.costo }}</td>
-                        <form action="{% url 'agregar_articulo' computadora.id %}" method="post">
-                          {% csrf_token %}
-                          <td><input type="number" name="cantidad" style="width: 110px;"></td>
-                          <td><input type="submit" value="Agregar" class="btn btn-block btn-success"></td>
-                        </form>
                     </tr>
                   {% endfor %}
                 </tbody>
