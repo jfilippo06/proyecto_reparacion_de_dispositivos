@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'mantenimiento.apps.MantenimientoConfig',
     'reparacion.apps.ReparacionConfig',
     'cliente.apps.ClienteConfig',
+    'consulta.apps.ConsultaConfig',
 ]
 
 MIDDLEWARE = [
