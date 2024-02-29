@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'reporte.apps.ReporteConfig',
     'mantenimiento.apps.MantenimientoConfig',
     'reparacion.apps.ReparacionConfig',
-    'aplicaciones.apps.AplicacionesConfig',
+    'cliente.apps.ClienteConfig',
 ]
 
 MIDDLEWARE = [
