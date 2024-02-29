@@ -9,9 +9,9 @@ from django.core.paginator import Paginator
 @employee_denied
 def consultar(request):
     if request.method == 'GET':
-        if 'inventario_ids' in request.session:
-            inventario_ids = request.session['inventario_ids']
-            inventario = Inventario.objects.filter(id__in=inventario_ids)
+        if 'inventario_pop' in request.session:
+            inventario_pop = request.session['inventario_pop']
+            inventario = Inventario.objects.filter(id__in=inventario_pop)
         else:
             inventario = []
 
@@ -41,7 +41,7 @@ def consultar(request):
         # Query the database
         inventario = Inventario.objects.filter(
             **query_params).exclude(is_active=False)
-        request.session['inventario_ids'] = list(
+        request.session['inventario_pop'] = list(
             inventario.values_list('id', flat=True))
 
     paginator = Paginator(inventario, 5)
