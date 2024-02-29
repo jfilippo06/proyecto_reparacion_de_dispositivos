@@ -8,10 +8,11 @@ from django.db.models import Sum
 from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura, Cliente_atendido
 from configuracion.models import Impuesto, Dolar
 from inventario.models import Inventario
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
+from reportlab.lib.units import inch
 import datetime
 import io
 import os
@@ -261,7 +262,7 @@ def some_view(request):
 
     # Crea el archivo PDF usando ReportLab
     doc = SimpleDocTemplate(buffer, pagesize=letter,
-                            rightMargin=72, leftMargin=72)
+                                    rightMargin=72, leftMargin=72, topMargin=10, bottomMargin=10)
 
     # Contenedor para los elementos 'Flowable'
     elements = []
@@ -271,6 +272,13 @@ def some_view(request):
 
     # Modifica el estilo del título para alinearlo a la izquierda
     styles["Title"].alignment = 0  # 0 = TA_LEFT
+
+    # Agrega la imagen
+    img_path = 'inventario/static/img/dr_cell.png'
+    img = Image(img_path, width=1*inch, height=1*inch)
+    img.hAlign = 'RIGHT'
+    img.vAlign = 'TOP'
+    elements.append(img)
 
     # Agrega un título
     title = Paragraph("Nota de entrega", styles["Title"])

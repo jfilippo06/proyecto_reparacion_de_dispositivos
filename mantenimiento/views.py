@@ -87,7 +87,7 @@ def copiar_bd(request, id):
     # Copia la base de datos al nuevo directorio
     shutil.copy2(db.link, db_path)
     messages.success(
-            request, 'xopia de seguridad restaurada correctamente.')
+            request, 'Copia de seguridad restaurada correctamente.')
 
     return redirect('restaurar')
 

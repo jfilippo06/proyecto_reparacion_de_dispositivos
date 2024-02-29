@@ -9,9 +9,10 @@ from venta.views import impuesto
 from django.db.models import Q
 from datetime import datetime, time
 from reportlab.lib.pagesizes import letter
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak, Image
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib import colors
+from reportlab.lib.units import inch
 from io import BytesIO
 from django.core.files.base import ContentFile
 from django.http import FileResponse
@@ -98,7 +99,7 @@ def reporteRepaciones(request):
 
             # Crea el archivo PDF usando ReportLab
             doc = SimpleDocTemplate(buffer, pagesize=letter,
-                                    rightMargin=72, leftMargin=72)
+                                    rightMargin=72, leftMargin=72, topMargin=10, bottomMargin=10)
 
             # Contenedor para los elementos 'Flowable'
             elements = []
@@ -109,9 +110,17 @@ def reporteRepaciones(request):
             # Modifica el estilo del título para alinearlo al centro
             styles["Title"].alignment = 1  # 1 = TA_CENTER
 
+            # Agrega la imagen
+            img_path = 'inventario/static/img/dr_cell.png'
+            img = Image(img_path, width=1*inch, height=1*inch)
+            img.hAlign = 'RIGHT'
+            img.vAlign = 'TOP'
+            elements.append(img)
+
             # Agrega un título
             title = Paragraph("Reporte - Reparaciónes", styles["Title"])
             elements.append(title)
+            elements.append(Spacer(1, 10))
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
             elements.append(fecha_b)
@@ -120,7 +129,7 @@ def reporteRepaciones(request):
             elements.append(fecha_e)
 
             # Agrega un espacio
-            elements.append(Spacer(1, 50))
+            elements.append(Spacer(1, 25))
 
             # Define los datos de la tabla
             data = [
@@ -224,7 +233,7 @@ def reporteCliente(request):
 
             # Crea el archivo PDF usando ReportLab
             doc = SimpleDocTemplate(buffer, pagesize=letter,
-                                    rightMargin=72, leftMargin=72)
+                                    rightMargin=72, leftMargin=72, topMargin=10, bottomMargin=10)
 
             # Contenedor para los elementos 'Flowable'
             elements = []
@@ -234,6 +243,13 @@ def reporteCliente(request):
 
             # Modifica el estilo del título para alinearlo al centro
             styles["Title"].alignment = 1  # 1 = TA_CENTER
+
+            # Agrega la imagen
+            img_path = 'inventario/static/img/dr_cell.png'
+            img = Image(img_path, width=1*inch, height=1*inch)
+            img.hAlign = 'RIGHT'
+            img.vAlign = 'TOP'
+            elements.append(img)
 
             # Agrega un título
             title = Paragraph("Reporte - Clientes", styles["Title"])
@@ -246,7 +262,7 @@ def reporteCliente(request):
             elements.append(fecha_e)
 
             # Agrega un espacio
-            elements.append(Spacer(1, 50))
+            elements.append(Spacer(1, 25))
 
             # Define los datos de la tabla
             if iva:
@@ -277,7 +293,7 @@ def reporteCliente(request):
                 if iva:
                     for i in cliente:
                         data.append([i.id, i.nombre_cliente, i.cedula, i.sub_total,
-                                i.iva, i.total, i.n_recibo_id])
+                                     i.iva, i.total, i.n_recibo_id])
                 else:
                     for i in cliente:
                         data.append([i.id, i.nombre_cliente,
@@ -379,7 +395,7 @@ def reporteInventario(request):
 
             # Crea el archivo PDF usando ReportLab
             doc = SimpleDocTemplate(buffer, pagesize=letter,
-                                    rightMargin=72, leftMargin=72)
+                                    rightMargin=72, leftMargin=72, topMargin=10, bottomMargin=10)
 
             # Contenedor para los elementos 'Flowable'
             elements = []
@@ -390,12 +406,21 @@ def reporteInventario(request):
             # Modifica el estilo del título para alinearlo al centro
             styles["Title"].alignment = 1  # 1 = TA_CENTER
 
+            # Agrega la imagen
+            # Asegúrate de cambiar esto por la ruta a tu imagen
+            img_path = 'inventario/static/img/dr_cell.png'
+            # Cambia el tamaño según tus necesidades
+            img = Image(img_path, width=1*inch, height=1*inch)
+            img.hAlign = 'RIGHT'
+            img.vAlign = 'TOP'
+            elements.append(img)
+
             # Agrega un título
             title = Paragraph("Reporte - Inventario", styles["Title"])
             elements.append(title)
 
             # Agrega un espacio
-            elements.append(Spacer(1, 50))
+            elements.append(Spacer(1, 25))
 
             # Define los datos de la tabla
             data = [
@@ -486,7 +511,7 @@ def reporteVenta(request):
 
             # Crea el archivo PDF usando ReportLab
             doc = SimpleDocTemplate(buffer, pagesize=letter,
-                                    rightMargin=72, leftMargin=72)
+                                    rightMargin=72, leftMargin=72, topMargin=10, bottomMargin=10)
 
             # Contenedor para los elementos 'Flowable'
             elements = []
@@ -496,6 +521,13 @@ def reporteVenta(request):
 
             # Modifica el estilo del título para alinearlo al centro
             styles["Title"].alignment = 1  # 1 = TA_CENTER
+
+            # Agrega la imagen
+            img_path = 'inventario/static/img/dr_cell.png'
+            img = Image(img_path, width=1*inch, height=1*inch)
+            img.hAlign = 'RIGHT'
+            img.vAlign = 'TOP'
+            elements.append(img)
 
             # Agrega un título
             title = Paragraph("Reporte - Ventas", styles["Title"])
@@ -508,7 +540,7 @@ def reporteVenta(request):
             elements.append(fecha_e)
 
             # Agrega un espacio
-            elements.append(Spacer(1, 50))
+            elements.append(Spacer(1, 25))
 
             # Define los datos de la tabla
             if iva:
