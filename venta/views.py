@@ -126,7 +126,10 @@ def facturar_cliente(request):
     request.session['sub_total'] = sub_total
     request.session['iva'] = iva
     request.session['total'] = total
-    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'sub_total': sub_total, 'nombre_iva': nombre_iva, 'iva': iva, 'total': total, 'is_active': is_active, 'dolar_is_active': dolar_is_active, 'dolar': total_dolar})
+    contexto_dict = contexto(request)
+    cliente = contexto_dict['cliente']
+    cedula = contexto_dict['cedula']
+    return render(request, 'venta/facturar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj, 'lista': registro, 'sub_total': sub_total, 'nombre_iva': nombre_iva, 'iva': iva, 'total': total, 'is_active': is_active, 'dolar_is_active': dolar_is_active, 'dolar': total_dolar, 'cliente': cliente, 'cedula': cedula})
 
 
 @admin_required

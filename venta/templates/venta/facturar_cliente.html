@@ -137,7 +137,13 @@
                     </div>   
                     <div style="margin-right: 10px;">
                       <a href="{% url 'facturar' %}" class="btn btn-block btn-success" id="facturar">Facturar</a>
-                    </div>   
+                    </div>
+                    <div style="margin-right: 10px;">
+                      <h3 class="card-title">Cliente: {{cliente}}</h3> 
+                    </div>
+                    <div style="margin-right: 10px;">
+                      <h3 class="card-title">Cedula: {{cedula}}</h3> 
+                    </div>
                     <div style="margin-right: 10px;">
                       <h3 class="card-title">Sub-Total: {{ sub_total }}</h3>    
                     </div>   
@@ -163,6 +169,12 @@
                   </div>   
                   <div style="margin-right: 10px;">
                     <a href="{% url 'facturar' %}" class="btn btn-block btn-success" id="facturar">Facturar</a>
+                  </div>
+                  <div style="margin-right: 10px;">
+                    <h3 class="card-title">Cliente: {{cliente}}</h3> 
+                  </div>
+                  <div style="margin-right: 10px;">
+                    <h3 class="card-title">Cedula: {{cedula}}</h3> 
                   </div>
                   <div style="margin-right: 10px;">
                     <h3 class="card-title">Total: {{total}}</h3> 

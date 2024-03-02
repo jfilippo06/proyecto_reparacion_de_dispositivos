@@ -7,7 +7,7 @@ from django.core.paginator import Paginator
 
 @admin_required
 @employee_denied
-def consultar(request):
+def consultar_inventario(request):
     if request.method == 'GET':
         if 'inventario_pop' in request.session:
             inventario_pop = request.session['inventario_pop']
@@ -47,4 +47,4 @@ def consultar(request):
     paginator = Paginator(inventario, 5)
     page_number = request.GET.get('page', 1)
     page_obj = paginator.get_page(page_number)
-    return render(request, 'consulta/consultar.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
+    return render(request, 'consulta/inventario.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
