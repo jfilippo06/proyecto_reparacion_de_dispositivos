@@ -92,6 +92,7 @@ def reporteRepaciones(request):
         elif 'enviar' in request.POST['submit_button']:
             if not reparaciones:
                 # Redirige a otra página (por ejemplo, a 'home')
+                messages.error(request, 'No se encontro información.')
                 return redirect('reporte_reparaciones')
 
             # Crea un objeto de archivo en memoria
@@ -226,6 +227,7 @@ def reporteCliente(request):
         elif 'enviar' in request.POST['submit_button']:
             if not cliente:
                 # Redirige a otra página (por ejemplo, a 'home')
+                messages.error(request, 'No se encontro información.')
                 return redirect('reporte_cliente')
 
             # Crea un objeto de archivo en memoria
@@ -389,6 +391,7 @@ def reporteInventario(request):
         elif 'enviar' in request.POST['submit_button']:
             if not inventario:
                 # Redirige a otra página (por ejemplo, a 'home')
+                messages.error(request, 'No se encontro información.')
                 return redirect('reporte_inventario')
 
             buffer = BytesIO()
@@ -504,6 +507,7 @@ def reporteVenta(request):
         elif 'enviar' in request.POST['submit_button']:
             if not venta:
                 # Redirige a otra página (por ejemplo, a 'home')
+                messages.error(request, 'No se encontro información.')
                 return redirect('reporte_venta')
 
             # Crea un objeto de archivo en memoria
