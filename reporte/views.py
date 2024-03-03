@@ -26,7 +26,7 @@ from django.contrib import messages
 @employee_denied
 def recibo(request):
     if request.method == 'GET':
-        direccion = Direccion_de_factura.objects.all()
+        direccion = Direccion_de_factura.objects.all().order_by('-id')
         paginator = Paginator(direccion, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)

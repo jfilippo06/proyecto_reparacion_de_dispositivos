@@ -5,3 +5,4 @@
 
 #Archivos
 db.sqlite3
+.env

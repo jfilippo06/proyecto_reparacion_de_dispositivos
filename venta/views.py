@@ -5,7 +5,9 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.conf import settings
 from django.db.models import Sum
-from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura, Cliente_atendido
+from django.core.mail import EmailMessage
+from django.core.mail import BadHeaderError
+from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura, Cliente_atendido, Correo
 from configuracion.models import Impuesto, Dolar
 from inventario.models import Inventario
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer, Image
@@ -14,6 +16,7 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib import colors
 from reportlab.lib.units import inch
 import datetime
+import requests
 import io
 import os
 
@@ -265,7 +268,7 @@ def some_view(request):
 
     # Crea el archivo PDF usando ReportLab
     doc = SimpleDocTemplate(buffer, pagesize=letter,
-                                    rightMargin=72, leftMargin=72, topMargin=10, bottomMargin=10)
+                            rightMargin=72, leftMargin=72, topMargin=10, bottomMargin=10)
 
     # Contenedor para los elementos 'Flowable'
     elements = []
@@ -359,6 +362,7 @@ def some_view(request):
 
     # Crea la ruta al archivo
     file_path = os.path.join(dir_path, f'recibo_{n_recibo}.pdf')
+    request.session['file_path'] = file_path
 
     # Guarda el PDF en el archivo
     with open(file_path, 'wb') as f:
@@ -388,6 +392,38 @@ def sumar_n_recibo():
     save.save()
 
 
+def send_email(request):
+    cedula = request.session['cedula']
+    user_email = Client.objects.get(cedula=cedula).email
+    file_path = request.session['file_path']
+
+    try:
+        # Intenta hacer una solicitud a un sitio web confiable.
+        response = requests.get('http://www.google.com', timeout=5)
+        # Lanza una excepción si la respuesta no fue exitosa.
+        response.raise_for_status()
+
+        # Si la solicitud fue exitosa, procede a enviar el correo electrónico.
+        email = EmailMessage(
+            'Hola',
+            'Aquí está el PDF que solicitaste.',
+            settings.EMAIL_HOST_USER,
+            [user_email]
+        )
+        email.attach_file(file_path)
+        email.send()
+        messages.success(request, 'Correo enviado exitosamente.')
+
+    except (requests.ConnectionError, requests.Timeout) as e:
+        # Si hubo un error en la solicitud, maneja la situación aquí.
+        contexto_dict = contexto(request)
+        cliente = contexto_dict['cliente']
+        n_recibo = contexto_dict['n_recibo']
+        id_cliente = contexto_dict['id_cliente']
+        correo = Correo.objects.create(nombre_cliente= cliente, cedula=cedula, n_recibo_id=n_recibo, cliente_id= id_cliente, email= user_email, link= file_path)
+        correo.save()
+        messages.error(request, 'Revise su conexión a internet, correo no enviado.')
+
 @admin_required
 @employee_denied
 def facturar(request):
@@ -395,6 +431,7 @@ def facturar(request):
     registrar_totales(request)
     restar_inventario(request)
     direccion = some_view(request)
+    send_email(request)
     limpiar_compra(request)
     sumar_n_recibo()
     return render(request, 'venta/ver_factura.html', {'direccion': direccion})
