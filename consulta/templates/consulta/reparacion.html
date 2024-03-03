@@ -1,4 +1,4 @@
-{% extends 'base_reparacion.html' %}
+{% extends 'base_consulta.html' %}
 {% load static %}
 
 {% block contenido %}
@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Reparaciónes</h1>
+            <h1>Consulta</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -28,9 +28,6 @@
                   <form action="" method="post">
                     {% csrf_token %}
                     <div style="display: flex; flex-direction: row; align-items: baseline;">
-                      <div style="margin-right: 10px;">
-                        <a href="{% url 'registrar' %}" class="btn btn-block btn-success">Ingresar reparación</a>
-                      </div> 
                       <div style="margin-right: 10px;">
                         <select class="form-control" name="user_type">
                           <option value="username" >Cliente</option>
@@ -59,8 +56,6 @@
                       <th>Cliente</th>
                       <th>Cédula</th>
                       <th>Estado</th>
-                      <th></th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -79,8 +74,6 @@
                           {% elif reparacion.estado == "TR" %}
                               <td>Terminado</td>
                           {% endif %}
-                          <td><a href="{% url 'actualizar' reparacion.id %}" class="btn btn-block btn-warning">Editar</a></td>
-                          <td><a href="{% url 'deshabilitar' reparacion.id %}" class="btn btn-block btn-danger">Deshabilitar</a></td>
                       </tr>
                     {% endfor %}
                   </tbody>

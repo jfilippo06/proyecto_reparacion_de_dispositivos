@@ -1,4 +1,4 @@
-{% extends 'base_reparacion.html' %}
+{% extends 'base_consulta.html' %}
 {% load static %}
 
 {% block contenido %}
@@ -9,7 +9,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Reparaciónes</h1>
+            <h1>Consulta</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -29,12 +29,10 @@
                     {% csrf_token %}
                     <div style="display: flex; flex-direction: row; align-items: baseline;">
                       <div style="margin-right: 10px;">
-                        <a href="{% url 'registrar' %}" class="btn btn-block btn-success">Ingresar reparación</a>
-                      </div> 
-                      <div style="margin-right: 10px;">
                         <select class="form-control" name="user_type">
                           <option value="username" >Cliente</option>
                           <option value="cedula" >Cédula</option>
+                          <option value="email" >Correo eléctronico</option>
                         </select> 
                       </div>               
                       <div class="input-group input-group-sm" style="width: 150px;">
@@ -53,34 +51,18 @@
                   <thead>
                     <tr>
                       <th>ID</th>
-                      <th>Artículo</th>
-                      <th>Descripción</th>
-                      <th>Cantidad</th>
                       <th>Cliente</th>
                       <th>Cédula</th>
-                      <th>Estado</th>
-                      <th></th>
-                      <th></th>
+                      <th>Correo eléctronico</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {% for reparacion in reparaciones %}
+                    {% for clientes in cliente %}
                       <tr>
-                          <td>{{ reparacion.id }}</td>
-                          <td>{{ reparacion.articulo }}</td>
-                          <td>{{ reparacion.descripcion }}</td>
-                          <td>{{ reparacion.cantidad }}</td>
-                          <td>{{ reparacion.username }}</td>
-                          <td>{{ reparacion.cedula }}</td>
-                          {% if reparacion.estado == "ER" %}
-                            <td>En revision</td>
-                          {% elif reparacion.estado == "EC" %}
-                              <td>En curso</td>
-                          {% elif reparacion.estado == "TR" %}
-                              <td>Terminado</td>
-                          {% endif %}
-                          <td><a href="{% url 'actualizar' reparacion.id %}" class="btn btn-block btn-warning">Editar</a></td>
-                          <td><a href="{% url 'deshabilitar' reparacion.id %}" class="btn btn-block btn-danger">Deshabilitar</a></td>
+                          <td>{{ clientes.id }}</td>
+                          <td>{{ clientes.username }}</td>
+                          <td>{{ clientes.cedula }}</td>
+                          <td>{{ clientes.email }}</td>
                       </tr>
                     {% endfor %}
                   </tbody>
@@ -88,18 +70,18 @@
               </div>
               <div class="card-footer clearfix">
                 <ul class="pagination pagination-sm m-0 float-right">
-                    {% if reparaciones.has_previous %}
+                    {% if cliente.has_previous %}
                         <li class="page-item"><a class="page-link" href="?page=1">&laquo; Primero</a></li>
-                        <li class="page-item"><a class="page-link" href="?page={{ reparaciones.previous_page_number }}">Anterior</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ cliente.previous_page_number }}">Anterior</a></li>
                     {% endif %}
             
                     <span class="current page-item active">
-                        <a class="page-link">Página {{ reparaciones.number }} de {{ reparaciones.paginator.num_pages }}.</a>
+                        <a class="page-link">Página {{ cliente.number }} de {{ cliente.paginator.num_pages }}.</a>
                     </span>
             
-                    {% if reparaciones.has_next %}
-                        <li class="page-item"><a class="page-link" href="?page={{ reparaciones.next_page_number }}">Siguiente</a></li>
-                        <li class="page-item"><a class="page-link" href="?page={{ reparaciones.paginator.num_pages }}">Último &raquo;</a></li>
+                    {% if cliente.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ cliente.next_page_number }}">Siguiente</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ cliente.paginator.num_pages }}">Último &raquo;</a></li>
                     {% endif %}
                 </ul>
               </div>
