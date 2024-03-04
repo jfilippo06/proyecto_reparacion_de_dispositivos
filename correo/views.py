@@ -1,18 +1,20 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from login.decorators import admin_required, employee_denied
 from django.core.paginator import Paginator
-from venta.models import Correo
+from correo.models import Correo_no_enviado, Correo_enviado
+from venta.models import Client
 from django.conf import settings
 from django.contrib import messages
 from django.core.mail import EmailMessage
 import requests
 # Create your views here.
 
+
 @admin_required
 @employee_denied
 def correo(request):
     if request.method == 'GET':
-        correo = Correo.objects.all()
+        correo = Correo_no_enviado.objects.all()
         paginator = Paginator(correo, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
@@ -24,7 +26,7 @@ def correo(request):
             messages.error(request, 'Introduzca texto.')
             return redirect('correo')
         else:
-            lista = Correo.objects.filter(
+            lista = Correo_no_enviado.objects.filter(
                 **{user_type+'__iexact': correo})
         paginator = Paginator(lista, 15)
         page_number = request.GET.get('page', 1)
@@ -34,9 +36,14 @@ def correo(request):
 
 
 def enviar_correo(request, id):
-    correo = Correo.objects.get(id=id)
+    correo = Correo_no_enviado.objects.get(id=id)
+    cliente = correo.nombre_cliente
+    cedula = correo.cedula
     email = correo.email
+    user_email = Client.objects.get(cedula=cedula).email
     file_path = correo.link
+    n_recibo = correo.n_recibo_id
+    id_cliente = correo.cliente_id
 
     try:
         # Intenta hacer una solicitud a un sitio web confiable.
@@ -53,11 +60,40 @@ def enviar_correo(request, id):
         )
         email.attach_file(file_path)
         email.send()
+        enviar = Correo_enviado.objects.create(
+            nombre_cliente=cliente, cedula=cedula, email=user_email, n_recibo_id=n_recibo, cliente_id=id_cliente, link=file_path)
+        enviar.save()
         correo.delete()
         messages.success(request, 'Correo enviado exitosamente.')
-        return redirect('correo')
+        return redirect('correo_no_enviado')
 
     except (requests.ConnectionError, requests.Timeout) as e:
         # Si hubo un error en la solicitud, maneja la situación aquí.
-        messages.error(request, 'Revise su conexión a internet, correo no enviado.')
-        return redirect('correo')
+        messages.error(
+            request, 'Revise su conexión a internet, correo no enviado.')
+        return redirect('correo_no_enviado')
+
+
+@admin_required
+@employee_denied
+def correo_enviado(request):
+    if request.method == 'GET':
+        correo = Correo_enviado.objects.all().order_by('-id')
+        paginator = Paginator(correo, 15)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+
+    elif request.method == 'POST':
+        correo = request.POST['table_search']
+        user_type = request.POST['user_type']
+        if correo == '':
+            messages.error(request, 'Introduzca texto.')
+            return redirect('correo_enviado')
+        else:
+            lista = Correo_enviado.objects.filter(
+                **{user_type+'__iexact': correo})
+        paginator = Paginator(lista, 15)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+
+    return render(request, 'correo/correo_enviado.html', {'username': request.user.username, 'correos': page_obj})

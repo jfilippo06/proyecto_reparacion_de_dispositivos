@@ -22,18 +22,18 @@
           <div class="col-12">
             <div class="card card-primary">
               <div class="card-header">
-                <h3 class="card-title" style="margin-top: 10px;">Correos no enviados</h3>
+                <h3 class="card-title" style="margin-top: 10px;">Correos enviados</h3>
   
                 <div class="card-tools">
                   <form action="" method="post">
                     {% csrf_token %}
-                    <div style="display: flex; flex-direction: row; align-items: baseline;">
+                    <div style="display: flex; flex-direction: row; align-items: baseline;"> 
                       <div style="margin-right: 10px;">
-                        <a href="" class="btn btn-block btn-success">Enviar todos los correos</a>
+                        <a href="" class="btn btn-block btn-success">Crear un nuevo correo</a>
                       </div>
                       <div style="margin-right: 10px;">
-                        <a href="{% url 'correo_enviado' %}" class="btn btn-block btn-success">Volver</a>
-                      </div>
+                        <a href="{% url 'correo_no_enviado' %}" class="btn btn-block btn-success">Correos no enviados</a>
+                      </div> 
                       <div style="margin-right: 10px;">
                         <select class="form-control" name="user_type">
                           <option value="nombre_cliente" >Cliente</option>
@@ -61,7 +61,6 @@
                       <th>Correo elétronico</th>
                       <th>N° recibo</th>
                       <th>Fecha</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -73,7 +72,6 @@
                           <td>{{ correo.email }}</td>
                           <td>{{ correo.n_recibo_id }}</td>
                           <td>{{ correo.fecha_creacion }}</td>
-                          <td><a href="{% url 'enviar_correo' correo.id %}" class="btn btn-block btn-success">Enviar correo</a></td>
                       </tr>
                     {% endfor %}
                   </tbody>

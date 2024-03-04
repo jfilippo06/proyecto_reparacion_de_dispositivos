@@ -6,8 +6,8 @@ from django.contrib import messages
 from django.conf import settings
 from django.db.models import Sum
 from django.core.mail import EmailMessage
-from django.core.mail import BadHeaderError
-from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura, Cliente_atendido, Correo
+from venta.models import Client, N_Recibo, T_Lista, Factura, Totales, Direccion_de_factura, Cliente_atendido
+from correo.models import Correo_enviado, Correo_no_enviado
 from configuracion.models import Impuesto, Dolar
 from inventario.models import Inventario
 from reportlab.platypus import SimpleDocTemplate, Paragraph, Table, TableStyle, Spacer, Image
@@ -396,6 +396,10 @@ def send_email(request):
     cedula = request.session['cedula']
     user_email = Client.objects.get(cedula=cedula).email
     file_path = request.session['file_path']
+    contexto_dict = contexto(request)
+    cliente = contexto_dict['cliente']
+    n_recibo = contexto_dict['n_recibo']
+    id_cliente = contexto_dict['id_cliente']
 
     try:
         # Intenta hacer una solicitud a un sitio web confiable.
@@ -412,15 +416,13 @@ def send_email(request):
         )
         email.attach_file(file_path)
         email.send()
+        correo = Correo_enviado.objects.create(nombre_cliente= cliente, cedula=cedula, n_recibo_id=n_recibo, cliente_id= id_cliente, email= user_email, link= file_path)
+        correo.save()
         messages.success(request, 'Correo enviado exitosamente.')
 
     except (requests.ConnectionError, requests.Timeout) as e:
         # Si hubo un error en la solicitud, maneja la situación aquí.
-        contexto_dict = contexto(request)
-        cliente = contexto_dict['cliente']
-        n_recibo = contexto_dict['n_recibo']
-        id_cliente = contexto_dict['id_cliente']
-        correo = Correo.objects.create(nombre_cliente= cliente, cedula=cedula, n_recibo_id=n_recibo, cliente_id= id_cliente, email= user_email, link= file_path)
+        correo = Correo_no_enviado.objects.create(nombre_cliente= cliente, cedula=cedula, n_recibo_id=n_recibo, cliente_id= id_cliente, email= user_email, link= file_path)
         correo.save()
         messages.error(request, 'Revise su conexión a internet, correo no enviado.')
 
