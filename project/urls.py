@@ -29,4 +29,5 @@ urlpatterns = [
     path('reparacion/', include('reparacion.urls')),
     path('cliente/', include('cliente.urls')),
     path('consulta/', include('consulta.urls')),
+    path('correo/', include('correo.urls')),
 ]
