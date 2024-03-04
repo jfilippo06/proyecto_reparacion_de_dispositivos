@@ -1,0 +1,87 @@
+{% extends 'base_correo.html' %}
+{% load static %}
+
+{% block contenido %}
+
+<div class="content-wrapper" style="min-height: 1246.5px;">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1>Servicios</h1>
+        </div>
+      </div>
+    </div><!-- /.container-fluid -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        <!-- left column -->
+        <div class="col-md-12">
+          <!-- general form elements -->
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Crear correo</h3>
+              <div class="card-tools">
+                  <div style="display: flex; flex-direction: row; align-items: baseline;">
+                    <div style="margin-right: 10px;">
+                      <a href="{% url 'correo_enviado' %}" class="btn btn-block btn-success">Volver</a>
+                    </div>
+                  </div>
+              </div>
+            </div>
+            
+            <!-- /.card-header -->
+            <!-- form start -->
+            <form method="POST" action="{% url 'usuarios' %}">
+              {% csrf_token %}
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-6">
+                    <label>Para</label>
+                    <input type="email" class="form-control" name="correo" placeholder="Coreo eléctronico" required autofocus>
+                  </div>
+                  <div class="col-6">
+                    <label>Asunto</label>
+                    <input type="text" class="form-control" name="asunto" placeholder="Asunto" required>
+                  </div>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-12">
+                    <label>Textarea</label>
+                    <textarea class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                  </div>
+                  <div class="col-12">
+                      <label for="exampleInputFile">File input</label>
+                      <div class="input-group">
+                        <div class="custom-file">
+                          <input type="file" class="custom-file-input" id="exampleInputFile">
+                          <label class="custom-file-label" for="exampleInputFile">Choose file</label>
+                        </div>
+                      </div>
+                  </div>                
+                </div>
+              </div>
+              <!-- /.card-body -->
+
+              <div class="card-footer">
+                <button type="submit" class="btn btn-primary">Enviar correo</button>
+              </div>
+            </form>
+          </div>
+          <!-- /.card -->
+        </div>
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+
+</div>
+
+{% endblock %}

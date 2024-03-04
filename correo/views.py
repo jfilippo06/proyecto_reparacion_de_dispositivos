@@ -97,3 +97,15 @@ def correo_enviado(request):
         page_obj = paginator.get_page(page_number)
 
     return render(request, 'correo/correo_enviado.html', {'username': request.user.username, 'correos': page_obj})
+
+
+@admin_required
+@employee_denied
+def crear_correo(request):
+    if request.method == 'GET':
+        pass
+
+    elif request.method == 'POST':
+        pass
+
+    return render(request, 'correo/crear_correo.html', {'username': request.user.username})

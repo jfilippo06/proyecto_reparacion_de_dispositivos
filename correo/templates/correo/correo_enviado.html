@@ -29,7 +29,7 @@
                     {% csrf_token %}
                     <div style="display: flex; flex-direction: row; align-items: baseline;"> 
                       <div style="margin-right: 10px;">
-                        <a href="" class="btn btn-block btn-success">Crear un nuevo correo</a>
+                        <a href="{% url 'crear_correo' %}" class="btn btn-block btn-success">Crear un nuevo correo</a>
                       </div>
                       <div style="margin-right: 10px;">
                         <a href="{% url 'correo_no_enviado' %}" class="btn btn-block btn-success">Correos no enviados</a>
