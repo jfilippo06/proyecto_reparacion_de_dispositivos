@@ -123,6 +123,14 @@ def reporteRepaciones(request):
             elements.append(title)
             elements.append(Spacer(1, 10))
 
+            ahora = datetime.now()
+            fecha = ahora.strftime("%d/%m/%Y")
+            paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
+            elements.append(paragraph)
+
+            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
+            elements.append(remitente)
+
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
             elements.append(fecha_b)
 
@@ -256,6 +264,14 @@ def reporteCliente(request):
             # Agrega un título
             title = Paragraph("Reporte - Clientes", styles["Title"])
             elements.append(title)
+
+            ahora = datetime.now()
+            fecha = ahora.strftime("%d/%m/%Y")
+            paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
+            elements.append(paragraph)
+
+            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
+            elements.append(remitente)
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
             elements.append(fecha_b)
@@ -422,6 +438,14 @@ def reporteInventario(request):
             title = Paragraph("Reporte - Inventario", styles["Title"])
             elements.append(title)
 
+            ahora = datetime.now()
+            fecha = ahora.strftime("%d/%m/%Y")
+            paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
+            elements.append(paragraph)
+
+            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
+            elements.append(remitente)
+
             # Agrega un espacio
             elements.append(Spacer(1, 25))
 
@@ -536,6 +560,14 @@ def reporteVenta(request):
             # Agrega un título
             title = Paragraph("Reporte - Ventas", styles["Title"])
             elements.append(title)
+
+            ahora = datetime.now()
+            fecha = ahora.strftime("%d/%m/%Y")
+            paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
+            elements.append(paragraph)
+
+            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
+            elements.append(remitente)
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
             elements.append(fecha_b)
