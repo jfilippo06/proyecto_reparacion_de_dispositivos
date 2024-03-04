@@ -58,7 +58,7 @@ def consultar_inventario(request):
 @employee_denied
 def consultar_reparacion(request):
     if request.method == 'GET':
-        reparacion = Reparacion.objects.all().exclude(is_active=False)
+        reparacion = Reparacion.objects.all().exclude(is_active=False).order_by('-id')
         paginator = Paginator(reparacion, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
@@ -83,7 +83,7 @@ def consultar_reparacion(request):
 @employee_denied
 def consultar_cliente(request):
     if request.method == 'GET':
-        cliente = Client.objects.all()
+        cliente = Client.objects.all().order_by('-id')
         paginator = Paginator(cliente, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
