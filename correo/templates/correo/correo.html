@@ -29,6 +29,9 @@
                     {% csrf_token %}
                     <div style="display: flex; flex-direction: row; align-items: baseline;">
                       <div style="margin-right: 10px;">
+                        <a href="" class="btn btn-block btn-success">Crear un nuevo correo</a>
+                      </div> 
+                      <div style="margin-right: 10px;">
                         <a href="{% url 'correo' %}" class="btn btn-block btn-success">Enviar todos los correos</a>
                       </div> 
                       <div style="margin-right: 10px;">
@@ -70,7 +73,7 @@
                           <td>{{ correo.email }}</td>
                           <td>{{ correo.n_recibo_id }}</td>
                           <td>{{ correo.fecha_creacion }}</td>
-                          <td><a href="{% url 'deshabilitar' correo.id %}" class="btn btn-block btn-success">Enviar correo</a></td>
+                          <td><a href="{% url 'enviar_correo' correo.id %}" class="btn btn-block btn-success">Enviar correo</a></td>
                       </tr>
                     {% endfor %}
                   </tbody>
