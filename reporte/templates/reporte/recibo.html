@@ -53,7 +53,8 @@
                       <th>ID</th>
                       <th>Cliente</th>
                       <th>Cédula</th>
-                      <th>N° recibo </th>
+                      <th>N° recibo</th>
+                      <th>Fecha</th>
                       <th>Recibo</th>
                     </tr>
                   </thead>
@@ -64,6 +65,7 @@
                           <td>{{ recibo.nombre_cliente }}</td>
                           <td>{{ recibo.cedula }}</td>
                           <td>{{ recibo.n_recibo_id }}</td>
+                          <td>{{ recibo.fecha_creacion }}</td>
                           <td><a href="{{ recibo.link }}" class="btn btn-block btn-success">Ver</a></td>
                       </tr>
                     {% endfor %}

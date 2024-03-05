@@ -29,7 +29,7 @@
                     {% csrf_token %}
                     <div style="display: flex; flex-direction: row; align-items: baseline;">
                       <div style="margin-right: 10px;">
-                        <a href="" class="btn btn-block btn-success">Enviar todos los correos</a>
+                        <a href="{% url 'enviar_todo' %}" class="btn btn-block btn-success">Enviar todos los correos</a>
                       </div>
                       <div style="margin-right: 10px;">
                         <a href="{% url 'correo_enviado' %}" class="btn btn-block btn-success">Volver</a>

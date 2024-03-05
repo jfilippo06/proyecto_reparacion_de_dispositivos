@@ -47,6 +47,8 @@ class Direccion_de_factura(models.Model):
     cedula = models.IntegerField()
     cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
 
 
 class Cliente_atendido(models.Model):

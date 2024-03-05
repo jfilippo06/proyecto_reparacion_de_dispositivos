@@ -55,10 +55,12 @@
                         <th>Iva</th>
                         <th>Total</th>
                         <th>N° Recibo</th>
-                    {% elif not is_active %}
+                        <th>Fecha</th>
+                        {% elif not is_active %}
                         <th>ID</th>
                         <th>Total</th>
                         <th>N° Recibo</th>
+                        <th>Fecha</th>
                     {% endif %}
                     </tr>
                   </thead>
@@ -71,10 +73,12 @@
                             <td>{{ venta.iva }}</td>
                             <td>{{ venta.total }}</td>
                             <td>{{ venta.n_recibo_id }}</td>
-                        {% elif not is_active %}
+                            <td>{{ venta.fecha_creacion }}</td>
+                            {% elif not is_active %}
                             <td>{{ venta.id }}</td>
                             <td>{{ venta.total }}</td>
                             <td>{{ venta.n_recibo_id }}</td>
+                            <td>{{ venta.fecha_creacion }}</td>
                         {% endif %}
                       </tr>
                     {% endfor %}

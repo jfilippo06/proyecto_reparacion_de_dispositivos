@@ -21,6 +21,8 @@ class Migration(migrations.Migration):
                 ('cedula', models.IntegerField()),
                 ('cliente', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='venta.client')),
                 ('n_recibo', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='venta.n_recibo')),
+                ('fecha_creacion', models.DateTimeField(auto_now_add=True)),
+                ('fecha_actualizacion', models.DateTimeField(auto_now=True)),
             ],
         ),
         migrations.CreateModel(

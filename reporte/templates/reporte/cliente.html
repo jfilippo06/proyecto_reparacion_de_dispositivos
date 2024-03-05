@@ -66,13 +66,15 @@
                         <th>Sub total</th>
                         <th>Iva</th>
                         <th>Total</th>
-                        <th>N° recibo </th>
-                    {% elif not is_active %}
+                        <th>N° recibo</th>
+                        <th>Fecha</th>
+                        {% elif not is_active %}
                         <th>ID</th>
                         <th>Cliente</th>
                         <th>Cédula</th>
                         <th>Total</th>
                         <th>N° recibo </th>
+                        <th>Fecha</th>
                     {% endif %}
                     </tr>
                 </thead>
@@ -87,12 +89,14 @@
                             <td>{{ i.iva }}</td>
                             <td>{{ i.total }}</td>
                             <td>{{ i.n_recibo_id }}</td>
-                        {% elif not is_active %}
+                            <td>{{ i.fecha_creacion }}</td>
+                            {% elif not is_active %}
                             <td>{{ i.id }}</td>
                             <td>{{ i.nombre_cliente }}</td>
                             <td>{{ i.cedula }}</td>
                             <td>{{ i.total }}</td>
                             <td>{{ i.n_recibo_id }}</td>
+                            <td>{{ i.fecha_creacion }}</td>
                         {% endif %}
                       </tr>
                     {% endfor %}
