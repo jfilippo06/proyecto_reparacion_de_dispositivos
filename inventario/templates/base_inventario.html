@@ -16,7 +16,6 @@
   <link rel="stylesheet" href="{% static 'css/adminlte.min.css' %}">
   <!-- Google Font: Source Sans Pro -->
   <link href="{% static 'css/css.css' %}" rel="stylesheet">
-  <link href="{% static 'css/message.css' %}" rel="stylesheet">
 </head>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
@@ -46,8 +45,8 @@
   <footer class="main-footer">
     <strong>Dirección:</strong>
     Local 0-90, La noria, Puerto Cabello, Edo. Carabobo, Venezuela
-    <div class="float-right d-none d-sm-inline-block" id="myElement">
-      <b>Desarrollado en la UPTPC</b>
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Desarrollado por Dajerckson Perales</b>
     </div>
   </footer>
 
@@ -68,13 +67,8 @@
 <!-- AdminLTE for demo purposes -->
 <script src="{% static 'js/demo.js' %}"></script>
 <script src="{% static 'js/popper.min.js' %}"></script>
-<script src="{% static 'js/tippy-bundle.umd.min.js' %}"></script>
 <script src="{% static 'js/message.js' %}"></script>
 <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
-<script>
-  tippy('#myElement', {
-    content: 'Universidad Politénica Territorial de Puerto Cabello.',
-  });
 </script>
 {% if messages %}
   {% for message in messages %}

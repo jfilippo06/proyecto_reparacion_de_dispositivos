@@ -284,12 +284,20 @@ def some_view(request):
     title = Paragraph("Dr. Cell", styles["Title"])
     elements.append(title)
 
+    rif = Paragraph("RIF: XXXXXXXXX", styles["Title"])
+    elements.append(rif)
+
     nota = Paragraph("Nota de entrega", styles["Title"])
     elements.append(nota)
 
     # Agrega un párrafo
     paragraph = Paragraph(f"Fecha: {fecha}", styles["Normal"])
     elements.append(paragraph)
+
+    hora_actual = datetime.datetime.now()
+    hora_formateada = hora_actual.strftime("%I:%M %p")
+    hora = Paragraph(f"Hora: {hora_formateada}", styles["Normal"])
+    elements.append(hora)
 
     recibo = Paragraph(f"Recibo N°: {n_recibo}", styles["Normal"])
     elements.append(recibo)
@@ -300,8 +308,11 @@ def some_view(request):
     id_client = Paragraph(f"C.I: {cedula}", styles["Normal"])
     elements.append(id_client)
 
-    tecnico = Paragraph(f"Técnico: {usuario}", styles["Normal"])
+    tecnico = Paragraph(f"Técnico: {request.user.username}", styles["Normal"])
     elements.append(tecnico)
+
+    garantia = Paragraph("Garantía: 15 días habiles de garantía", styles["Normal"])
+    elements.append(garantia)
 
     # Define los datos de la tabla
     data = [

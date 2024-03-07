@@ -10,33 +10,33 @@ def create_reparaciones(apps, schema_editor):
     # Crear el primer artículo de
 
     client1 = Client.objects.create(
-        cedula=1, username='exampleClient', email='client1@example.com')
+        cedula=30357801, username='Dajerckson Perales', email='jossemarzal12@gamil.com')
     client1.save()
 
     client2 = Client.objects.create(
-        cedula=2, username='exampleClient2', email='client2@example.com')
+        cedula=12824277, username='Danubia Marzal', email='danuviamarzal14@gmail.com')
     client2.save()
     
     client3 = Client.objects.create(
-        cedula=3, username='exampleClient3', email='client3@example.com')
+        cedula=8724277, username='Carolina Moreno', email='alba32@gmail.com')
     client3.save()
     
     client4 = Client.objects.create(
-        cedula=4, username='exampleClient4', email='client4@example.com')
+        cedula=1425237, username='Raiza Galindez', email='raizagalindez@gmail.com')
     client4.save()
     
     client5 = Client.objects.create(
-        cedula=5, username='exampleClient5', email='client5@example.com')
+        cedula=15908503, username='Roi Peralez', email='roikperalez@gmail.com')
     client5.save()
     
     client6 = Client.objects.create(
-        cedula=6, username='exampleClient6', email='client6@example.com')
+        cedula=11222333, username='Maria Gonzalez', email='maria_gonzalez@gmail.com')
     client6.save()
     
     articulo1_reparaciones = Reparacion.objects.create(
-        articulo='Articulo 1',
-        descripcion='Esta es una descripción del artículo 1.',
-        cantidad=10,
+        articulo='Telefono Xiaomi Redmi 9',
+        descripcion='Pantalla dañada',
+        cantidad=1,
         client_id=client1.id,
         cedula=client1.cedula,
         username=client1.username,
@@ -48,9 +48,9 @@ def create_reparaciones(apps, schema_editor):
 
     
     articulo2_reparaciones = Reparacion.objects.create(
-        articulo='Articulo 2',
-        descripcion='Esta es una descripción del artículo 2.',
-        cantidad=10,
+        articulo='Telefono Xiaomi Redmi 10',
+        descripcion='Pin de carga',
+        cantidad=1,
         client_id=client2.id,
         cedula=client2.cedula,
         username=client2.username,
@@ -62,8 +62,8 @@ def create_reparaciones(apps, schema_editor):
 
     
     articulo3_reparaciones = Reparacion.objects.create(
-        articulo='Articulo 3',
-        descripcion='Esta es una descripción del artículo 3.',
+        articulo='Computadoro Lenovo S700',
+        descripcion='Cambio de pantalla',
         cantidad=2,
         client_id=client3.id,
         cedula=client3.cedula,
@@ -76,9 +76,9 @@ def create_reparaciones(apps, schema_editor):
 
     
     articulo4_reparaciones = Reparacion.objects.create(
-        articulo='Articulo 4',
-        descripcion='Esta es una descripción del artículo 4.',
-        cantidad=2,
+        articulo='Computadora Dell XB890',
+        descripcion='Cambiar fuente de poder',
+        cantidad=1,
         client_id=client4.id,
         cedula=client4.cedula,
         username=client4.username,
@@ -90,9 +90,9 @@ def create_reparaciones(apps, schema_editor):
 
     
     articulo5_reparaciones = Reparacion.objects.create(
-        articulo='Articulo 5',
-        descripcion='Esta es una descripción del artículo 5.',
-        cantidad=5,
+        articulo='Iphone 11 Pro+',
+        descripcion='Pantalla dañada',
+        cantidad=1,
         client_id=client5.id,
         cedula=client5.cedula,
         username=client5.username,
@@ -104,8 +104,8 @@ def create_reparaciones(apps, schema_editor):
 
     
     articulo6_reparaciones = Reparacion.objects.create(
-        articulo='Articulo 6',
-        descripcion='Esta es una descripción del artículo 6.',
+        articulo='Computadora Lenovo S2000',
+        descripcion='Actualizar sistema operativo a Windows 10 64bits',
         cantidad=10,
         client_id=client6.id,
         cedula=client6.cedula,

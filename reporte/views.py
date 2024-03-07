@@ -120,6 +120,9 @@ def reporteRepaciones(request):
             title1 = Paragraph("Dr. Cell", styles["Title"])
             elements.append(title1)
 
+            rif = Paragraph("RIF: XXXXXXXXX", styles["Title"])
+            elements.append(rif)
+
             title2 = Paragraph("Reporte - Reparaciónes", styles["Title"])
             elements.append(title2)
             elements.append(Spacer(1, 10))
@@ -129,8 +132,13 @@ def reporteRepaciones(request):
             paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
             elements.append(paragraph)
 
-            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
-            elements.append(remitente)
+            hora_actual = datetime.now()
+            hora_formateada = hora_actual.strftime("%I:%M %p")
+            hora = Paragraph(f"Hora: {hora_formateada}", styles["Normal"])
+            elements.append(hora)
+
+            tecnico = Paragraph(f"Técnico: {request.user.username}", styles["Normal"])
+            elements.append(tecnico)
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
             elements.append(fecha_b)
@@ -265,6 +273,9 @@ def reporteCliente(request):
             title1 = Paragraph("Dr. Cell", styles["Title"])
             elements.append(title1)
 
+            rif = Paragraph("RIF: XXXXXXXXX", styles["Title"])
+            elements.append(rif)
+
             title2 = Paragraph("Reporte - Clientes", styles["Title"])
             elements.append(title2)
 
@@ -273,8 +284,13 @@ def reporteCliente(request):
             paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
             elements.append(paragraph)
 
-            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
-            elements.append(remitente)
+            hora_actual = datetime.now()
+            hora_formateada = hora_actual.strftime("%I:%M %p")
+            hora = Paragraph(f"Hora: {hora_formateada}", styles["Normal"])
+            elements.append(hora)
+
+            tecnico = Paragraph(f"Técnico: {request.user.username}", styles["Normal"])
+            elements.append(tecnico)
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
             elements.append(fecha_b)
@@ -440,6 +456,9 @@ def reporteInventario(request):
             title1 = Paragraph("Dr. Cell", styles["Title"])
             elements.append(title1)
 
+            rif = Paragraph("RIF: XXXXXXXXX", styles["Title"])
+            elements.append(rif)
+
             title2 = Paragraph("Reporte - Inventario", styles["Title"])
             elements.append(title2)
 
@@ -448,8 +467,13 @@ def reporteInventario(request):
             paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
             elements.append(paragraph)
 
-            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
-            elements.append(remitente)
+            hora_actual = datetime.now()
+            hora_formateada = hora_actual.strftime("%I:%M %p")
+            hora = Paragraph(f"Hora: {hora_formateada}", styles["Normal"])
+            elements.append(hora)
+
+            tecnico = Paragraph(f"Técnico: {request.user.username}", styles["Normal"])
+            elements.append(tecnico)
 
             # Agrega un espacio
             elements.append(Spacer(1, 25))
@@ -565,6 +589,9 @@ def reporteVenta(request):
             title1 = Paragraph("Dr. Cell", styles["Title"])
             elements.append(title1)
 
+            rif = Paragraph("RIF: XXXXXXXXX", styles["Title"])
+            elements.append(rif)
+
             title2 = Paragraph("Reporte - Ventas", styles["Title"])
             elements.append(title2)
 
@@ -573,8 +600,13 @@ def reporteVenta(request):
             paragraph = Paragraph(f"Fecha actual: {fecha}", styles["Normal"])
             elements.append(paragraph)
 
-            remitente = Paragraph(f"Remitente: {request.user.username}", styles["Normal"])
-            elements.append(remitente)
+            hora_actual = datetime.now()
+            hora_formateada = hora_actual.strftime("%I:%M %p")
+            hora = Paragraph(f"Hora: {hora_formateada}", styles["Normal"])
+            elements.append(hora)
+
+            tecnico = Paragraph(f"Técnico: {request.user.username}", styles["Normal"])
+            elements.append(tecnico)
 
             fecha_b = Paragraph(f"Fecha: {date_begin}", styles["Normal"])
             elements.append(fecha_b)
