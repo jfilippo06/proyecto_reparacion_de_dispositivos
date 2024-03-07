@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from login.decorators import admin_required, employee_denied
+from login.decorators import admin_required
 from django.core.paginator import Paginator
 from correo.models import Correo_no_enviado, Correo_enviado
 from venta.models import Client
@@ -12,7 +12,6 @@ import os
 
 
 @admin_required
-@employee_denied
 def correo(request):
     if request.method == 'GET':
         correo = Correo_no_enviado.objects.all()
@@ -33,9 +32,10 @@ def correo(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
-    return render(request, 'correo/correo.html', {'username': request.user.username, 'correos': page_obj})
+    return render(request, 'correo/correo.html', {'username': request.user.username, 'user_type': request.user.user_type, 'correos': page_obj})
 
 
+@admin_required
 def enviar_correo(request, id):
     correo = Correo_no_enviado.objects.get(id=id)
     cliente = correo.nombre_cliente
@@ -76,7 +76,6 @@ def enviar_correo(request, id):
 
 
 @admin_required
-@employee_denied
 def correo_enviado(request):
     if request.method == 'GET':
         correo = Correo_enviado.objects.all().order_by('-id')
@@ -97,7 +96,7 @@ def correo_enviado(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
-    return render(request, 'correo/correo_enviado.html', {'username': request.user.username, 'correos': page_obj})
+    return render(request, 'correo/correo_enviado.html', {'username': request.user.username, 'user_type': request.user.user_type, 'correos': page_obj})
 
 
 def handle_uploaded_file(f):
@@ -111,10 +110,9 @@ def handle_uploaded_file(f):
 
 
 @admin_required
-@employee_denied
 def crear_correo(request):
     if request.method == 'GET':
-        return render(request, 'correo/crear_correo.html', {'username': request.user.username})
+        return render(request, 'correo/crear_correo.html', {'username': request.user.username, 'user_type': request.user.user_type,})
 
     elif request.method == 'POST':
         correo = request.POST['correo']
@@ -153,6 +151,7 @@ def crear_correo(request):
             return redirect('crear_correo')
 
 
+@admin_required
 def enviar_todo(request):
     correos = Correo_no_enviado.objects.all()
     try:

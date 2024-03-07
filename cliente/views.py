@@ -1,15 +1,14 @@
 from django.shortcuts import render, redirect
-from login.decorators import admin_required, employee_denied
+from login.decorators import admin_required
 from django.contrib import messages
 from venta.models import Client
 
 # Create your views here.
 
 @admin_required
-@employee_denied
 def registrar_cliente(request):
     if request.method == 'GET':
-        return render(request, 'cliente/registrar_cliente.html', {'username': request.user.username})
+        return render(request, 'cliente/registrar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type})
 
     elif request.method == 'POST':
         cedula = request.POST['cedula']

@@ -23,7 +23,6 @@ from django.contrib import messages
 
 
 @admin_required
-@employee_denied
 def recibo(request):
     if request.method == 'GET':
         direccion = Direccion_de_factura.objects.all().order_by('-id')
@@ -51,14 +50,13 @@ def recibo(request):
 
 
 @admin_required
-@employee_denied
 def reporteRepaciones(request):
     if request.method == 'GET':
         reparacion = Reparacion.objects.all()
         paginator = Paginator(reparacion, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'reparaciones': page_obj})
+        return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'user_type': request.user, 'reparaciones': page_obj})
 
     elif request.method == 'POST':
         date_begin = datetime.strptime(request.POST.get('date_begin', ''), '%Y-%m-%d') if request.POST.get(
@@ -193,7 +191,6 @@ def reporteRepaciones(request):
 
 
 @admin_required
-@employee_denied
 def reporteCliente(request):
     if request.method == 'GET':
         cliente = Cliente_atendido.objects.all()
@@ -201,7 +198,7 @@ def reporteCliente(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         iva = impuesto()
-        return render(request, 'reporte/cliente.html', {'username': request.user.username, 'cliente': page_obj, 'is_active': iva})
+        return render(request, 'reporte/cliente.html', {'username': request.user.username, 'user_type': request.user, 'cliente': page_obj, 'is_active': iva})
 
     elif request.method == 'POST':
         iva = impuesto()
@@ -353,7 +350,6 @@ def reporteCliente(request):
 
 
 @admin_required
-@employee_denied
 def reporteInventario(request):
     if request.method == 'GET':
         if 'inventario_ads' in request.session:
@@ -362,7 +358,7 @@ def reporteInventario(request):
             paginator = Paginator(inventario, 15)
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
-            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'inventario': page_obj})
+            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'user_type': request.user, 'inventario': page_obj})
         else:
             inventario = []
             paginator = Paginator(inventario, 15)
@@ -502,7 +498,6 @@ def reporteInventario(request):
 
 
 @admin_required
-@employee_denied
 def reporteVenta(request):
     if request.method == 'GET':
         venta = Totales.objects.all()
@@ -510,7 +505,7 @@ def reporteVenta(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         iva = impuesto()
-        return render(request, 'reporte/venta.html', {'username': request.user.username, 'ventas': page_obj, 'is_active': iva})
+        return render(request, 'reporte/venta.html', {'username': request.user.username, 'user_type': request.user, 'ventas': page_obj, 'is_active': iva})
 
     elif request.method == 'POST':
         iva = impuesto()

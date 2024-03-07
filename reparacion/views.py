@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from login.decorators import admin_required, employee_denied
+from login.decorators import admin_required
 from django.core.paginator import Paginator
 from reparacion.models import Reparacion
 from django.contrib import messages
@@ -8,7 +8,6 @@ from venta.models import Client
 
 
 @admin_required
-@employee_denied
 def reparacion(request):
     if request.method == 'GET':
         reparacion = Reparacion.objects.all().exclude(is_active=False)
@@ -29,14 +28,13 @@ def reparacion(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
-    return render(request, 'reparacion/reparacion.html', {'username': request.user.username, 'reparaciones': page_obj})
+    return render(request, 'reparacion/reparacion.html', {'username': request.user.username, 'user_type': request.user.user_type, 'reparaciones': page_obj})
 
 
 @admin_required
-@employee_denied
 def registrarReparacion(request):
     if request.method == 'GET':
-        return render(request, 'reparacion/registrar.html', {'username': request.user.username})
+        return render(request, 'reparacion/registrar.html', {'username': request.user.username, 'user_type': request.user.user_type})
 
     elif request.method == 'POST':
         articulo = request.POST['articulo'].lower().capitalize()
@@ -70,7 +68,6 @@ def cancelar(request):
 
 
 @admin_required
-@employee_denied
 def deleteReparacion(request, id):
     reparacion = get_object_or_404(Reparacion, id=id)
     reparacion.is_active = False
@@ -79,6 +76,7 @@ def deleteReparacion(request, id):
     return redirect('reparacion')
 
 
+@admin_required
 def updateReparacion(request, id):
     if request.method == "GET":
         reparacion = get_object_or_404(Reparacion, id=id)
@@ -92,6 +90,7 @@ def updateReparacion(request, id):
             'descripcion': reparacion.descripcion,
             'cantidad': reparacion.cantidad,
             'estado': reparacion.estado,
+            'user_type': request.user.user_type,
         })
 
     elif request.method == "POST":
@@ -125,7 +124,7 @@ def buscar_cedula(request):
                 request, 'Introduzca una cédula.')
             return redirect('registrar')
         usuario = Client.objects.get(cedula=table_search)
-        return render(request, 'reparacion/registrar.html', {'username': request.user.username, 'cedula': usuario.cedula, 'nombre': usuario.username})
+        return render(request, 'reparacion/registrar.html', {'username': request.user.username, 'user_type': request.user.user_type, 'cedula': usuario.cedula, 'nombre': usuario.username})
     except Client.DoesNotExist:
         messages.error(
             request, 'Usuario no existe.')

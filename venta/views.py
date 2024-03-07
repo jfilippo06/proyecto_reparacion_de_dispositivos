@@ -48,10 +48,9 @@ def suma_total(request):
 
 
 @admin_required
-@employee_denied
 def client(request):
     if request.method == 'GET':
-        return render(request, 'venta/consultar_cliente.html', {'username': request.user.username})
+        return render(request, 'venta/consultar_cliente.html', {'username': request.user.username, 'user_type': request.user.user_type})
 
     elif request.method == 'POST':
         cedula = request.POST['cedula']
@@ -65,13 +64,11 @@ def client(request):
 
 
 @admin_required
-@employee_denied
 def cancelar(request):
     return redirect('cliente')
 
 
 @admin_required
-@employee_denied
 def facturar_cliente(request):
     if request.method == 'GET':
         if 'inventario_ids' in request.session:
@@ -136,7 +133,6 @@ def facturar_cliente(request):
 
 
 @admin_required
-@employee_denied
 def agregar_articulo(request, id):
     try:
         cantidad = int(request.POST['cantidad'])
@@ -163,7 +159,6 @@ def agregar_articulo(request, id):
 
 
 @admin_required
-@employee_denied
 def cancelar_articulo(request, id):
     objeto = get_object_or_404(T_Lista, id=id)
     objeto.delete()
@@ -172,7 +167,6 @@ def cancelar_articulo(request, id):
 
 
 @admin_required
-@employee_denied
 def cancelar_compra(request):
     last = request.session['last']
     T_Lista.objects.filter(n_recibo_id=last).delete()
@@ -427,7 +421,6 @@ def send_email(request):
         messages.error(request, 'Revise su conexión a internet, correo no enviado.')
 
 @admin_required
-@employee_denied
 def facturar(request):
     registrar_factura(request)
     registrar_totales(request)
@@ -436,4 +429,4 @@ def facturar(request):
     send_email(request)
     limpiar_compra(request)
     sumar_n_recibo()
-    return render(request, 'venta/ver_factura.html', {'direccion': direccion})
+    return render(request, 'venta/ver_factura.html', {'username': request.user.username, 'user_type': request.user.user_type, 'direccion': direccion})

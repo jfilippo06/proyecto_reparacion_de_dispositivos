@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from login.decorators import admin_required, employee_denied
+from login.decorators import admin_required
 from inventario.models import Inventario
 from reparacion.models import Reparacion
 from venta.models import Client
@@ -10,7 +10,6 @@ from django.contrib import messages
 
 
 @admin_required
-@employee_denied
 def consultar_inventario(request):
     if request.method == 'GET':
         if 'inventario_pop' in request.session:
@@ -55,7 +54,6 @@ def consultar_inventario(request):
 
 
 @admin_required
-@employee_denied
 def consultar_reparacion(request):
     if request.method == 'GET':
         reparacion = Reparacion.objects.all().exclude(is_active=False).order_by('-id')
@@ -76,11 +74,10 @@ def consultar_reparacion(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
-    return render(request, 'consulta/reparacion.html', {'username': request.user.username, 'reparaciones': page_obj})
+    return render(request, 'consulta/reparacion.html', {'username': request.user.username, 'user_type': request.user.user_type, 'reparaciones': page_obj})
 
 
 @admin_required
-@employee_denied
 def consultar_cliente(request):
     if request.method == 'GET':
         cliente = Client.objects.all().order_by('-id')
@@ -101,4 +98,4 @@ def consultar_cliente(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
 
-    return render(request, 'consulta/cliente.html', {'username': request.user.username, 'cliente': page_obj})
+    return render(request, 'consulta/cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'cliente': page_obj})
