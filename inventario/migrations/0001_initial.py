@@ -8,13 +8,13 @@ def create_inventario(apps, schema_editor):
     # Crear el primer artículo de inventario
     articulo1_computadora = Inventario.objects.create(
         codigo="C00001",
-        articulo='Articulo 1',
-        marca='Marca 1',
-        modelo='Modelo 1',
-        no_serie='Serie 1',
-        descripcion='Esta es una descripción del artículo 1.',
-        cantidad=10,
-        costo=1000,
+        articulo='Computadora',
+        marca='HP',
+        modelo='Compaq',
+        no_serie='MXJ-52804PQ',
+        descripcion='',
+        cantidad=4,
+        costo=200,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -22,13 +22,13 @@ def create_inventario(apps, schema_editor):
 
     articulo2_computadora = Inventario.objects.create(
         codigo="C00002",
-        articulo='Articulo 2',
-        marca='Marca 2',
-        modelo='Modelo 2',
-        no_serie='Serie 2',
-        descripcion='Esta es una descripción del artículo 2.',
-        cantidad=10,
-        costo=1000,
+        articulo='Computadora',
+        marca='HP',
+        modelo='Compaq',
+        no_serie='MXJ-752005C',
+        descripcion='',
+        cantidad=6,
+        costo=100,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -36,13 +36,13 @@ def create_inventario(apps, schema_editor):
 
     articulo3_computadora = Inventario.objects.create(
         codigo="C00003",
-        articulo='Articulo 3',
-        marca='Marca 3',
-        modelo='Modelo 3',
-        no_serie='Serie 3',
-        descripcion='Esta es una descripción del artículo 3.',
-        cantidad=10,
-        costo=1000,
+        articulo='Computadora',
+        marca='HP',
+        modelo='Compaq 2000',
+        no_serie='MXL7020J24',
+        descripcion='',
+        cantidad=6,
+        costo=400,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -50,13 +50,13 @@ def create_inventario(apps, schema_editor):
 
     articulo4_computadora = Inventario.objects.create(
         codigo="C00004",
-        articulo='Articulo 4',
-        marca='Marca 4',
-        modelo='Modelo 4',
-        no_serie='Serie 4',
-        descripcion='Esta es una descripción del artículo 4.',
+        articulo='Computadora',
+        marca='HP',
+        modelo='Compaq 2200',
+        no_serie='MXJ-7520078',
+        descripcion='',
         cantidad=10,
-        costo=1000,
+        costo=600,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -64,13 +64,13 @@ def create_inventario(apps, schema_editor):
 
     articulo5_computadora = Inventario.objects.create(
         codigo="C00005",
-        articulo='Articulo 5',
-        marca='Marca 5',
-        modelo='Modelo 5',
-        no_serie='Serie 5',
-        descripcion='Esta es una descripción del artículo 5.',
-        cantidad=10,
-        costo=1000,
+        articulo='Computadora',
+        marca='HP',
+        modelo='Soprano',
+        no_serie='MXA-754045C',
+        descripcion='',
+        cantidad=6,
+        costo=200,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -78,13 +78,13 @@ def create_inventario(apps, schema_editor):
 
     articulo6_computadora = Inventario.objects.create(
         codigo="C00006",
-        articulo='Articulo 6',
-        marca='Marca 6',
-        modelo='Modelo 6',
-        no_serie='Serie 6',
-        descripcion='Esta es una descripción del artículo 6.',
-        cantidad=10,
-        costo=1000,
+        articulo='Computadora',
+        marca='HP',
+        modelo='Soprano 240 dk',
+        no_serie='MEF-45447C',
+        descripcion='',
+        cantidad=2,
+        costo=400,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -92,13 +92,13 @@ def create_inventario(apps, schema_editor):
 
     articulo7_computadora = Inventario.objects.create(
         codigo="C00007",
-        articulo='Articulo 7',
-        marca='Marca 7',
-        modelo='Modelo 7',
-        no_serie='Serie 7',
-        descripcion='Esta es una descripción del artículo 7.',
-        cantidad=10,
-        costo=1000,
+        articulo='Computadora',
+        marca='HP',
+        modelo='Soprano h809x',
+        no_serie='MXQ-234045C',
+        descripcion='',
+        cantidad=1,
+        costo=200,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -106,13 +106,13 @@ def create_inventario(apps, schema_editor):
 
     articulo1_telefono = Inventario.objects.create(
         codigo="T00001",
-        articulo='Articulo 1',
-        marca='Marca 1',
-        modelo='Modelo 1',
-        no_serie='Serie 1',
-        descripcion='Esta es una descripción del artículo 1.',
-        cantidad=20,
-        costo=2000,
+        articulo='Telefono',
+        marca='Xiaomi',
+        modelo='Redmi 7',
+        no_serie='M75600AG',
+        descripcion='',
+        cantidad=7,
+        costo=200,
         categoria='TEL',  # Telefono
         is_active=True,
     )
@@ -120,13 +120,13 @@ def create_inventario(apps, schema_editor):
 
     articulo2_telefono = Inventario.objects.create(
         codigo="T00002",
-        articulo='Articulo 2',
-        marca='Marca 2',
-        modelo='Modelo 2',
-        no_serie='Serie 2',
-        descripcion='Esta es una descripción del artículo 2.',
-        cantidad=20,
-        costo=2000,
+        articulo='Telefono',
+        marca='Xiaomi',
+        modelo='Redmi 8',
+        no_serie='M46600OG',
+        descripcion='',
+        cantidad=7,
+        costo=260,
         categoria='TEL',  # Telefono
         is_active=True,
     )
@@ -134,13 +134,13 @@ def create_inventario(apps, schema_editor):
 
     articulo3_telefono = Inventario.objects.create(
         codigo="T00003",
-        articulo='Articulo 3',
-        marca='Marca 3',
-        modelo='Modelo 3',
-        no_serie='Serie 3',
-        descripcion='Esta es una descripción del artículo 3.',
-        cantidad=20,
-        costo=2000,
+        articulo='Telefono',
+        marca='Xiaomi',
+        modelo='Redmi 9',
+        no_serie='M12600GT',
+        descripcion='',
+        cantidad=7,
+        costo=300,
         categoria='TEL',  # Telefono
         is_active=True,
     )
@@ -148,13 +148,13 @@ def create_inventario(apps, schema_editor):
 
     articulo4_telefono = Inventario.objects.create(
         codigo="T00004",
-        articulo='Articulo 4',
-        marca='Marca 4',
-        modelo='Modelo 4',
-        no_serie='Serie 4',
-        descripcion='Esta es una descripción del artículo 4.',
-        cantidad=20,
-        costo=2000,
+        articulo='Telefono',
+        marca='Xiaomi',
+        modelo='Redmi 10',
+        no_serie='MER600GT',
+        descripcion='',
+        cantidad=8,
+        costo=400,
         categoria='TEL',  # Telefono
         is_active=True,
     )
@@ -162,13 +162,13 @@ def create_inventario(apps, schema_editor):
 
     articulo5_telefono = Inventario.objects.create(
         codigo="T00005",
-        articulo='Articulo 5',
-        marca='Marca 5',
-        modelo='Modelo 5',
-        no_serie='Serie 5',
-        descripcion='Esta es una descripción del artículo 5.',
-        cantidad=20,
-        costo=2000,
+        articulo='Telefono',
+        marca='Xiaomi',
+        modelo='Redmi 11',
+        no_serie='M89600EU',
+        descripcion='',
+        cantidad=7,
+        costo=500,
         categoria='TEL',  # Telefono
         is_active=True,
     )
@@ -176,13 +176,13 @@ def create_inventario(apps, schema_editor):
 
     articulo6_telefono = Inventario.objects.create(
         codigo="T00006",
-        articulo='Articulo 6',
-        marca='Marca 6',
-        modelo='Modelo 6',
-        no_serie='Serie 6',
-        descripcion='Esta es una descripción del artículo 6.',
-        cantidad=20,
-        costo=2000,
+        articulo='Telefono',
+        marca='Xiaomi',
+        modelo='Redmi 11 Pro',
+        no_serie='AO65900QG',
+        descripcion='',
+        cantidad=7,
+        costo=600,
         categoria='TEL',  # Telefono
         is_active=True,
     )
@@ -190,13 +190,13 @@ def create_inventario(apps, schema_editor):
 
     articulo7_telefono = Inventario.objects.create(
         codigo="T00007",
-        articulo='Articulo 7',
-        marca='Marca 7',
-        modelo='Modelo 7',
-        no_serie='Serie 7',
-        descripcion='Esta es una descripción del artículo 7.',
-        cantidad=20,
-        costo=2000,
+        articulo='Telefono',
+        marca='Xiaomi',
+        modelo='Redmi 12',
+        no_serie='MER700AG',
+        descripcion='',
+        cantidad=8,
+        costo=800,
         categoria='TEL',  # Telefono
         is_active=True,
     )
@@ -204,13 +204,13 @@ def create_inventario(apps, schema_editor):
 
     articulo1_accesorio = Inventario.objects.create(
         codigo="A00001",
-        articulo='Articulo 1',
-        marca='Marca 1',
-        modelo='Modelo 1',
-        no_serie='Serie 1',
-        descripcion='Esta es una descripción del artículo 1.',
+        articulo='Vidrio templado',
+        marca='Universal',
+        modelo='',
+        no_serie='',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=200,
         categoria='ASE',  # Acessorio
         is_active=True,
     )
@@ -218,13 +218,13 @@ def create_inventario(apps, schema_editor):
 
     articulo2_accesorio = Inventario.objects.create(
         codigo="A00002",
-        articulo='Articulo 2',
-        marca='Marca 2',
-        modelo='Modelo 2',
-        no_serie='Serie 2',
-        descripcion='Esta es una descripción del artículo 2.',
-        cantidad=20,
-        costo=2000,
+        articulo='Vidrio templado',
+        marca='Nokia',
+        modelo='',
+        no_serie='',
+        descripcion='',
+        cantidad=10,
+        costo=100,
         categoria='ASE',  # Acessorio
         is_active=True,
     )
@@ -232,13 +232,13 @@ def create_inventario(apps, schema_editor):
 
     articulo3_accesorio = Inventario.objects.create(
         codigo="A00003",
-        articulo='Articulo 3',
-        marca='Marca 3',
-        modelo='Modelo 3',
-        no_serie='Serie 3',
-        descripcion='Esta es una descripción del artículo 3.',
-        cantidad=20,
-        costo=2000,
+        articulo='Cargador',
+        marca='Optimus',
+        modelo='',
+        no_serie='',
+        descripcion='',
+        cantidad=4,
+        costo=40,
         categoria='ASE',  # Acessorio
         is_active=True,
     )
@@ -246,69 +246,69 @@ def create_inventario(apps, schema_editor):
 
     articulo4_accesorio = Inventario.objects.create(
         codigo="A00004",
-        articulo='Articulo 4',
-        marca='Marca 4',
-        modelo='Modelo 4',
-        no_serie='Serie 4',
-        descripcion='Esta es una descripción del artículo 4.',
-        cantidad=20,
-        costo=2000,
-        categoria='ASE',  # Acessorio
+        articulo='Cargador',
+        marca='Universal',
+        modelo='',
+        no_serie='',
+        descripcion='',
+        cantidad=7,
+        costo=90,
+        categoria='ASE',   # Acessorio
         is_active=True,
     )
     articulo4_accesorio.save()
 
     articulo5_accesorio = Inventario.objects.create(
         codigo="A00005",
-        articulo='Articulo 5',
-        marca='Marca 5',
-        modelo='Modelo 5',
-        no_serie='Serie 5',
-        descripcion='Esta es una descripción del artículo 5.',
-        cantidad=20,
-        costo=2000,
-        categoria='ASE',  # Acessorio
+        articulo='Cargador',
+        marca='Belkin',
+        modelo='',
+        no_serie='',
+        descripcion='',
+        cantidad=10,
+        costo=55,
+        categoria='ASE',   # Acessorio
         is_active=True,
     )
     articulo5_accesorio.save()
 
     articulo6_accesorio = Inventario.objects.create(
         codigo="A00006",
-        articulo='Articulo 6',
-        marca='Marca 6',
-        modelo='Modelo 6',
-        no_serie='Serie 6',
-        descripcion='Esta es una descripción del artículo 6.',
-        cantidad=20,
-        costo=2000,
+        articulo='Cargador',
+        marca='Griffin',
+        modelo='',
+        no_serie='',
+        descripcion='',
+        cantidad=4,
+        costo=80,
         categoria='ASE',  # Acessorio
         is_active=True,
     )
-    articulo1_accesorio.save()
+    articulo6_accesorio.save()
 
     articulo7_accesorio = Inventario.objects.create(
         codigo="A00007",
-        articulo='Articulo 7',
-        marca='Marca 7',
-        modelo='Modelo 7',
-        no_serie='Serie 7',
-        descripcion='Esta es una descripción del artículo 7.',
-        cantidad=20,
-        costo=2000,
-        categoria='ASE',  # Acessorio
+        articulo='Cargador',
+        marca='Rr',
+        modelo='',
+        no_serie='',
+        descripcion='',
+        cantidad=10,
+        costo=200,
+        categoria='ASE',   # Acessorio
         is_active=True,
     )
     articulo7_accesorio.save()
 
     articulo1_rcp = Inventario.objects.create(
         codigo="R00001",
-        articulo='Articulo 1',
-        marca='Marca 1',
-        modelo='Modelo 1',
-        no_serie='Serie 1',
-        descripcion='Esta es una descripción del artículo 1.',
+        articulo='Pantalla',
+        marca='Lenovo',
+        modelo='A2l09',
+        no_serie='',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=200,
         categoria='RPC',  # Repuestos de Computadoras
         is_active=True,
     )
@@ -316,13 +316,13 @@ def create_inventario(apps, schema_editor):
 
     articulo2_rcp = Inventario.objects.create(
         codigo="R00002",
-        articulo='Articulo 2',
-        marca='Marca 2',
-        modelo='Modelo 2',
-        no_serie='Serie 2',
-        descripcion='Esta es una descripción del artículo 2.',
-        cantidad=20,
-        costo=2000,
+        articulo='Pantalla',
+        marca='Lenovo',
+        modelo='S40l72',
+        no_serie='',
+        descripcion='',
+        cantidad=10,
+        costo=300,
         categoria='RPC',  # Repuestos de Computadoras
         is_active=True,
     )
@@ -330,13 +330,13 @@ def create_inventario(apps, schema_editor):
 
     articulo3_rcp = Inventario.objects.create(
         codigo="R00003",
-        articulo='Articulo 3',
-        marca='Marca 3',
-        modelo='Modelo 3',
-        no_serie='Serie 3',
-        descripcion='Esta es una descripción del artículo 3.',
-        cantidad=20,
-        costo=2000,
+        articulo='Fuente de poder',
+        marca='Titaniun',
+        modelo='S78g34',
+        no_serie='',
+        descripcion='',
+        cantidad=19,
+        costo=170,
         categoria='RPC',  # Repuestos de Computadoras
         is_active=True,
     )
@@ -344,13 +344,13 @@ def create_inventario(apps, schema_editor):
 
     articulo4_rcp = Inventario.objects.create(
         codigo="R00004",
-        articulo='Articulo 4',
-        marca='Marca 4',
-        modelo='Modelo 4',
-        no_serie='Serie 4',
-        descripcion='Esta es una descripción del artículo 4.',
-        cantidad=20,
-        costo=2000,
+        articulo='Fuente de poder',
+        marca='Deluxe',
+        modelo='A89g01',
+        no_serie='',
+        descripcion='',
+        cantidad=12,
+        costo=130,
         categoria='RPC',  # Repuestos de Computadoras
         is_active=True,
     )
@@ -358,13 +358,13 @@ def create_inventario(apps, schema_editor):
 
     articulo5_rcp = Inventario.objects.create(
         codigo="R00005",
-        articulo='Articulo 5',
-        marca='Marca 5',
-        modelo='Modelo 5',
-        no_serie='Serie 5',
-        descripcion='Esta es una descripción del artículo 5.',
-        cantidad=20,
-        costo=2000,
+        articulo='Fuente de poder',
+        marca='Black',
+        modelo='Q8y34',
+        no_serie='',
+        descripcion='',
+        cantidad=10,
+        costo=470,
         categoria='RPC',  # Repuestos de Computadoras
         is_active=True,
     )
@@ -372,13 +372,13 @@ def create_inventario(apps, schema_editor):
 
     articulo6_rcp = Inventario.objects.create(
         codigo="R00006",
-        articulo='Articulo 6',
-        marca='Marca 6',
-        modelo='Modelo 6',
-        no_serie='Serie 6',
-        descripcion='Esta es una descripción del artículo 6.',
-        cantidad=20,
-        costo=2000,
+        articulo='Fuente de poder',
+        marca='Red pro+',
+        modelo='O09p31',
+        no_serie='',
+        descripcion='',
+        cantidad=22,
+        costo=470,
         categoria='RPC',  # Repuestos de Computadoras
         is_active=True,
     )
@@ -386,13 +386,13 @@ def create_inventario(apps, schema_editor):
 
     articulo7_rcp = Inventario.objects.create(
         codigo="R00007",
-        articulo='Articulo 7',
-        marca='Marca 7',
-        modelo='Modelo 7',
-        no_serie='Serie 7',
-        descripcion='Esta es una descripción del artículo 7.',
-        cantidad=20,
-        costo=2000,
+        articulo='Mouse',
+        marca='Titaniun',
+        modelo='YYUU77',
+        no_serie='',
+        descripcion='',
+        cantidad=11,
+        costo=70,
         categoria='RPC',  # Repuestos de Computadoras
         is_active=True,
     )
@@ -400,13 +400,13 @@ def create_inventario(apps, schema_editor):
 
     articulo1_rpt = Inventario.objects.create(
         codigo="P00001",
-        articulo='Articulo 1',
-        marca='Marca 1',
-        modelo='Modelo 1',
-        no_serie='Serie 1',
-        descripcion='Esta es una descripción del artículo 1.',
+        articulo='Pantalla táctil',
+        marca='Xiaomi',
+        modelo='Redmi 7',
+        no_serie='SAM009G',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=200,
         categoria='RPT',  # Repuestos de Telefonos
         is_active=True,
     )
@@ -414,13 +414,13 @@ def create_inventario(apps, schema_editor):
 
     articulo2_rpt = Inventario.objects.create(
         codigo="P00002",
-        articulo='Articulo 2',
-        marca='Marca 2',
-        modelo='Modelo 2',
-        no_serie='Serie 2',
-        descripcion='Esta es una descripción del artículo 2.',
-        cantidad=20,
-        costo=2000,
+        articulo='Pantalla táctil',
+        marca='Xiaomi',
+        modelo='Redmi 8',
+        no_serie='QWM008G',
+        descripcion='',
+        cantidad=10,
+        costo=300,
         categoria='RPT',  # Repuestos de Telefonos
         is_active=True,
     )
@@ -428,13 +428,13 @@ def create_inventario(apps, schema_editor):
 
     articulo3_rpt = Inventario.objects.create(
         codigo="P00003",
-        articulo='Articulo 3',
-        marca='Marca 3',
-        modelo='Modelo 3',
-        no_serie='Serie 3',
-        descripcion='Esta es una descripción del artículo 3.',
+        articulo='Pantalla táctil',
+        marca='Xiaomi',
+        modelo='Redmi 8',
+        no_serie='SDM007G',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=400,
         categoria='RPT',  # Repuestos de Telefonos
         is_active=True,
     )
@@ -442,13 +442,13 @@ def create_inventario(apps, schema_editor):
 
     articulo4_rpt = Inventario.objects.create(
         codigo="P00004",
-        articulo='Articulo 4',
-        marca='Marca 4',
-        modelo='Modelo 4',
-        no_serie='Serie 4',
-        descripcion='Esta es una descripción del artículo 4.',
+        articulo='Pantalla táctil',
+        marca='Xiaomi',
+        modelo='Redmi 9',
+        no_serie='EEM0078',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=500,
         categoria='RPT',  # Repuestos de Telefonos
         is_active=True,
     )
@@ -456,13 +456,13 @@ def create_inventario(apps, schema_editor):
 
     articulo5_rpt = Inventario.objects.create(
         codigo="P00005",
-        articulo='Articulo 5',
-        marca='Marca 5',
-        modelo='Modelo 5',
-        no_serie='Serie 5',
-        descripcion='Esta es una descripción del artículo 5.',
+        articulo='Pantalla táctil',
+        marca='Xiaomi',
+        modelo='Redmi 10',
+        no_serie='QTM006T',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=600,
         categoria='RPT',  # Repuestos de Telefonos
         is_active=True,
     )
@@ -470,13 +470,13 @@ def create_inventario(apps, schema_editor):
 
     articulo6_rpt = Inventario.objects.create(
         codigo="P00006",
-        articulo='Articulo 6',
-        marca='Marca 6',
-        modelo='Modelo 6',
-        no_serie='Serie 6',
-        descripcion='Esta es una descripción del artículo 6.',
+        articulo='Pantalla táctil',
+        marca='Xiaomi',
+        modelo='Redmi 11',
+        no_serie='RT5O57G',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=700,
         categoria='RPT',  # Repuestos de Telefonos
         is_active=True,
     )
@@ -484,13 +484,13 @@ def create_inventario(apps, schema_editor):
 
     articulo7_rpt = Inventario.objects.create(
         codigo="P00007",
-        articulo='Articulo 7',
-        marca='Marca 7',
-        modelo='Modelo 7',
-        no_serie='Serie 7',
-        descripcion='Esta es una descripción del artículo 7.',
+        articulo='Pantalla táctil',
+        marca='Xiaomi',
+        modelo='Redmi 12',
+        no_serie='GTM007G',
+        descripcion='',
         cantidad=20,
-        costo=2000,
+        costo=800,
         categoria='RPT',  # Repuestos de Telefonos
         is_active=True,
     )
