@@ -281,8 +281,11 @@ def some_view(request):
     elements.append(img)
 
     # Agrega un título
-    title = Paragraph("Nota de entrega", styles["Title"])
+    title = Paragraph("Dr. Cell", styles["Title"])
     elements.append(title)
+
+    nota = Paragraph("Nota de entrega", styles["Title"])
+    elements.append(nota)
 
     # Agrega un párrafo
     paragraph = Paragraph(f"Fecha: {fecha}", styles["Normal"])
@@ -297,8 +300,8 @@ def some_view(request):
     id_client = Paragraph(f"C.I: {cedula}", styles["Normal"])
     elements.append(id_client)
 
-    remitente = Paragraph(f"Remitente: {usuario}", styles["Normal"])
-    elements.append(remitente)
+    tecnico = Paragraph(f"Técnico: {usuario}", styles["Normal"])
+    elements.append(tecnico)
 
     # Define los datos de la tabla
     data = [

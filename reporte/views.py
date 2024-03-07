@@ -117,8 +117,11 @@ def reporteRepaciones(request):
             elements.append(img)
 
             # Agrega un título
-            title = Paragraph("Reporte - Reparaciónes", styles["Title"])
-            elements.append(title)
+            title1 = Paragraph("Dr. Cell", styles["Title"])
+            elements.append(title1)
+
+            title2 = Paragraph("Reporte - Reparaciónes", styles["Title"])
+            elements.append(title2)
             elements.append(Spacer(1, 10))
 
             ahora = datetime.now()
@@ -259,8 +262,11 @@ def reporteCliente(request):
             elements.append(img)
 
             # Agrega un título
-            title = Paragraph("Reporte - Clientes", styles["Title"])
-            elements.append(title)
+            title1 = Paragraph("Dr. Cell", styles["Title"])
+            elements.append(title1)
+
+            title2 = Paragraph("Reporte - Clientes", styles["Title"])
+            elements.append(title2)
 
             ahora = datetime.now()
             fecha = ahora.strftime("%d/%m/%Y")
@@ -431,8 +437,11 @@ def reporteInventario(request):
             elements.append(img)
 
             # Agrega un título
-            title = Paragraph("Reporte - Inventario", styles["Title"])
-            elements.append(title)
+            title1 = Paragraph("Dr. Cell", styles["Title"])
+            elements.append(title1)
+
+            title2 = Paragraph("Reporte - Inventario", styles["Title"])
+            elements.append(title2)
 
             ahora = datetime.now()
             fecha = ahora.strftime("%d/%m/%Y")
@@ -553,8 +562,11 @@ def reporteVenta(request):
             elements.append(img)
 
             # Agrega un título
-            title = Paragraph("Reporte - Ventas", styles["Title"])
-            elements.append(title)
+            title1 = Paragraph("Dr. Cell", styles["Title"])
+            elements.append(title1)
+
+            title2 = Paragraph("Reporte - Ventas", styles["Title"])
+            elements.append(title2)
 
             ahora = datetime.now()
             fecha = ahora.strftime("%d/%m/%Y")
