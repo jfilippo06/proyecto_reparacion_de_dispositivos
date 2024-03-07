@@ -78,8 +78,10 @@
                         <td>{{ computadora.cantidad }}</td>
                         <td>{{ computadora.costo }}</td>
                         <td><a href="{% url 'actualizar_accesorio' computadora.id %}" class="btn btn-block btn-warning">Editar</a></td>
+                        {% if user_type == "admin" %}
                         <td><a href="{% url 'deshabilitar_accesorio' computadora.id %}" class="btn btn-block btn-danger">Deshabilitar</a></td>
-                    </tr>
+                        {% endif %}
+                      </tr>
                   {% endfor %}
                 </tbody>
               </table>

@@ -78,7 +78,9 @@
                           <td>{{ computadora.cantidad }}</td>
                           <td>{{ computadora.costo }}</td>
                           <td><a href="{% url 'actualizar_telefono' computadora.id %}" class="btn btn-block btn-warning">Editar</a></td>
+                          {% if user_type == "admin" %}
                           <td><a href="{% url 'deshabilitar_telefono' computadora.id %}" class="btn btn-block btn-danger">Deshabilitar</a></td>
+                          {% endif %}
                       </tr>
                     {% endfor %}
                   </tbody>

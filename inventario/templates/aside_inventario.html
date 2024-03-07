@@ -100,12 +100,14 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              {% if user_type == "admin" %}
               <li class="nav-item">
                 <a href="/inventario/inventario" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Ingresar inventario</p>
                 </a>
               </li>
+              {% endif %}
               <li class="nav-item">
                 <a href="/inventario/computadora" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

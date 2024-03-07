@@ -1,4 +1,4 @@
-from login.decorators import admin_required
+from login.decorators import admin_required, employee_denied
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from inventario.models import Inventario
@@ -7,6 +7,7 @@ from django.contrib import messages
 
 
 @admin_required
+@employee_denied
 def inventario(request):
     if request.method == 'GET':
         return render(request, 'inventario/inventario.html', {'username': request.user.username, 'user_type': request.user.user_type})
@@ -56,6 +57,7 @@ def computadora(request):
 
 
 @admin_required
+@employee_denied
 def deleteComputadora(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
@@ -157,6 +159,7 @@ def telefono(request):
 
 
 @admin_required
+@employee_denied
 def deleteTelefono(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
@@ -258,6 +261,7 @@ def repuesto_computadora(request):
 
 
 @admin_required
+@employee_denied
 def deleteRepuestoComputadora(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
@@ -359,6 +363,7 @@ def repuesto_telefono(request):
 
 
 @admin_required
+@employee_denied
 def deleteRepuestoTelefono(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False
@@ -460,6 +465,7 @@ def acessorio(request):
 
 
 @admin_required
+@employee_denied
 def deleteAccesorio(request, id):
     inventario = get_object_or_404(Inventario, id=id)
     inventario.is_active = False

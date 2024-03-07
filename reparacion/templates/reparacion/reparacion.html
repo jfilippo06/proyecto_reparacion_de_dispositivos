@@ -80,7 +80,9 @@
                               <td>Terminado</td>
                           {% endif %}
                           <td><a href="{% url 'actualizar' reparacion.id %}" class="btn btn-block btn-warning">Editar</a></td>
+                          {% if user_type == "admin" %}
                           <td><a href="{% url 'deshabilitar' reparacion.id %}" class="btn btn-block btn-danger">Deshabilitar</a></td>
+                          {% endif %}
                       </tr>
                     {% endfor %}
                   </tbody>
