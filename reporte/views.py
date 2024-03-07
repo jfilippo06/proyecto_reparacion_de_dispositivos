@@ -29,7 +29,7 @@ def recibo(request):
         paginator = Paginator(direccion, 5)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'reporte/recibo.html', {'username': request.user.username, 'user_type': request.user, 'reporte': page_obj})
+        return render(request, 'reporte/recibo.html', {'username': request.user.username, 'user_type': request.user.user_type, 'reporte': page_obj})
 
     elif request.method == 'POST':
         reporte = request.POST['table_search']
@@ -46,7 +46,7 @@ def recibo(request):
         paginator = Paginator(computadora, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'reporte/recibo.html', {'username': request.user.username, 'user_type': request.user, 'reporte': page_obj})
+        return render(request, 'reporte/recibo.html', {'username': request.user.username, 'user_type': request.user.user_type, 'reporte': page_obj})
 
 
 @admin_required
@@ -56,7 +56,7 @@ def reporteRepaciones(request):
         paginator = Paginator(reparacion, 15)
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
-        return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'user_type': request.user, 'reparaciones': page_obj})
+        return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'user_type': request.user.user_type, 'reparaciones': page_obj})
 
     elif request.method == 'POST':
         date_begin = datetime.strptime(request.POST.get('date_begin', ''), '%Y-%m-%d') if request.POST.get(
@@ -86,7 +86,7 @@ def reporteRepaciones(request):
             paginator = Paginator(reparaciones, 15)
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
-            return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'reparaciones': page_obj})
+            return render(request, 'reporte/reparacion.html', {'username': request.user.username, 'user_type': request.user.user_type, 'reparaciones': page_obj})
         elif 'enviar' in request.POST['submit_button']:
             if not reparaciones:
                 # Redirige a otra página (por ejemplo, a 'home')
@@ -201,7 +201,7 @@ def reporteCliente(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         iva = impuesto()
-        return render(request, 'reporte/cliente.html', {'username': request.user.username, 'user_type': request.user, 'cliente': page_obj, 'is_active': iva})
+        return render(request, 'reporte/cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'cliente': page_obj, 'is_active': iva})
 
     elif request.method == 'POST':
         iva = impuesto()
@@ -231,7 +231,7 @@ def reporteCliente(request):
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
             iva = impuesto()
-            return render(request, 'reporte/cliente.html', {'username': request.user.username, 'cliente': page_obj, 'is_active': iva})
+            return render(request, 'reporte/cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'cliente': page_obj, 'is_active': iva})
         elif 'enviar' in request.POST['submit_button']:
             if not cliente:
                 # Redirige a otra página (por ejemplo, a 'home')
@@ -364,13 +364,13 @@ def reporteInventario(request):
             paginator = Paginator(inventario, 15)
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
-            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'user_type': request.user, 'inventario': page_obj})
+            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
         else:
             inventario = []
             paginator = Paginator(inventario, 15)
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
-            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'inventario': page_obj})
+            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
 
     elif request.method == 'POST':
         equipo = request.POST['equipo']
@@ -405,7 +405,7 @@ def reporteInventario(request):
             paginator = Paginator(inventario, 15)
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
-            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'inventario': page_obj})
+            return render(request, 'reporte/inventario.html', {'username': request.user.username, 'user_type': request.user.user_type, 'inventario': page_obj})
         elif 'enviar' in request.POST['submit_button']:
             if not inventario:
                 # Redirige a otra página (por ejemplo, a 'home')
@@ -514,7 +514,7 @@ def reporteVenta(request):
         page_number = request.GET.get('page', 1)
         page_obj = paginator.get_page(page_number)
         iva = impuesto()
-        return render(request, 'reporte/venta.html', {'username': request.user.username, 'user_type': request.user, 'ventas': page_obj, 'is_active': iva})
+        return render(request, 'reporte/venta.html', {'username': request.user.username, 'user_type': request.user.user_type, 'ventas': page_obj, 'is_active': iva})
 
     elif request.method == 'POST':
         iva = impuesto()
@@ -531,7 +531,7 @@ def reporteVenta(request):
             paginator = Paginator(venta, 15)
             page_number = request.GET.get('page', 1)
             page_obj = paginator.get_page(page_number)
-            return render(request, 'reporte/venta.html', {'username': request.user.username, 'ventas': page_obj, 'is_active': iva})
+            return render(request, 'reporte/venta.html', {'username': request.user.username, 'user_type': request.user.user_type, 'ventas': page_obj, 'is_active': iva})
         elif 'enviar' in request.POST['submit_button']:
             if not venta:
                 # Redirige a otra página (por ejemplo, a 'home')
