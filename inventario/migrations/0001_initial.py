@@ -11,10 +11,10 @@ def create_inventario(apps, schema_editor):
         articulo='Computadora',
         marca='HP',
         modelo='Compaq',
-        no_serie='MXJ-52804PQ',
+        no_serie='MXJ-52804P',
         descripcion='',
         cantidad=4,
-        costo=200,
+        costo=20000,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -25,10 +25,10 @@ def create_inventario(apps, schema_editor):
         articulo='Computadora',
         marca='HP',
         modelo='Compaq',
-        no_serie='MXJ-752005C',
+        no_serie='MXJ-752005',
         descripcion='',
         cantidad=6,
-        costo=100,
+        costo=10000,
         categoria='COM',  # Computadora
         is_active=True,
     )
@@ -53,7 +53,7 @@ def create_inventario(apps, schema_editor):
         articulo='Computadora',
         marca='HP',
         modelo='Compaq 2200',
-        no_serie='MXJ-7520078',
+        no_serie='MXJ-752007',
         descripcion='',
         cantidad=10,
         costo=600,
@@ -67,7 +67,7 @@ def create_inventario(apps, schema_editor):
         articulo='Computadora',
         marca='HP',
         modelo='Soprano',
-        no_serie='MXA-754045C',
+        no_serie='MXA-754045',
         descripcion='',
         cantidad=6,
         costo=200,
@@ -95,7 +95,7 @@ def create_inventario(apps, schema_editor):
         articulo='Computadora',
         marca='HP',
         modelo='Soprano h809x',
-        no_serie='MXQ-234045C',
+        no_serie='MXQ-234045',
         descripcion='',
         cantidad=1,
         costo=200,
@@ -112,7 +112,7 @@ def create_inventario(apps, schema_editor):
         no_serie='M75600AG',
         descripcion='',
         cantidad=7,
-        costo=200,
+        costo=4500,
         categoria='TEL',  # Telefono
         is_active=True,
     )

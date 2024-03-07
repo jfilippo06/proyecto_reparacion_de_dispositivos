@@ -153,7 +153,7 @@ def agregar_articulo(request, id):
             total = cantidad * articulo.costo
             last = request.session['last']
             registro = T_Lista.objects.create(
-                articulo=articulo.articulo, cantidad=cantidad, costo_unidad=articulo.costo, total=total, inventario_id=id,  n_recibo_id=last)
+                articulo=articulo.articulo + " " + articulo.marca + " " + articulo.modelo + " " + articulo.no_serie, cantidad=cantidad, costo_unidad=articulo.costo, total=total, inventario_id=id,  n_recibo_id=last)
             registro.save()
     return redirect('facturar_cliente')
 

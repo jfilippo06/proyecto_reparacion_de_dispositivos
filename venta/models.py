@@ -18,7 +18,7 @@ class T_Lista(models.Model):
     articulo = models.CharField(max_length=50)
     cantidad = models.PositiveIntegerField()
     costo_unidad = models.IntegerField()
-    total = models.IntegerField()
+    total = models.BigIntegerField()
     inventario = models.ForeignKey(Inventario, on_delete=models.CASCADE)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
 
@@ -34,8 +34,8 @@ class Factura(models.Model):
 
 class Totales(models.Model):
     sub_total = models.IntegerField()
-    iva = models.DecimalField(max_digits=5, decimal_places=2)
-    total = models.DecimalField(max_digits=50, decimal_places=2)
+    iva = models.DecimalField(max_digits=100, decimal_places=2)
+    total = models.DecimalField(max_digits=100, decimal_places=2)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
@@ -57,8 +57,8 @@ class Cliente_atendido(models.Model):
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
     cliente = models.ForeignKey(Client, on_delete=models.CASCADE)
     sub_total = models.IntegerField()
-    iva = models.DecimalField(max_digits=5, decimal_places=2)
-    total = models.DecimalField(max_digits=50, decimal_places=2)
+    iva = models.DecimalField(max_digits=100, decimal_places=2)
+    total = models.DecimalField(max_digits=100, decimal_places=2)
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_actualizacion = models.DateTimeField(auto_now=True)
 

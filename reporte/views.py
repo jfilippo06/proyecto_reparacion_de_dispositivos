@@ -163,14 +163,14 @@ def reporteRepaciones(request):
             # Si la tabla se está volviendo muy larga, inserta un salto de página
             if len(data) % 25 == 0:  # ajusta el número según tus necesidades
                 elements.append(
-                    Table(data, colWidths=[40, 110, 200, 60, 80, 70, 40]))
+                    Table(data, colWidths=[40, 140, 170, 60, 80, 70, 40]))
                 elements.append(PageBreak())
                 for reparacion in reparaciones:
                     data.append([reparacion.id, reparacion.articulo,
                                  reparacion.descripcion, reparacion.cantidad, reparacion.username, reparacion.cedula, reparacion.estado])
 
             # Crea la tabla
-            table = Table(data, colWidths=[40, 110, 200, 60, 80, 70, 40])
+            table = Table(data, colWidths=[40, 140, 170, 60, 80, 70, 40])
 
             # Define el estilo de la tabla
             style = TableStyle([
@@ -325,7 +325,7 @@ def reporteCliente(request):
             # Si la tabla se está volviendo muy larga, inserta un salto de página
             if len(data) % 25 == 0:  # ajusta el número según tus necesidades
                 elements.append(
-                    Table(data, colWidths=[40, 70, 40, 70, 40]))
+                    Table(data, colWidths=[40, 130, 70, 70, 70]))
                 elements.append(PageBreak())
                 if iva:
                     for i in cliente:
@@ -338,9 +338,9 @@ def reporteCliente(request):
 
             # Crea la tabla
             if iva:
-                table = Table(data, colWidths=[40, 130, 40, 70, 70, 70, 70])
+                table = Table(data, colWidths=[40, 130, 70, 70, 70, 70, 70])
             else:
-                table = Table(data, colWidths=[40, 130, 40, 70, 70])
+                table = Table(data, colWidths=[40, 130, 70, 70, 70])
 
             # Define el estilo de la tabla
             style = TableStyle([

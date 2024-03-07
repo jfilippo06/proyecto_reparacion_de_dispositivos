@@ -47,31 +47,31 @@
                 <div class="row">
                   <div class="col-3">
                     <label>Artículo</label>
-                    <input type="text" class="form-control" name="articulo" placeholder="Artículo" required autofocus>
+                    <input type="text" class="form-control" name="articulo" placeholder="Artículo" required autofocus maxlength="25" >
                   </div>
                   <div class="col-3">
                     <label>Descripción</label>
-                    <input type="text" class="form-control" name="descripcion" placeholder="Descripción" required>
+                    <input type="text" class="form-control" name="descripcion" placeholder="Descripción" required maxlength="35">
                   </div>
                   <div class="col-3">
                     <label>Cantidad</label>
                     <input type="number" class="form-control" name="cantidad"  placeholder="Cantidad" required>
                   </div>
                   <div class="col-3">
-                    <label>Nombre</label>
-                    <input type="text" class="form-control" name="nombre" value="{{nombre}}" placeholder="Nombre" required>
+                    <label>Nombre y apellido</label>
+                    <input type="text" class="form-control" name="nombre y apellido" value="{{nombre}}" placeholder="Nombre" required maxlength="15">
                   </div>
                 </div>
               </div>
               <div class="card-body">
                 <div class="row ">
                   <div class="col-3">
-                    <label>Cédula</label>
-                    <input type="number" class="form-control" name="cedula" value="{{cedula}}" placeholder="Cédula" required>
+                    <label>Cédula de identidad</label>
+                    <input type="number" class="form-control" name="cedula de identidad" value="{{cedula}}" placeholder="Cédula" required >
                   </div>
                   <div class="col-3">
                     <label>Correo electronico</label>
-                    <input type="email" class="form-control" name="correo"  placeholder="Correo electronico" required>
+                    <input type="email" class="form-control" name="correo"  placeholder="Correo electronico" required maxlength="50">
                   </div>
                   <div class="col-3">
                     <label>Estado</label>

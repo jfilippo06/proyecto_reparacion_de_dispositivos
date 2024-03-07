@@ -15,7 +15,7 @@ class Inventario(models.Model):
     articulo = models.CharField(max_length=50)
     marca = models.CharField(max_length=50)
     modelo = models.CharField(max_length=50)
-    no_serie = models.CharField(max_length=50)
+    no_serie = models.CharField(max_length=10)
     descripcion = models.TextField(blank=True)
     cantidad = models.PositiveIntegerField()
     costo = models.IntegerField()

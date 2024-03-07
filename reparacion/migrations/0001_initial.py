@@ -10,7 +10,7 @@ def create_reparaciones(apps, schema_editor):
     # Crear el primer artículo de
 
     client1 = Client.objects.create(
-        cedula=30357801, username='Dajerckson Perales', email='jossemarzal12@gamil.com')
+        cedula=30357801, username='Dajerckson', email='jossemarzal12@gamil.com')
     client1.save()
 
     client2 = Client.objects.create(
