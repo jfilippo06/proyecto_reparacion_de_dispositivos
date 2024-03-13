@@ -99,3 +99,14 @@ def consultar_cliente(request):
         page_obj = paginator.get_page(page_number)
 
     return render(request, 'consulta/cliente.html', {'username': request.user.username, 'user_type': request.user.user_type, 'cliente': page_obj})
+
+
+@admin_required
+def consultar_venta(request):
+    if request.method == 'GET':
+        pass
+
+    elif request.method == 'POST':
+        pass
+
+    return render(request, 'consulta/venta.html', {'username': request.user.username, 'user_type': request.user.user_type})
