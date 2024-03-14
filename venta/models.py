@@ -21,6 +21,8 @@ class T_Lista(models.Model):
     total = models.BigIntegerField()
     inventario = models.ForeignKey(Inventario, on_delete=models.CASCADE)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
 
 
 class Factura(models.Model):
@@ -30,6 +32,8 @@ class Factura(models.Model):
     total = models.IntegerField()
     inventario = models.ForeignKey(Inventario, on_delete=models.CASCADE)
     n_recibo = models.ForeignKey(N_Recibo, on_delete=models.CASCADE)
+    fecha_creacion = models.DateTimeField(auto_now_add=True)
+    fecha_actualizacion = models.DateTimeField(auto_now=True)
 
 
 class Totales(models.Model):

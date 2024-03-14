@@ -184,7 +184,9 @@ def registrar_factura(request):
             costo_unidad=articulo.costo_unidad,
             total=articulo.total,
             inventario_id=articulo.inventario_id,
-            n_recibo_id=last
+            n_recibo_id=last,
+            fecha_creacion=articulo.fecha_creacion,
+            fecha_actualizacion=articulo.fecha_actualizacion
         )
         registro.save()
 

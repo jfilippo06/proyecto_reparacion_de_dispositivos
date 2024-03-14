@@ -2,9 +2,12 @@ from django.shortcuts import render, redirect
 from login.decorators import admin_required
 from inventario.models import Inventario
 from reparacion.models import Reparacion
-from venta.models import Client
+from venta.models import Client, Factura
 from django.core.paginator import Paginator
 from django.contrib import messages
+from datetime import datetime, time
+from django.db.models import Sum
+import json
 
 # Create your views here.
 
@@ -104,9 +107,20 @@ def consultar_cliente(request):
 @admin_required
 def consultar_venta(request):
     if request.method == 'GET':
-        pass
+        fecha_inicio =  datetime.combine(datetime.today(), time.min)
+        fecha_final = datetime.now()
 
     elif request.method == 'POST':
-        pass
+        fecha_inicio = datetime.strptime(request.POST.get('date_begin', ''), '%Y-%m-%d') if request.POST.get(
+            'date_begin', '') else datetime.combine(datetime.today(), time.min)
+        fecha_final = datetime.strptime(request.POST.get(
+            'date_end', ''), '%Y-%m-%d') if request.POST.get('date_end', '') else datetime.now()
+    
+    facturas = Factura.objects.filter(fecha_creacion__range=(fecha_inicio, fecha_final))\
+        .values('inventario_id', 'articulo')\
+        .annotate(cantidad_total=Sum('cantidad'))\
+        .order_by('-cantidad_total')
 
-    return render(request, 'consulta/venta.html', {'username': request.user.username, 'user_type': request.user.user_type})
+    datos_json = json.dumps(list(facturas), default=str)
+
+    return render(request, 'consulta/venta.html', {'username': request.user.username, 'user_type': request.user.user_type, 'datos': datos_json})

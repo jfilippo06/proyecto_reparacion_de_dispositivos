@@ -3,6 +3,57 @@
 
 {% block contenido %}
 
+<div class="content-wrapper" style="min-height: 1911.53px;">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Ventas</h1>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
 
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="container">
+              <div class="card card-primary">
+                  <div class="card-header">
+                      <h3 class="card-title" style="margin-top: 10px;">Stacked Bar Chart</h3>
+                      <div class="card-tools">
+                        <form action="" method="post">
+                          {% csrf_token %}
+                          <div style="display: flex; flex-direction: row; align-items: baseline; margin-right: -80px;">
+                            <div style="margin-right: 10px;">
+                              <input type="date" name="date_begin" class="form-control" style="width:140px;">
+                            </div>               
+                            <div style="margin-right: 10px;">
+                              <input type="date" name="date_end" class="form-control" style="width:140px;">
+                            </div>  
+                            <div class="input-group input-group-sm" style="width: 150px;">
+                              <button type="submit" value="buscar" class="btn btn-default"><i>Buscar</i></button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                  </div>
+                  
+                  <div class="card-body">
+                      <div class="chart">
+                          <canvas id="myChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block;"></canvas>
+                      </div>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
 
 {% endblock %}
