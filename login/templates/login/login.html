@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-{% block contenido %}
+{% load static %}
+
+{% block content %}
 <div class="login-box">
   <div class="login-logo">
     <a style="color: white;"><b>Iniciar sesión</b></a>
@@ -8,6 +10,15 @@
   <div class="card">
     <div class="card-body login-card-body">
       <p class="login-box-msg" style="font-size: 35px; color: black;">Sistema de inventario y facturación para la empresa Dr. Cell</p>
+
+      {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible">
+          <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+          {{ message }}
+        </div>
+        {% endfor %}
+      {% endif %}
 
       <form method="POST" action="{% url 'login' %}">
         {% csrf_token %}
@@ -27,15 +38,27 @@
             </div>
           </div>
         </div>
-        <div class="social-auth-links text-center mb-3">
-          <button type="submit" class="btn btn-block btn-primary btn">Iniciar sesión</button>
+        <div class="row">
+          <div class="col-8">
+            <div class="icheck-primary">
+              <input type="checkbox" id="remember">
+              <label for="remember">
+                Recordarme
+              </label>
+            </div>
+          </div>
+          <div class="col-4">
+            <button type="submit" class="btn btn-primary btn-block">Ingresar</button>
+          </div>
         </div>
       </form>
 
-      <!-- /.social-auth-links -->
-
+      <p class="mb-1">
+        <a href="{% url 'password_reset' %}">Olvidé mi contraseña</a>
+      </p>
+      <!-- Opcional: Descomentar si necesitas registro -->
       <!-- <p class="mb-0">
-        <a href="{% url 'register' %}" class="text-center">Registrarse</a>
+        <a href="{% url 'register' %}" class="text-center">Registrarme</a>
       </p> -->
     </div>
     <!-- /.login-card-body -->

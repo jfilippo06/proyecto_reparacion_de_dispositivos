@@ -1,8 +1,15 @@
+# login/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
     path('', views.sign_in, name='login'),
     path('logout/', views.sign_out, name='logout'),
-    path('register/', views.register, name='register')
+    path('register/', views.register, name='register'),
+    path('verify-otp/', views.verify_otp, name='verify_otp'),
+    path('resend-otp/', views.resend_otp, name='resend_otp'),
+    
+    # Vistas protegidas
+    path('admin/dashboard/', views.admin_dashboard, name='admin_dashboard'),
+    path('client/dashboard/', views.client_dashboard, name='client_dashboard'),
 ]

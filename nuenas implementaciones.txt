@@ -1,0 +1,12 @@
+
+
+Instala las dependencias necesarias
+
+Ejecuta:
+
+pip install pyotp
+
+Realiza las migraciones
+
+python manage.py makemigrations
+python manage.py migrate

@@ -28,7 +28,7 @@ class UserProfile(AbstractUser):
     otp_secret = models.CharField(max_length=32, blank=True, null=True)
     otp_created_at = models.DateTimeField(null=True, blank=True)
     
-    REQUIRED_FIELDS = ['user_type']
+    REQUIRED_FIELDS = ['user_type', 'email']  # Agregamos email como campo requerido
     
     def generate_otp(self):
         """Genera un nuevo OTP secreto y lo guarda"""
@@ -56,3 +56,6 @@ class UserProfile(AbstractUser):
             
         totp = pyotp.TOTP(self.otp_secret, interval=settings.OTP_EXPIRE_SECONDS)
         return totp.verify(otp)
+
+    def __str__(self):
+        return self.username
