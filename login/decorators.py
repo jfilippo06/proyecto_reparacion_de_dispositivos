@@ -66,4 +66,4 @@ def role_required(*allowed_roles):
                 return HttpResponseForbidden()
             return view_func(request, *args, **kwargs)
         return _wrapped_view
-    return decorator
+    return decorator 

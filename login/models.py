@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
 import pyotp
 from datetime import timedelta
+from requests
 from django.conf import settings
 
 class UserProfile(AbstractUser):
